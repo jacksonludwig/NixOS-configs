@@ -63,7 +63,7 @@
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
-    extraConfig = builtins.readFile configs/nvim/init.vim;
+    extraConfig = builtins.readFile ./configs/nvim/init.vim;
   };
 
   # manage awesomeWM config
