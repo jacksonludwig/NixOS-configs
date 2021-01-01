@@ -53,7 +53,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-        font.size = 14;
+        font.size = 14.5;
         font.normal.family = "Inconsolata Nerd Font";
         font.bold.family = "Inconsolata Nerd Font";
         font.italic.family = "Inconsolata Nerd Font";
