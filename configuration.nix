@@ -78,7 +78,15 @@
     enable = true;
     videoDrivers = [ "nvidia" ];
     displayManager.lightdm.enable = true;
-    desktopManager.gnome3.enable = true;
+    displayManager.defaultSession = "none+awesome";
+    windowManager.awesome = {
+	enable = true;
+	luaModules = with pkgs.luaPackages; [
+		luarocks
+		luadbi-mysql
+	];
+    };
+    # desktopManager.gnome3.enable = true;
   };
 
   # Enable flakes

@@ -65,4 +65,6 @@
     package = pkgs.neovim-nightly;
     extraConfig = builtins.readFile configs/nvim/init.vim;
   };
+
+  home.file.".config/awesome/rc.lua".source = ./configs/awesomewm/rc.lua;
 }
