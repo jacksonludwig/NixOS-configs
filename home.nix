@@ -47,6 +47,8 @@
     discord
     htop
 
+    inconsolata-nerdfont
+
     neofetch
   ];
 
