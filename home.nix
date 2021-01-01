@@ -66,5 +66,6 @@
     extraConfig = builtins.readFile configs/nvim/init.vim;
   };
 
+  # manage awesomeWM config
   home.file.".config/awesome/rc.lua".source = ./configs/awesomewm/rc.lua;
 }
