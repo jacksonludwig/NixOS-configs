@@ -34,10 +34,10 @@
     fd
     python3
     gcc10
+    gopls
+    go
 
-    alacritty
     firefox
-    git
     discord
     htop
 
