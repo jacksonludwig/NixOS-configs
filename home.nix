@@ -32,10 +32,16 @@
   home.packages = with pkgs; [
     bat
     fd
-    python3
+    unzip
+
     gcc10
-    gopls
+    ninja
+
+    python3
     go
+    jdk11
+
+    gopls
 
     firefox
     discord
