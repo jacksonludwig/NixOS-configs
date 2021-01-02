@@ -13,6 +13,7 @@
     bat
     fd
     unzip
+    ripgrep
 
     gcc10
     ninja

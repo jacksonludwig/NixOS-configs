@@ -55,7 +55,7 @@ require('packer').startup(function ()
 
     use {'mkitt/tabline.vim'}
     use {'SirVer/ultisnips'}
-    use {'honza/vim-snippets'}
+    use {'jacksonludwig/vim-snippets'}
 end)
 
 -------------------- OPTIONS -------------------------------
