@@ -106,7 +106,6 @@ treesitter.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 
 -------------------- COMMANDS ------------------------------
 vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
-vim.cmd('autocmd BufWritePost plugins.lua PackerCompile')
 
 --------------------- PLUGIN -------------------------------
 -- startify
