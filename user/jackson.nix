@@ -54,4 +54,15 @@
           font.italic.family = "Inconsolata Nerd Font";
       };
   };
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+        gu() {
+            git add .
+            git commit -m "$1"
+            git push
+        }
+  '';
+  };
 }
