@@ -98,9 +98,9 @@
   };
 
   # Fonts
-  fonts.fonts = with pkgs; [
-	(nerdfonts.override { fonts = [ "DejaVuSansMono" "Inconsolata" "JetBrainsMono" ]; })
-  ];
+  #fonts.fonts = with pkgs; [
+#	(nerdfonts.override { fonts = [ "DejaVuSansMono" "Inconsolata" "JetBrainsMono" ]; })
+ # ];
 
 
   # Some programs need SUID wrappers, can be configured further or are
