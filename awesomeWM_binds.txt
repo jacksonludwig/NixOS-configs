@@ -1,2 +1,0 @@
-mod+shift+h/j   move window to left/right
-mod+shift+s/v   change split to horizontal/vertical

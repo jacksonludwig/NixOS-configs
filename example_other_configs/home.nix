@@ -19,7 +19,6 @@
   # changes in each release.
   home.stateVersion = "21.03";
 
-  # if needed, role can overwrite settings from user
   imports = [
     ./machine/first.nix
     ./user/jackson.nix
