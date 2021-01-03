@@ -40,7 +40,6 @@ require('packer').startup(function ()
     use {'wbthomason/packer.nvim', opt = true}
 
     use {'nvim-treesitter/nvim-treesitter'}
-    use {'mhinz/vim-startify'}
     use {'mhartington/oceanic-next'}
     use {'kyazdani42/nvim-web-devicons'}
     use {'tpope/vim-commentary'}
