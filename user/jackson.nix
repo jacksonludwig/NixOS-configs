@@ -27,6 +27,7 @@
     firefox
     discord
     htop
+    scrot
 
     inconsolata-nerdfont
 
