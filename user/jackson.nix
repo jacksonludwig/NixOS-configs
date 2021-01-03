@@ -21,6 +21,7 @@
     python3
     go
     jdk11
+    nodejs
 
     gopls
 
@@ -42,6 +43,7 @@
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly;
+    withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim/init.vim;
   };
 
@@ -64,5 +66,8 @@
             git push
         }
   '';
+    shellAliases = {
+        c = "cd ~/.config/nixpkgs";
+    };
   };
 }
