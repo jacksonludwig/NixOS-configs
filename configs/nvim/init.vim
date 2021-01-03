@@ -107,9 +107,6 @@ treesitter.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 vim.cmd('au TextYankPost * lua vim.highlight.on_yank {on_visual = false}')
 
 --------------------- PLUGIN -------------------------------
--- startify
-vim.g.startify_custom_header = '[]'
-
 -- Ultisnips
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
 vim.g.UltiSnipsJumpForwardTrigger = '<C-j>'
