@@ -1,5 +1,5 @@
 let g:vimsyn_embed = 'l'
-let g:vimsyn_noerr = 1
+let g:vimsyn_noerror = 1
 
 lua << EOF
 
