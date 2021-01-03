@@ -39,6 +39,8 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
     use {'wbthomason/packer.nvim', opt = true}
 
+    use {'LnL7/vim-nix'}
+
     use {'nvim-treesitter/nvim-treesitter'}
     use {'mhartington/oceanic-next'}
     use {'kyazdani42/nvim-web-devicons'}
@@ -77,7 +79,6 @@ opt('o', 'smartcase', true)                -- Don't ignore case with capitals
 opt('o', 'splitbelow', true)               -- Put new windows below current
 opt('o', 'splitright', true)               -- Put new windows right of current
 opt('o', 'termguicolors', true)            -- True color support
-opt('o', 'wildmode', 'longest:full,full')  -- Command-line completion mode
 opt('w', 'list', true)                     -- Show some invisible characters (tabs etc.)
 opt('w', 'number', true)                   -- Print line number
 opt('w', 'relativenumber', true)           -- Relative line numbers

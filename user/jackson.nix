@@ -16,7 +16,6 @@
     ripgrep
 
     gcc10
-    ninja
 
     python3
     go
@@ -48,13 +47,13 @@
   };
 
   programs.alacritty = {
-      enable = true;
-      settings = {
-          font.size = 14.5;
-          font.normal.family = "Inconsolata Nerd Font";
-          font.bold.family = "Inconsolata Nerd Font";
-          font.italic.family = "Inconsolata Nerd Font";
-      };
+    enable = true;
+    settings = {
+      font.size = 14.5;
+      font.normal.family = "Inconsolata Nerd Font";
+      font.bold.family = "Inconsolata Nerd Font";
+      font.italic.family = "Inconsolata Nerd Font";
+    };
   };
 
   programs.bash = {
@@ -65,9 +64,9 @@
             git commit -m "$1"
             git push
         }
-  '';
+    '';
     shellAliases = {
-        c = "cd ~/.config/nixpkgs";
+      c = "cd ~/.config/nixpkgs";
     };
   };
 }
