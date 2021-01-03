@@ -1,6 +1,7 @@
+let g:vimsyn_embed = 'l'
+let g:vimsyn_noerr = 1
+
 lua << EOF
-vim.g.vimsyn_embed = 'l'
-vim.g.vimsyn_noerr = 1
 
 ------------------ PACKER INSTALL --------------------------
 local execute = vim.api.nvim_command
