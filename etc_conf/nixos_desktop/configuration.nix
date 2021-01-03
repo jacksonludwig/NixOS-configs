@@ -77,6 +77,9 @@
   services.xserver = {
     enable = true;
     videoDrivers = [ "nvidia" ];
+    screenSection = ''
+	Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+    '';
     displayManager.lightdm.enable = true;
     displayManager.defaultSession = "none+awesome";
     windowManager.awesome = {
