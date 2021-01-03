@@ -55,7 +55,7 @@ require('packer').startup(function ()
 
     use {'mkitt/tabline.vim'}
     use {'SirVer/ultisnips'}
-    use {'jacksonludwig/vim-snippets'}
+    use {'honza/vim-snippets'}
 end)
 
 -------------------- OPTIONS -------------------------------
@@ -115,6 +115,7 @@ vim.g.startify_custom_header = '[]'
 vim.g.UltiSnipsExpandTrigger = '<C-l>'
 vim.g.UltiSnipsJumpForwardTrigger = '<C-j>'
 vim.g.UltiSnipsJumpBackwardTrigger = '<C-k>'
+vim.cmd("let g:UltiSnipsSnippetDirectories = [$HOME . '/.config/nixpkgs/configs/nvim/UltiSnips']")
 
 -- Telescope
 map('n', '<leader><leader>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
