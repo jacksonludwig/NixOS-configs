@@ -30,6 +30,7 @@
     scrot
 
     inconsolata-nerdfont
+    emacs-all-the-icons-fonts
 
     neofetch
   ];
@@ -70,4 +71,11 @@
       c = "cd ~/.config/nixpkgs";
     };
   };
+
+  programs.emacs = {
+    enable = true;
+  };
+  home.file.".doom.d/init.el".source = ../configs/doom/init.el;
+  home.file.".doom.d/config.el".source = ../configs/doom/config.el;
+  home.file.".doom.d/packages.el".source = ../configs/doom/packages.el;
 }
