@@ -37,6 +37,98 @@
 ;;(menu-bar-mode -1)
 (scroll-bar-mode -1)
 
+;; ----------------------------------------------------------------------------
+;; Defaults
+;; ########
+
+;; Set font size
+(set-face-attribute 'default nil :font "Roboto Mono Nerd Font" :height 110)
+
+;; Use UTF-8 everywhere. Why?
+;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
+(prefer-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(setq default-buffer-file-coding-system 'utf-8)
+
+;; Show text instead prompts instead of dialog popups. Why?
+;; .. because they're not as nice for quick keyboard access.
+(setq use-dialog-box nil)
+
+;; For text-mode prompts. Why?
+;; .. answering just 'y' or 'n' is sufficient.
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; Store registers on exit. Why?
+;; .. nice to keep macros available on restart.
+(savehist-mode 1)
+(setq savehist-additional-variables '(register-alist))
+
+;; Don't use file backups. Why?
+;; .. it adds cruft on the file-system which gets annoying.
+(setq backup-inhibited t)
+(setq auto-save-default nil)
+
+;; recent files
+(recentf-mode 1)
+
+;; Don't put two spaces after full-stop. Why?
+;; .. one space after a full-stop is sufficient in most documentation & comments.
+(setq sentence-end-double-space nil)
+
+;; Disable bidirectional text support. Why?
+;; .. slight performance improvement.
+(setq bidi-display-reordering nil)
+
+;; Hide mouse cursor while typing. Why?
+;; .. it can overlap characters we want to see.
+(setq make-pointer-invisible t)
+
+;; Set ispell dict to home-manager
+(setq ispell-personal-dictionary "~/.config/nixpkgs/configs/emacs/ispell_english")
+
+;; ---------
+;; Scrolling
+;; =========
+
+;; Scroll N lines to screen edge. Why?
+;; .. having some margin is useful to see some lines above/below the lines you edit.
+(setq scroll-margin 2)
+
+;; Scroll back this many lines to being the cursor back on screen. Why?
+;; .. default behavior is to re-center which is jarring. Clamp to the scroll margin instead.
+(setq scroll-conservatively scroll-margin)
+
+;; Keyboard scroll one line at a time. Why?
+;; .. having scrolling jump is jarring & unnecessary (use page up down in this case).
+(setq scroll-step 1)
+;; Mouse scroll N lines. Why?
+;; .. speed is fast but slower than page up/down (a little personal preference).
+(setq mouse-wheel-scroll-amount '(6 ((shift) . 1)))
+;; Don't accelerate scrolling. Why?
+;; .. it makes scrolling distance unpredictable.
+(setq mouse-wheel-progressive-speed nil)
+;; Don't use timer when scrolling. Why?
+;; .. it's not especially useful, one less timer for a little less overhead.
+(setq mouse-wheel-inhibit-click-time nil)
+
+;; Preserve line/column (nicer page up/down). Why?
+;; .. avoids having the cursor at the top/bottom edges.
+(setq scroll-preserve-screen-position t)
+;; Move the cursor to top/bottom even if the screen is viewing top/bottom (for page up/down). Why?
+;; .. so pressing page/up down can move the cursor & the view to start/end of the buffer.
+(setq scroll-error-top-bottom t)
+
+;; Center after going to the next compiler error. Why?
+;; .. don't get stuck at screen edges.
+(setq next-error-recenter (quote (4)))
+
+;; Always redraw immediately when scrolling. Why?
+;; .. more responsive, it wont hang while handling keyboard input.
+(setq fast-but-imprecise-scrolling nil)
+(setq jit-lock-defer-time 0)
+
 ;; -----------------
 ;; Clipboard Support
 ;; =================
@@ -75,9 +167,6 @@
 
 ;; restart emacs package
 (use-package restart-emacs)
-
-;; recent files
-(recentf-mode 1)
 
 ;; Case Sensitivity
 ;; ================
@@ -146,9 +235,9 @@
   :config
   (ivy-mode)
 
-  ;; Always show half the window height. Why?
+  ;; Always show third the window height. Why?
   ;; .. useful when searching through large lists of content.
-  (setq ivy-height-alist `((t . ,(lambda (_caller) (/ (frame-height) 2)))))
+  (setq ivy-height-alist `((t . ,(lambda (_caller) (/ (frame-height) 3)))))
   (setq ivy-display-style 'fancy)
 
   ;; Vim style keys in ivy (holding Control).
@@ -394,6 +483,10 @@
   ;; Restart emacs.
   (evil-define-key 'normal 'global (kbd "<leader>qr") 'restart-emacs)
   (evil-define-key 'normal 'global (kbd "<leader>qR") 'restart-emacs)
+  ;; Quit emacs
+  (evil-define-key 'normal 'global (kbd "<leader>qq") 'kill-emacs)
+  ;; Evil m-x version
+  (evil-define-key 'normal 'global (kbd "<leader>:") 'execute-extended-command)
 
 ;; ----------------------------------------------------------------------------
 ;; Custom Variables
