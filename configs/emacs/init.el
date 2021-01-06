@@ -434,7 +434,6 @@
 ;; .. this is a common shortcut for web-browsers that doesn't conflict with anything else.
 (global-set-key (kbd "C-=") 'default-text-scale-increase)
 (global-set-key (kbd "C--") 'default-text-scale-decrease)
-(global-set-key (kbd "C-0") 'default-text-scale-reset)
 
 (global-set-key (kbd "<C-mouse-4>") 'default-text-scale-increase)
 (global-set-key (kbd "<C-mouse-5>") 'default-text-scale-decrease)
