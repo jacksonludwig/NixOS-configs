@@ -6,6 +6,9 @@
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     }))
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
   ];
 
   # packages to install
@@ -23,14 +26,18 @@
     nodejs
 
     gopls
+    nodePackages.pyright
 
     firefox
     discord
     htop
     scrot
+    xclip
 
     inconsolata-nerdfont
     emacs-all-the-icons-fonts
+    roboto-mono
+    fira-code
 
     neofetch
   ];
@@ -74,6 +81,7 @@
 
   programs.emacs = {
     enable = true;
+    package = pkgs.emacsGcc;
   };
   home.file.".doom.d/init.el".source = ../configs/doom/init.el;
   home.file.".doom.d/config.el".source = ../configs/doom/config.el;

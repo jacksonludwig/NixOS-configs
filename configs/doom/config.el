@@ -55,8 +55,8 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "Roboto Mono" :size 16)
+      doom-variable-pitch-font (font-spec :family "sans" :size 16))
 ;;(setq
 ;; doom-font (font-spec :family "Iosevka Fixed" :size 18)
 ;; doom-big-font (font-spec :family "Iosevka Fixed" :size 24)
