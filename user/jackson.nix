@@ -6,9 +6,9 @@
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     }))
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
+    # (import (builtins.fetchTarball {
+    #   url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    # }))
   ];
 
   # packages to install
@@ -33,9 +33,10 @@
     htop
     scrot
     xclip
+    ispell
 
     emacs-all-the-icons-fonts
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "RobotoMono" ]; })
 
     neofetch
   ];
@@ -56,7 +57,7 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      font.size = 13.0;
+      font.size = 12;
       font.normal.family = "FiraCode Nerd Font";
       font.bold.family = "FiraCode Nerd Font";
       font.italic.family = "FiraCode Nerd Font";
@@ -81,4 +82,5 @@
     enable = true;
     # package = pkgs.emacsGcc;
   };
+  home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
 }
