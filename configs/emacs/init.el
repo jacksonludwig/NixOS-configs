@@ -165,16 +165,15 @@
 ;; Misc config
 ;; ================
 
-;; Install latest Org mode, configure babel
+;; Install latest Org mode, configure it and babel
 (use-package org
   :config
-  )
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (python . t)
-   (java . t)
-   ))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (python . t)
+     (java . t)
+     )))
 (use-package org-plus-contrib
   :after org)
 
@@ -338,6 +337,10 @@
   :demand t
   :init (setq default-text-scale-mode-map (make-sparse-keymap))
   :config (default-text-scale-mode))
+
+;; Doom mode-line
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
 
 ;; ---------------
 ;; Display Options
