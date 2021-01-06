@@ -500,7 +500,7 @@
   (evil-set-leader 'normal (kbd "<SPC>"))
 
   ;; Interactive file name search in project.
-  (evil-define-key 'normal 'global (kbd "<leader><leader>") 'find-file-in-project)
+  (evil-define-key 'normal 'global (kbd "<leader><SPC>") 'find-file-in-project)
   ;; Interactive file content search (git).
   (evil-define-key 'normal 'global (kbd "<leader>fg") 'counsel-git-grep)
   ;; Interactive current-file search.
