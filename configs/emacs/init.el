@@ -1,5 +1,5 @@
 ;; ----------------------------------------------------------------------------
-;; Packages
+;; Package manager
 ;; ########
 
 (with-eval-after-load 'package
@@ -162,24 +162,6 @@
 ;; Note that the default is x100), but this seems too high.
 (setq undo-outer-limit 1006632960)
 
-;; Misc config
-;; ================
-
-;; Install latest Org mode, configure it and babel
-(use-package org
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '(
-     (python . t)
-     (java . t)
-     )))
-(use-package org-plus-contrib
-  :after org)
-
-;; restart emacs package
-(use-package restart-emacs)
-
 ;; Case Sensitivity
 ;; ================
 
@@ -204,6 +186,25 @@
 (setq fill-column 100)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
+
+;; -----------
+;; Installing packages
+;; ===========
+
+;; Install latest Org mode, configure it and babel
+(use-package org
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (python . t)
+     (java . t)
+     )))
+(use-package org-plus-contrib
+  :after org)
+
+;; restart emacs package
+(use-package restart-emacs)
 
 ;; Main Vim emulation package. Why?
 ;; .. without this, you won't have Vim key bindings or modes.
