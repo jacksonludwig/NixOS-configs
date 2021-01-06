@@ -88,14 +88,6 @@
 ;; Set ispell dict to home-manager
 (setq ispell-personal-dictionary "~/.config/nixpkgs/configs/emacs/ispell_english")
 
-;; Org babel setup -- add languages as needed
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (python . t)
-   (java . t)
-   ))
-
 ;; ---------
 ;; Scrolling
 ;; =========
@@ -172,6 +164,19 @@
 
 ;; Misc config
 ;; ================
+
+;; Install latest Org mode, configure babel
+(use-package org
+  :config
+  )
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (python . t)
+   (java . t)
+   ))
+(use-package org-plus-contrib
+  :after org)
 
 ;; restart emacs package
 (use-package restart-emacs)
@@ -366,83 +371,83 @@
 
 ;; Options for generic modes.
 (add-hook 'after-change-major-mode-hook
-  (lambda ()
-    (when (derived-mode-p 'text-mode)
-      (flyspell-mode))
-    (when (derived-mode-p 'prog-mode)
-      (flyspell-prog-mode))))
+          (lambda ()
+            (when (derived-mode-p 'text-mode)
+              (flyspell-mode))
+            (when (derived-mode-p 'prog-mode)
+              (flyspell-prog-mode))))
 
 ;; ------
 ;; Markup
 ;; ------
 
 (add-hook 'org-mode-hook
-  (lambda ()
-    (setq-local fill-column 120)
-    (setq-local tab-width 2)
-    (setq-local evil-shift-width 2)
-    (setq-local indent-tabs-mode nil)
+          (lambda ()
+            (setq-local fill-column 120)
+            (setq-local tab-width 2)
+            (setq-local evil-shift-width 2)
+            (setq-local indent-tabs-mode nil)
 
-    (setq-local ffip-patterns '("*.org"))))
+            (setq-local ffip-patterns '("*.org"))))
 
 ;; ---------
 ;; Scripting
 ;; ---------
 
 (add-hook 'emacs-lisp-mode-hook
-  (lambda ()
-    (setq-local fill-column 120)
-    (setq-local tab-width 2)
-    (setq-local evil-shift-width 2)
-    (setq-local indent-tabs-mode nil)
+          (lambda ()
+            (setq-local fill-column 120)
+            (setq-local tab-width 2)
+            (setq-local evil-shift-width 2)
+            (setq-local indent-tabs-mode nil)
 
-    (setq-local ffip-patterns '("*.el"))
+            (setq-local ffip-patterns '("*.el"))
 
-    ;; Don't delimit on dashes or underscores. Why?
-    ;; .. makes searching for variable names inconvenient.
-    (modify-syntax-entry ?- "w")
-    (modify-syntax-entry ?_ "w")))
+            ;; Don't delimit on dashes or underscores. Why?
+            ;; .. makes searching for variable names inconvenient.
+            (modify-syntax-entry ?- "w")
+            (modify-syntax-entry ?_ "w")))
 
 (add-hook 'python-mode-hook
-  (lambda ()
-    (setq-local fill-column 80)
-    (setq-local tab-width 4)
-    (setq-local evil-shift-width 4)
-    (setq-local indent-tabs-mode nil)
+          (lambda ()
+            (setq-local fill-column 80)
+            (setq-local tab-width 4)
+            (setq-local evil-shift-width 4)
+            (setq-local indent-tabs-mode nil)
 
-    (setq-local ffip-patterns '("*.py"))))
+            (setq-local ffip-patterns '("*.py"))))
 
 ;; -----
 ;; Shell
 ;; -----
 
 (add-hook 'sh-mode-hook
-  (lambda ()
-    (setq-local fill-column 120)
-    (setq-local tab-width 4)
-    (setq-local evil-shift-width 4)
-    (setq-local indent-tabs-mode nil)
+          (lambda ()
+            (setq-local fill-column 120)
+            (setq-local tab-width 4)
+            (setq-local evil-shift-width 4)
+            (setq-local indent-tabs-mode nil)
 
-    (setq-local ffip-patterns '("*.sh"))))
+            (setq-local ffip-patterns '("*.sh"))))
 
 ;; ---------------
 ;; Other Languages
 ;; ---------------
 
 (add-hook 'c-mode-hook
-  (lambda ()
-    (setq-local fill-column 120)
-    (setq-local c-basic-offset 4)
-    (setq-local tab-width 4)
-    (setq-local evil-shift-width 4)
-    (setq-local indent-tabs-mode nil)
+          (lambda ()
+            (setq-local fill-column 120)
+            (setq-local c-basic-offset 4)
+            (setq-local tab-width 4)
+            (setq-local evil-shift-width 4)
+            (setq-local indent-tabs-mode nil)
 
-    (setq-local ffip-patterns
-      '("*.c" "*.cc" "*.cpp" "*.cxx" "*.h" "*.hh" "*.hpp" "*.hxx" "*.inl"))
+            (setq-local ffip-patterns
+                        '("*.c" "*.cc" "*.cpp" "*.cxx" "*.h" "*.hh" "*.hpp" "*.hxx" "*.inl"))
 
-    ;; Don't delimit on '_'. Why?
-    ;; .. makes searching for variable names inconvenient.
-    (modify-syntax-entry ?_ "w")))
+            ;; Don't delimit on '_'. Why?
+            ;; .. makes searching for variable names inconvenient.
+            (modify-syntax-entry ?_ "w")))
 
 ;; -----------
 ;; Global Keys
