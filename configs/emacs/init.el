@@ -272,6 +272,9 @@
   (setq company-dabbrev-downcase nil)
   (setq company-dabbrev-ignore-case nil)
 
+  ;; Wrap completion
+  (setq company-selection-wrap-around t)
+
   ;; Key-map: hold Control for Vim motion. Why?
   ;; .. we're already holding Control, allow navigation at the same time.
   (define-key company-active-map (kbd "C-n") 'company-select-next-or-abort)
@@ -477,7 +480,7 @@
   ;; Interactive open-buffer switch.
   (evil-define-key 'normal 'global (kbd "<leader>b") 'counsel-switch-buffer)
   ;; Search recent files
-  (evil-define-key 'normal 'global (kbd "<leader>fr") 'counsel-recentf))
+  (evil-define-key 'normal 'global (kbd "<leader>fr") 'counsel-recentf)
   ;; Interactive file search.
   (evil-define-key 'normal 'global (kbd "<leader>ff") 'find-file)
   ;; Restart emacs.
@@ -486,7 +489,7 @@
   ;; Quit emacs
   (evil-define-key 'normal 'global (kbd "<leader>qq") 'kill-emacs)
   ;; Evil m-x version
-  (evil-define-key 'normal 'global (kbd "<leader>:") 'execute-extended-command)
+  (evil-define-key 'normal 'global (kbd "<leader>:") 'execute-extended-command))
 
 ;; ----------------------------------------------------------------------------
 ;; Custom Variables
