@@ -228,12 +228,17 @@
   ;; Initialize.
   (which-key-mode))
 
+;; Back-end for ivy/ivy-rich
+(use-package counsel
+  :after ivy
+  :config (counsel-mode))
+
 ;; Ivy completion. Why?
 ;; .. makes completing various prompts for input much more friendly & interactive.
 (use-package ivy
   :demand t
   :config
-  (ivy-mode)
+  (ivy-mode 1)
 
   ;; Always show third the window height. Why?
   ;; .. useful when searching through large lists of content.
@@ -258,6 +263,11 @@
 
   ;; stop ivy from quitting on delete
   (setq ivy-on-del-error-function #'ignore))
+
+;; More detail for info completion
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1))
 
 ;; Use for auto-complete. Why?
 ;; .. saves typing, allows multiple back-ends based on the current language/mode.
