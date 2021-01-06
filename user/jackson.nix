@@ -34,10 +34,8 @@
     scrot
     xclip
 
-    inconsolata-nerdfont
     emacs-all-the-icons-fonts
-    roboto-mono
-    fira-code
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
     neofetch
   ];
@@ -58,10 +56,10 @@
   programs.alacritty = {
     enable = true;
     settings = {
-      font.size = 14.5;
-      font.normal.family = "Inconsolata Nerd Font";
-      font.bold.family = "Inconsolata Nerd Font";
-      font.italic.family = "Inconsolata Nerd Font";
+      font.size = 13.0;
+      font.normal.family = "FiraCode Nerd Font";
+      font.bold.family = "FiraCode Nerd Font";
+      font.italic.family = "FiraCode Nerd Font";
     };
   };
 
@@ -83,7 +81,4 @@
     enable = true;
     # package = pkgs.emacsGcc;
   };
-  home.file.".doom.d/init.el".source = ../configs/doom/init.el;
-  home.file.".doom.d/config.el".source = ../configs/doom/config.el;
-  home.file.".doom.d/packages.el".source = ../configs/doom/packages.el;
 }
