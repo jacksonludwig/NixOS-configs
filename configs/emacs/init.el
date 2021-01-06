@@ -88,6 +88,14 @@
 ;; Set ispell dict to home-manager
 (setq ispell-personal-dictionary "~/.config/nixpkgs/configs/emacs/ispell_english")
 
+;; Org babel setup -- add languages as needed
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (python . t)
+   (java . t)
+   ))
+
 ;; ---------
 ;; Scrolling
 ;; =========
