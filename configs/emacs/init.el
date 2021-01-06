@@ -254,7 +254,10 @@
   (define-key ivy-minibuffer-map (kbd "<C-return>") 'ivy-done)
 
   ;; so we can switch away
-  (define-key ivy-minibuffer-map (kbd "C-w") 'evil-window-map))
+  (define-key ivy-minibuffer-map (kbd "C-w") 'evil-window-map)
+
+  ;; stop ivy from quitting on delete
+  (setq ivy-on-del-error-function #'ignore))
 
 ;; Use for auto-complete. Why?
 ;; .. saves typing, allows multiple back-ends based on the current language/mode.
