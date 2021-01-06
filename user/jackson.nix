@@ -81,7 +81,7 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsGcc;
+    # package = pkgs.emacsGcc;
   };
   home.file.".doom.d/init.el".source = ../configs/doom/init.el;
   home.file.".doom.d/config.el".source = ../configs/doom/config.el;
