@@ -42,7 +42,7 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 110)
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 120)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
@@ -339,12 +339,20 @@
   :init (setq default-text-scale-mode-map (make-sparse-keymap))
   :config (default-text-scale-mode))
 
+;; Theme
+(use-package doom-themes
+  :init (load-theme 'doom-one t))
+
 ;; All-the-icons
 (use-package all-the-icons)
 
 ;; Doom mode-line
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
+
+;; Rainbow delimiters
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; ---------------
 ;; Display Options
