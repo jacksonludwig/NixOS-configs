@@ -42,7 +42,7 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 120)
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 125)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
