@@ -337,7 +337,7 @@
 ;; Theme
 (use-package doom-themes
   :init
-  ;(load-theme 'doom-one t)
+  (load-theme 'doom-one t)
   )
 
 ;; All-the-icons
@@ -381,7 +381,7 @@
 ;; File Formats
 ;; ============
 
-;; TODO
+;; TODO if needed
 
 ;; ------
 ;; Markup
@@ -470,7 +470,6 @@
 ;; Evil Leader Keys
 ;; ================
 
-;; Example leader keys for useful functionality exposed by packages.
 (with-eval-after-load 'evil
   (evil-set-leader 'normal (kbd "<SPC>"))
 
