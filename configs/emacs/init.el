@@ -21,9 +21,6 @@
 ;; Download automatically. Why?
 ;; .. convenience, so on first start all packages are installed.
 (setq use-package-always-ensure t)
-;; Defer loading packages by default. Why?
-;; .. faster startup for packages which are only activated on certain modes or key bindings.
-(setq use-package-always-defer t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -42,7 +39,7 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "Iosevka" :height 130)
+(set-face-attribute 'default nil :font "Iosevka" :height 135)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
@@ -191,8 +188,6 @@
      (python . t)
      (java . t)
      )))
-(use-package org-plus-contrib
-  :after org)
 
 ;; restart emacs package
 (use-package restart-emacs)
@@ -279,9 +274,12 @@
 
 ;; base company configuration
 (use-package company
-  :commands (company-complete-common company-dabbrev)
+  :commands (company-dabbrev)
   :config
   (global-company-mode)
+
+  ;; Manual Completion
+  (setq company-idle-delay nil)
 
   ;; Don't make abbreviations lowercase or ignore case. Why?
   ;; .. many languages are case sensitive, so changing case isn't helpful.
@@ -347,7 +345,9 @@
 
 ;; Theme
 (use-package doom-themes
-  :init (load-theme 'doom-one t))
+  :init
+  ;(load-theme 'doom-one t)
+  )
 
 ;; All-the-icons
 (use-package all-the-icons)
