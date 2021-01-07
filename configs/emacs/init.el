@@ -36,7 +36,8 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "Iosevka" :height 135)
+(defvar size 135)
+(set-face-attribute 'default nil :font "Iosevka" :height size)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
