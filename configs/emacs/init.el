@@ -42,7 +42,7 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "JetBrains Mono" :height 125)
+(set-face-attribute 'default nil :font "Iosevka" :height 130)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
@@ -51,10 +51,6 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
-
-;; Show text instead prompts instead of dialog popups. Why?
-;; .. because they're not as nice for quick keyboard access.
-(setq use-dialog-box nil)
 
 ;; For text-mode prompts. Why?
 ;; .. answering just 'y' or 'n' is sufficient.
@@ -218,7 +214,11 @@
 
   ;; For some reasons evils own search isn't default.
   (setq evil-search-module 'evil-search)
-  (setq evil-ex-search-case 'sensitive))
+  (setq evil-ex-search-case 'sensitive)
+
+  ;; Split right and split below
+  (setq evil-vsplit-window-right t)
+  (setq evil-split-window-below t))
 
 ;; Use a thin wrapper for undo. Why?
 ;; .. By default undo doesn't support redo as most users would expect from other software.
@@ -538,5 +538,3 @@
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
-
-; LocalWords:  SPC
