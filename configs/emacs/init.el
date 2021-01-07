@@ -42,7 +42,7 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "Roboto Mono Nerd Font" :height 110)
+(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 110)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
@@ -338,6 +338,9 @@
   :demand t
   :init (setq default-text-scale-mode-map (make-sparse-keymap))
   :config (default-text-scale-mode))
+
+;; All-the-icons
+(use-package all-the-icons)
 
 ;; Doom mode-line
 (use-package doom-modeline

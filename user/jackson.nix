@@ -37,6 +37,7 @@
 
     emacs-all-the-icons-fonts
     (nerdfonts.override { fonts = [ "FiraCode" "RobotoMono" ]; })
+    iosevka
 
     neofetch
   ];
