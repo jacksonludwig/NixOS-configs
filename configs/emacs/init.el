@@ -312,6 +312,10 @@
   (define-key company-search-map (kbd "C-n") 'company-select-next)
   (define-key company-search-map (kbd "C-p") 'company-select-previous))
 
+;; Use child-frame for company
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
 ;; Use `swiper' for interactive buffer search. Why?
 ;; .. quickly search the buffer if useful.
 (use-package swiper
