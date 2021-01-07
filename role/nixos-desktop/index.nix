@@ -3,4 +3,6 @@
 {
     # manage awesomeWM config
     home.file.".config/awesome/rc.lua".source = ../../configs/awesomewm/rc.lua;
+    # set screen res/refresh rate
+    home.file.".xprofile".source = ../../configs/xrandr/first/.xprofile;
 }

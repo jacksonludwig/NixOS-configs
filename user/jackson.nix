@@ -34,6 +34,7 @@
     scrot
     xclip
     ispell
+    arandr
 
     emacs-all-the-icons-fonts
     (nerdfonts.override { fonts = [ "FiraCode" "RobotoMono" ]; })
