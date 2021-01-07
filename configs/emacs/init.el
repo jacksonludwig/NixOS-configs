@@ -271,7 +271,7 @@
 
 ;; base company configuration
 (use-package company
-  :commands (company-dabbrev)
+  :commands (company-complete-common company-dabbrev)
   :config
   (global-company-mode)
 
@@ -298,8 +298,8 @@
   (define-key company-search-map (kbd "C-p") 'company-select-previous))
 
 ;; Use child-frame for company
-(use-package company-box
-  :hook (company-mode . company-box-mode))
+;(use-package company-box
+;  :hook (company-mode . company-box-mode))
 
 ;; Use `swiper' for interactive buffer search. Why?
 ;; .. quickly search the buffer if useful.
@@ -332,13 +332,6 @@
 ;; Ivy integration for projectile
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
-
-;; Scale all text. Why?
-;; .. it's useful sometimes to globally zoom in all text.
-(use-package default-text-scale
-  :demand t
-  :init (setq default-text-scale-mode-map (make-sparse-keymap))
-  :config (default-text-scale-mode))
 
 ;; Theme
 (use-package doom-themes
@@ -387,15 +380,7 @@
 ;; File Formats
 ;; ============
 
-;; Options for generic modes.
-(add-hook 'after-change-major-mode-hook
-          (lambda ()
-            (when (derived-mode-p 'text-mode)
-              ;(flyspell-mode)
-              )
-            (when (derived-mode-p 'prog-mode)
-              ;(flyspell-prog-mode)
-              )))
+;; TODO
 
 ;; ------
 ;; Markup
@@ -469,28 +454,14 @@
             ;; .. makes searching for variable names inconvenient.
             (modify-syntax-entry ?_ "w")))
 
-;; -----------
-;; Global Keys
-;; ===========
-
-;; Control +/- or mouse-wheel to zoom. Why?
-;; .. this is a common shortcut for web-browsers that doesn't conflict with anything else.
-(global-set-key (kbd "C-=") 'default-text-scale-increase)
-(global-set-key (kbd "C--") 'default-text-scale-decrease)
-
-(global-set-key (kbd "<C-mouse-4>") 'default-text-scale-increase)
-(global-set-key (kbd "<C-mouse-5>") 'default-text-scale-decrease)
-
 ;; --------------
 ;; Evil Mode Keys
 ;; ==============
 
 ;; Vim increment/decrement keys.
-(define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
-(define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
+(define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/dec-at-pt)
 
-;; Auto complete using words from the buffer.
-(define-key evil-insert-state-map (kbd "C-n") 'company-dabbrev)
 ;; Comprehensive auto-complete.
 (define-key evil-insert-state-map (kbd "C-SPC") 'company-complete-common)
 
@@ -509,7 +480,9 @@
   ;; Interactive current-file search.
   (evil-define-key 'normal 'global (kbd "<leader>s") 'swiper)
   ;; Interactive open-buffer switch.
-  (evil-define-key 'normal 'global (kbd "<leader>b") 'counsel-switch-buffer)
+  (evil-define-key 'normal 'global (kbd "<leader>bb") 'counsel-switch-buffer)
+  ;; Interactive kill-buffer switch.
+  (evil-define-key 'normal 'global (kbd "<leader>bk") 'kill-buffer)
   ;; Search recent files
   (evil-define-key 'normal 'global (kbd "<leader>fr") 'counsel-recentf)
   ;; Interactive file search.
