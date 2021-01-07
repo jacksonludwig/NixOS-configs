@@ -37,8 +37,9 @@
     arandr
 
     emacs-all-the-icons-fonts
-    (nerdfonts.override { fonts = [ "FiraCode" "RobotoMono" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "Inconsolata" "RobotoMono" ]; })
     iosevka
+    jetbrains-mono
 
     neofetch
   ];
@@ -60,9 +61,9 @@
     enable = true;
     settings = {
       font.size = 12;
-      font.normal.family = "FiraCode Nerd Font";
-      font.bold.family = "FiraCode Nerd Font";
-      font.italic.family = "FiraCode Nerd Font";
+      font.normal.family = "Inconsolata Nerd Font";
+      font.bold.family = "Inconsolata Nerd Font";
+      font.italic.family = "Inconsolata Nerd Font";
     };
   };
 

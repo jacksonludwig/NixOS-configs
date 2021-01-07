@@ -42,7 +42,7 @@
 ;; ########
 
 ;; Set font size
-(set-face-attribute 'default nil :font "RobotoMono Nerd Font" :height 125)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height 125)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
@@ -59,11 +59,6 @@
 ;; For text-mode prompts. Why?
 ;; .. answering just 'y' or 'n' is sufficient.
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;; Store registers on exit. Why?
-;; .. nice to keep macros available on restart.
-(savehist-mode 1)
-(setq savehist-additional-variables '(register-alist))
 
 ;; Don't use file backups. Why?
 ;; .. it adds cruft on the file-system which gets annoying.
@@ -282,16 +277,11 @@
   :init
   (ivy-rich-mode 1))
 
-;; Use for auto-complete. Why?
-;; .. saves typing, allows multiple back-ends based on the current language/mode.
+;; base company configuration
 (use-package company
   :commands (company-complete-common company-dabbrev)
   :config
   (global-company-mode)
-
-  ;; Increase maximum number of items to show in auto-completion. Why?
-  ;; .. seeing more at once gives you a better overview of your options.
-  (setq company-tooltip-limit 20)
 
   ;; Don't make abbreviations lowercase or ignore case. Why?
   ;; .. many languages are case sensitive, so changing case isn't helpful.
@@ -496,20 +486,6 @@
 ;; Evil Mode Keys
 ;; ==============
 
-;; Use secondary selection in insert mode, Why?
-;; .. this is handy for quick middle mouse copy/paste while in insert mode.
-(define-key evil-insert-state-map (kbd "<down-mouse-1>") 'mouse-drag-secondary)
-(define-key evil-insert-state-map (kbd "<drag-mouse-1>") 'mouse-drag-secondary)
-(define-key evil-insert-state-map (kbd "<mouse-1>") 'mouse-start-secondary)
-;; De-select after copy, Why?
-;; .. allows quick select-copy-paste.
-(define-key evil-insert-state-map (kbd "<mouse-2>")
-  (lambda (click)
-    (interactive "*p")
-    (when (overlay-start mouse-secondary-overlay)
-      (mouse-yank-secondary click)
-      (delete-overlay mouse-secondary-overlay))))
-
 ;; Vim increment/decrement keys.
 (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
@@ -545,7 +521,13 @@
   ;; Quit emacs
   (evil-define-key 'normal 'global (kbd "<leader>qq") 'kill-emacs)
   ;; Evil m-x version
-  (evil-define-key 'normal 'global (kbd "<leader>:") 'execute-extended-command))
+  (evil-define-key 'normal 'global (kbd "<leader>:") 'execute-extended-command)
+  ;; Projectile add project
+  (evil-define-key 'normal 'global (kbd "<leader>pa") 'projectile-add-known-project)
+  ;; Projectile switch project
+  (evil-define-key 'normal 'global (kbd "<leader>pp") 'projectile-switch-project)
+  ;; Projectile remove project
+  (evil-define-key 'normal 'global (kbd "<leader>pd") 'projectile-remove-known-project))
 
 ;; ----------------------------------------------------------------------------
 ;; Custom Variables
