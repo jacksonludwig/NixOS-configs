@@ -2,24 +2,21 @@
 ;; Package manager
 ;; ########
 
-(with-eval-after-load 'package
-  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(require 'package)
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
+(unless package-archive-contents
+  (package-refresh-contents))
 
-;; Auto-install use-package. Why:
-;; .. this is a defacto-standard package manager, useful to isolate each package's configuration.
+  ;; Initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
-  (package-refresh-contents)
   (package-install 'use-package))
 
-;; This is only needed once, near the top of the file
-(eval-when-compile (require 'use-package))
-
-;; Download automatically. Why?
-;; .. convenience, so on first start all packages are installed.
+(require 'use-package)
 (setq use-package-always-ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -394,9 +391,11 @@
 (add-hook 'after-change-major-mode-hook
           (lambda ()
             (when (derived-mode-p 'text-mode)
-              (flyspell-mode))
+              ;(flyspell-mode)
+              )
             (when (derived-mode-p 'prog-mode)
-              (flyspell-prog-mode))))
+              ;(flyspell-prog-mode)
+              )))
 
 ;; ------
 ;; Markup
