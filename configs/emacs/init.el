@@ -34,7 +34,7 @@
 ;; Disable GUI elements. Why?
 ;; .. they take up screen-space and are unnecessary, favor a minimal interface.
 (tool-bar-mode -1)
-;;(menu-bar-mode -1)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 ;; ----------------------------------------------------------------------------
@@ -332,6 +332,18 @@
 (use-package find-file-in-project
   :commands (find-file-in-project))
 
+;; Projectile
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :custom ((projectile-completion-system 'ivy)))
+
+;; Ivy integration for projectile
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
 ;; Scale all text. Why?
 ;; .. it's useful sometimes to globally zoom in all text.
 (use-package default-text-scale
@@ -540,3 +552,5 @@
 
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
+
+; LocalWords:  SPC
