@@ -498,6 +498,23 @@
   ;; Projectile remove project
   (evil-define-key 'normal 'global (kbd "<leader>pd") 'projectile-remove-known-project))
 
+;; Custom functions
+(defun package-menu-find-marks ()
+  "Find packages marked for action in *Packages*."
+  (interactive)
+  (occur "^[A-Z]"))
+
+;; Only in Emacs 25.1+
+(defun package-menu-filter-by-status (status)
+  "Filter the *Packages* buffer by status."
+  (interactive
+   (list (completing-read
+          "Status: " '("new" "installed" "dependency" "obsolete"))))
+  (package-menu-filter (concat "status:" status)))
+
+(define-key package-menu-mode-map "s" #'package-menu-filter-by-status)
+(define-key package-menu-mode-map "a" #'package-menu-find-marks)
+
 ;; ----------------------------------------------------------------------------
 ;; Custom Variables
 ;; ################
