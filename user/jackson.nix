@@ -28,7 +28,7 @@
     gopls
     nodePackages.pyright
 
-    firefox
+    firefox-bin
     discord
     htop
     scrot
