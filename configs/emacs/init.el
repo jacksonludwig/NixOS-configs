@@ -36,8 +36,7 @@
 ;; ########
 
 ;; Set font size
-(defvar size 135)
-(set-face-attribute 'default nil :font "Iosevka" :height size)
+(set-face-attribute 'default nil :font "Iosevka" :height 135)
 
 ;; Use UTF-8 everywhere. Why?
 ;; .. this is the most common encoding, saves hassles guessing and getting it wrong.
@@ -354,8 +353,7 @@
 ;; Display Options
 ;; ===============
 
-;; Show line numbers. Why?
-;; Helpful to give context when reading errors & the current line is made more prominent.
+;; Show line numbers.
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 
