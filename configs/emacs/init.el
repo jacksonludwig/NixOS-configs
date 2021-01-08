@@ -194,7 +194,6 @@
 (use-package evil
   :demand t
   :init
-  (setq evil-want-C-u-scroll t)
 
   ;; See `undo-fu' package.
   (setq evil-undo-system 'undo-fu)
@@ -209,7 +208,10 @@
 
   ;; Split right and split below
   (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t))
+  (setq evil-split-window-below t)
+
+  ;; Allow C-u
+  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up))
 
 ;; Use a thin wrapper for undo. Why?
 ;; .. By default undo doesn't support redo as most users would expect from other software.
@@ -356,6 +358,7 @@
 ;; Show line numbers.
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
+(setq display-line-numbers-width-start t)
 
 ;; Show the column as well as the line. Why?
 ;; .. some compiler errors show the column which is useful to compare.
