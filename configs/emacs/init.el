@@ -195,11 +195,10 @@
 (use-package evil
   :demand t
   :init
+  (setq evil-want-C-u-scroll t)
 
   ;; See `undo-fu' package.
   (setq evil-undo-system 'undo-fu)
-
-  (setq evil-want-C-u-scroll t)
 
   :config
   ;; Initialize.
@@ -334,16 +333,16 @@
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
 
+(use-package go-mode)
+
 ;; Theme
 (use-package doom-themes
   :init
   (load-theme 'doom-one t)
   )
 
-;; All-the-icons
+;; Doom mode-line/all-the-icons
 (use-package all-the-icons)
-
-;; Doom mode-line
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
 

@@ -37,7 +37,6 @@
     arandr
     zoom-us
 
-    emacs-all-the-icons-fonts
     (nerdfonts.override { fonts = [ "FiraCode" "Inconsolata" "RobotoMono" ]; })
     iosevka
     jetbrains-mono
