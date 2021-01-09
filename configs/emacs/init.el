@@ -65,6 +65,7 @@
     "qq"  '(kill-emacs :which-key "kill emacs")
     ))
 
+(use-package undo-fu)
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -203,6 +204,21 @@
                           (require 'lsp-pyright)
                           (lsp))))  ; or lsp-deferred
 
+
+;; PROJECTILE
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  ;; NOTE: Set this to the folder where you keep your Git repos!
+  (when (file-directory-p "~/git_repos/")
+    (setq projectile-project-search-path '("~/git_repos/"))))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
 
