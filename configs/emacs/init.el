@@ -190,15 +190,9 @@
 (use-package flycheck
   :init (global-flycheck-mode))
 
-;; Config if breadcrumbs are enabled, and other things if needed
-(defun jackson/lsp-mode-setup ()
-  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode)
-  )
-
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook (lsp-mode . jackson/lsp-mode-setup)
+  :hook (lsp-mode)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
