@@ -199,7 +199,8 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook (lsp-mode)
+  :hook
+  (python-mode . lsp)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
