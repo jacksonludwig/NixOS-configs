@@ -6,9 +6,9 @@
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     }))
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
+    # (import (builtins.fetchTarball {
+    #   url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    # }))
   ];
 
   # packages to install
@@ -83,7 +83,8 @@
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacsGcc;
+    # package = pkgs.emacsGcc;
   };
+  # home.file.".emacs.d/Emacs.org".source = ../configs/emacs/Emacs.org;
   home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
 }
