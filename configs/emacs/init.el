@@ -57,7 +57,7 @@
     "tt" '(counsel-load-theme :which-key "choose theme")
     "f"  '(:ignore t :which-key "files")
     "fr" '(counsel-recentf :which-key "recent files")
-    "ff" '(find-files :which-key "find files")
+    "ff" '(counsel-find-file :which-key "find files")
     ":"  '(execute-extended-command :which-key "run M-x")
     "b"  '(:ignore t :which-key "buffers")
     "bb" '(counsel-switch-buffer :which-key "switch buffer")
