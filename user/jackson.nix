@@ -36,6 +36,7 @@
     ispell
     arandr
     zoom-us
+    texlive.combined.scheme-basic
 
     (nerdfonts.override { fonts = [ "FiraCode" "Inconsolata" "RobotoMono" ]; })
     iosevka
