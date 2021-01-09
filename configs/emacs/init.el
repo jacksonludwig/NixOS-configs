@@ -64,6 +64,8 @@
     "bk"  '(kill-current-buffer :which-key "kill current buffer")
     "bK"  '(kill-buffer :which-key "interactive kill buffer")
     "bs"  '(save-buffer :which-key "save current buffer")
+    "bp"  '(previous-buffer :which-key "previous buffer")
+    "bn"  '(next-buffer :which-key "next buffer")
     "q"   '(:ignore t :which-key "exit menu")
     "qq"  '(kill-emacs :which-key "kill emacs")
     "p"   '(:ignore t :which-key "projectile")
@@ -80,7 +82,11 @@
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   :config
+  (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
   (evil-mode 1)
+
+  (evil-declare-change-repeat 'company-complete-common) ;; avoid error on blank completion trigger
+
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
@@ -139,6 +145,13 @@
   :config
   (ivy-mode 1))
 
+(use-package ivy-prescient
+  :after counsel
+  :config
+  (setq prescient-filter-method '(literal regexp initialism))
+  (ivy-prescient-mode 1)
+  (prescient-persist-mode))
+
 (use-package ivy-rich
   :init
   (ivy-rich-mode 1))
@@ -187,7 +200,7 @@
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous))
   :general
-  ("C-SPC" 'company-complete-common)
+  (general-imap "C-SPC" 'company-complete-common)
   :config
   (setq company-idle-delay nil)
   (global-company-mode t))
