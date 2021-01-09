@@ -58,7 +58,11 @@
     "f"  '(:ignore t :which-key "files")
     "fr" '(counsel-recentf :which-key "recent files")
     "ff" '(find-files :which-key "find files")
-    ":"  '(execute-extended-command :which-key "Run M-x")
+    ":"  '(execute-extended-command :which-key "run M-x")
+    "b"  '(:ignore t :which-key "buffers")
+    "bb" '(counsel-switch-buffer :which-key "switch buffer")
+    "q"  '(:ignore t :which-key "exit menu")
+    "qq"  '(kill-emacs :which-key "kill emacs")
     ))
 
 (use-package evil
@@ -178,6 +182,26 @@
   :config
   (setq company-idle-delay nil)
   (global-company-mode t))
+
+
+;; LSP MODE AND OTHER LANG SUPPORT
+(defun jackson/lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode))
+
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . jackson/lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
 
 
 (push '("conf-unix" . conf-unix) org-src-lang-modes)
