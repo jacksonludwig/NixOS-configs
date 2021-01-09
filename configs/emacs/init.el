@@ -187,9 +187,14 @@
 
 
 ;; LSP MODE AND OTHER LANG SUPPORT
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+;; Config if breadcrumbs are enabled, and other things if needed
 (defun jackson/lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
+  (lsp-headerline-breadcrumb-mode)
+  )
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
@@ -197,6 +202,7 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
+  (setq lsp-headerline-breadcrumb-enable nil) ; disable breadcrumb
   (lsp-enable-which-key-integration t))
 
 (use-package lsp-pyright
