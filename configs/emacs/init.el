@@ -171,6 +171,7 @@
   'org-babel-load-languages
   '((emacs-lisp . t)
     (python . t)))
+(push '("conf-unix" . conf-unix) org-src-lang-modes)
 
 
 ;; COMPANY
@@ -219,8 +220,6 @@
 
 (use-package counsel-projectile
   :config (counsel-projectile-mode))
-
-(push '("conf-unix" . conf-unix) org-src-lang-modes)
 
 ;; SAVE CUSTOM VARS TO SEPARATE FILE
 (setq custom-file (concat user-emacs-directory "custom.el"))
