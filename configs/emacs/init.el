@@ -212,24 +212,23 @@
 (use-package flycheck
   :init (global-flycheck-mode))
 
-(use-package go-mode)
-
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
+
   :hook
   (python-mode . lsp)
   (go-mode . lsp)
+
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :config
-  (setq lsp-gopls-staticcheck t)
-  (setq lsp-gopls-complete-unimported t)
 
+  :config
+  (setq lsp-enable-snippet nil) ; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ; disable breadcrumb
   (lsp-enable-which-key-integration t)
+
   :general
-  (general-nmap "gs" 'lsp-signature-activate)
-  )
+  (general-nmap "gs" 'lsp-signature-activate))
 
 (use-package lsp-pyright
   :ensure t
@@ -237,6 +236,10 @@
                           (require 'lsp-pyright)
                           (lsp))))
 
+(use-package go-mode
+  :config
+  (setq lsp-gopls-staticcheck t)
+  (setq lsp-gopls-complete-unimported t))
 
 ;; PROJECTILE
 (use-package projectile
