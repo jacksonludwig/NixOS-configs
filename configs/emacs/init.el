@@ -210,7 +210,9 @@
 
 ;; LSP MODE AND OTHER LANG SUPPORT
 (use-package flycheck
-  :init (global-flycheck-mode))
+  :init (global-flycheck-mode)
+  :config
+  (setq flycheck-check-syntax-automatically '(save)))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
