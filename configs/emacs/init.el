@@ -32,6 +32,7 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
+(setq truncate-lines t)
 
 
 ;; FONT CONFIG
