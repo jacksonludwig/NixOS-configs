@@ -1,6 +1,6 @@
 ;; VARS
-(defvar jackson/default-font-size 135)
-(defvar jackson/default-variable-font-size 135)
+(defvar jackson/default-font-size 125)
+(defvar jackson/default-variable-font-size 125)
 
 
 ;; PACKAGE SETUP
@@ -35,10 +35,10 @@
 
 
 ;; FONT CONFIG
-(set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
+(set-face-attribute 'default nil :font "JetBrains Mono" :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Iosevka" :height jackson/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height jackson/default-font-size)
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height jackson/default-variable-font-size :weight 'regular)
@@ -100,7 +100,7 @@
 
 ;; THEME
 (use-package doom-themes
-  :init (load-theme 'doom-dracula t))
+  :init (load-theme 'doom-vibrant t))
 
 
 ;; MODELINE
@@ -224,7 +224,7 @@
   :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+                          (lsp))))
 
 
 ;; PROJECTILE
