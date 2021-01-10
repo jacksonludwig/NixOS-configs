@@ -81,6 +81,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
+  (setq evil-undo-system 'undo-fu)
   :config
   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
   (evil-mode 1)
@@ -210,10 +211,13 @@
 (use-package flycheck
   :init (global-flycheck-mode))
 
+(use-package go-mode)
+
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook
   (python-mode . lsp)
+  (go-mode . lsp)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
