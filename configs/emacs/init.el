@@ -221,8 +221,14 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
+  (setq lsp-gopls-staticcheck t)
+  (setq lsp-gopls-complete-unimported t)
+
   (setq lsp-headerline-breadcrumb-enable nil) ; disable breadcrumb
-  (lsp-enable-which-key-integration t))
+  (lsp-enable-which-key-integration t)
+  :general
+  (general-nmap "gs" 'lsp-signature-activate)
+  )
 
 (use-package lsp-pyright
   :ensure t
