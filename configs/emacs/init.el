@@ -230,21 +230,18 @@
   (setq lsp-enable-symbol-highlighting nil) ; disable symbol highlight
   (lsp-enable-which-key-integration t)
 
-  ; Change appearance of doc windows
-  (add-to-list 'display-buffer-alist
-             '((lambda (buffer _) (with-current-buffer buffer
-                                    (seq-some (lambda (mode)
-                                                (derived-mode-p mode))
-                                              '(help-mode))))
-               (display-buffer-reuse-window display-buffer-below-selected)
-               (reusable-frames . visible)
-               (window-height . 0.25)))
-
   :general
   (general-nmap "gs" 'lsp-signature-activate)
   (general-nmap "gr" 'lsp-find-references)
-  (general-nmap "K" 'lsp-describe-thing-at-point)
   )
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-enable nil)
+  :general
+  (general-nmap "K" 'lsp-ui-doc-glance))
 
 (use-package lsp-pyright
   :ensure t
