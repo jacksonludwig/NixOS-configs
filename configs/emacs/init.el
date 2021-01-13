@@ -230,6 +230,16 @@
   (setq lsp-enable-symbol-highlighting nil) ; disable symbol highlight
   (lsp-enable-which-key-integration t)
 
+  ; Change appearance of doc windows
+  (add-to-list 'display-buffer-alist
+             '((lambda (buffer _) (with-current-buffer buffer
+                                    (seq-some (lambda (mode)
+                                                (derived-mode-p mode))
+                                              '(help-mode))))
+               (display-buffer-reuse-window display-buffer-below-selected)
+               (reusable-frames . visible)
+               (window-height . 0.25)))
+
   :general
   (general-nmap "gs" 'lsp-signature-activate)
   (general-nmap "gr" 'lsp-find-references)
