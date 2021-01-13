@@ -227,10 +227,14 @@
   :config
   (setq lsp-enable-snippet nil) ; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ; disable breadcrumb
+  (setq lsp-enable-symbol-highlighting nil) ; disable symbol highlight
   (lsp-enable-which-key-integration t)
 
   :general
-  (general-nmap "gs" 'lsp-signature-activate))
+  (general-nmap "gs" 'lsp-signature-activate)
+  (general-nmap "gr" 'lsp-find-references)
+  (general-nmap "K" 'lsp-describe-thing-at-point)
+  )
 
 (use-package lsp-pyright
   :ensure t

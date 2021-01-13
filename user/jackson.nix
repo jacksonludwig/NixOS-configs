@@ -28,7 +28,7 @@
     gopls
     nodePackages.pyright
 
-    firefox-bin
+    firefox
     discord
     htop
     scrot
@@ -36,7 +36,7 @@
     ispell
     arandr
     zoom-us
-    texlive.combined.scheme-full
+    texlive.combined.scheme-medium
 
     (nerdfonts.override { fonts = [ "Inconsolata" "RobotoMono" ]; })
     iosevka
