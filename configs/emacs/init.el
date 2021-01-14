@@ -228,12 +228,7 @@
   (setq lsp-enable-snippet nil) ; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ; disable breadcrumb
   (setq lsp-enable-symbol-highlighting nil) ; disable symbol highlight
-  (lsp-enable-which-key-integration t)
-
-  :general
-  (general-nmap "gs" 'lsp-signature-activate)
-  (general-nmap "gr" 'lsp-find-references)
-  )
+  (lsp-enable-which-key-integration t))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
@@ -241,7 +236,10 @@
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-doc-enable nil)
   :general
-  (general-nmap "K" 'lsp-ui-doc-glance))
+  (general-nmap "K" 'lsp-ui-doc-glance)
+  (general-nmap "gs" 'lsp-signature-activate)
+  (general-nmap "gr" 'lsp-ui-peek-find-references)
+  (general-nmap "gd" 'lsp-ui-peek-find-definitions))
 
 (use-package lsp-pyright
   :ensure t
