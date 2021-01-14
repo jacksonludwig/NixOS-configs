@@ -233,9 +233,9 @@
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'at-point)
-  (lsp-ui-doc-enable nil)
+  :config
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-enable nil)
   :general
   (general-nmap "K" 'lsp-ui-doc-glance)
   (general-nmap "gs" 'lsp-signature-activate)
