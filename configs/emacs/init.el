@@ -111,7 +111,7 @@
 
 (use-package doom-modeline
   :init (doom-modeline-mode 1)
-  :custom ((doom-modeline-height 15)))
+  )
 
 
 ;; WHICH KEY
@@ -243,7 +243,6 @@
   (general-nmap "gd" 'lsp-ui-peek-find-definitions))
 
 (use-package lsp-pyright
-  :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-pyright)
                           (lsp))))
@@ -256,8 +255,9 @@
 ;; PROJECTILE
 (use-package projectile
   :diminish projectile-mode
-  :config (projectile-mode)
-  :custom ((projectile-completion-system 'ivy))
+  :config
+  (projectile-mode)
+  (setq projectile-completion-system 'ivy)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
