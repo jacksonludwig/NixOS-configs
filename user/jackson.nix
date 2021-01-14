@@ -38,8 +38,9 @@
     zoom-us
     texlive.combined.scheme-medium
 
-    (nerdfonts.override { fonts = [ "Inconsolata" "RobotoMono" ]; })
+    (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka
+    roboto-mono
     jetbrains-mono
 
     neofetch

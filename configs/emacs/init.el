@@ -2,7 +2,6 @@
 (defvar jackson/default-font-size 125)
 (defvar jackson/default-variable-font-size 125)
 
-
 ;; PACKAGE SETUP
 (require 'package)
 
@@ -34,6 +33,7 @@
 (setq display-line-numbers-type 'relative)
 (setq truncate-lines t)
 
+(setq-default tab-width 4)
 
 ;; FONT CONFIG
 (set-face-attribute 'default nil :font "JetBrains Mono" :height jackson/default-font-size)
@@ -102,7 +102,8 @@
 
 ;; THEME
 (use-package doom-themes
-  :init (load-theme 'doom-vibrant t))
+  :init
+  (load-theme 'adwaita t))
 
 
 ;; MODELINE
