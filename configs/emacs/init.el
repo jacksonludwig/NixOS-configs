@@ -103,7 +103,7 @@
 ;; THEME
 (use-package doom-themes
   :init
-  (load-theme 'adwaita t))
+  (load-theme 'doom-opera t))
 
 
 ;; MODELINE
