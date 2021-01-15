@@ -31,9 +31,9 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
-(setq truncate-lines t)
 
 (setq-default tab-width 4)
+(setq-default truncate-lines t)
 
 ;; FONT CONFIG
 (set-face-attribute 'default nil :font "JetBrains Mono" :height jackson/default-font-size)
