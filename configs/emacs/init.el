@@ -48,8 +48,7 @@
 ;; DIMINISH
 (use-package diminish
   :config
-  (diminish 'eldoc-mode)
-  )
+  (diminish 'eldoc-mode))
 
 
 ;; KEYBINDINGS
@@ -111,7 +110,7 @@
 ;; THEME
 (use-package doom-themes
   :init
-  (load-theme 'doom-opera t))
+  (load-theme 'adwaita t))
 
 
 ;; MODELINE
@@ -167,18 +166,6 @@
 (use-package ivy-rich
   :init
   (ivy-rich-mode 1))
-
-
-;; EXTRA INFO FOR HELP COMMANDS
-(use-package helpful
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
-  :bind
-  ([remap describe-function] . counsel-describe-function)
-  ([remap describe-command] . helpful-command)
-  ([remap describe-variable] . counsel-describe-variable)
-  ([remap describe-key] . helpful-key))
 
 
 ;; HYDRA SET UP
@@ -266,9 +253,9 @@
 ;; PROJECTILE
 (use-package projectile
   :diminish projectile-mode
+  :custom ((projectile-completion-system 'ivy))
   :config
   (projectile-mode)
-  (setq projectile-completion-system 'ivy)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :init
