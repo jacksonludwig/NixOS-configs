@@ -45,6 +45,13 @@
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height jackson/default-variable-font-size :weight 'regular)
 
 
+;; DIMINISH
+(use-package diminish
+  :config
+  (diminish 'eldoc-mode)
+  )
+
+
 ;; KEYBINDINGS
 (use-package general
   :config
@@ -83,6 +90,7 @@
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   (setq evil-undo-system 'undo-fu)
+  (setq evil-mode-line-format nil)
   :config
   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
   (evil-mode 1)
@@ -110,7 +118,7 @@
 (use-package all-the-icons)
 
 (use-package doom-modeline
-  :init (doom-modeline-mode 1)
+  ;:init (doom-modeline-mode 1)
   )
 
 
@@ -124,6 +132,7 @@
 
 ;; IVY
 (use-package counsel
+  :diminish counsel-mode
   :bind (("C-M-j" . 'counsel-switch-buffer)
          :map minibuffer-local-map
          ("C-r" . 'counsel-minibuffer-history))
@@ -199,6 +208,7 @@
 
 ;; COMPANY
 (use-package company
+  :diminish company-mode
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous))
@@ -236,6 +246,7 @@
   :config
   (setq lsp-ui-doc-position 'at-point)
   (setq lsp-ui-doc-enable nil)
+  (setq lsp-ui-sideline-enable nil)
   :general
   (general-nmap "K" 'lsp-ui-doc-glance)
   (general-nmap "gs" 'lsp-signature-activate)
