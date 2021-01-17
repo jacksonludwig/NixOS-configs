@@ -109,7 +109,10 @@
 
 (use-package evil-collection
   :after evil
-  :config
+  :custom
+  (evil-collection-company-use-tng nil)
+  (evil-collection-key-blacklist '("gr" "gs" "gd" "K"))
+  :init
   (evil-collection-init))
 
 
@@ -122,9 +125,8 @@
 ;; MODELINE
 (use-package all-the-icons)
 
-(use-package doom-modeline
-  ;:init (doom-modeline-mode 1)
-  )
+;(use-package doom-modeline
+;  :init (doom-modeline-mode 1))
 
 
 ;; WHICH KEY
@@ -255,6 +257,7 @@
   :config
   (setq lsp-gopls-staticcheck t)
   (setq lsp-gopls-complete-unimported t))
+
 
 ;; PROJECTILE
 (use-package projectile
