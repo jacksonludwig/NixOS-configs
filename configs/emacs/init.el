@@ -111,7 +111,7 @@
   :after evil
   :custom
   (evil-collection-company-use-tng nil)
-  (evil-collection-key-blacklist '("gr" "gs" "gd" "K"))
+  (evil-collection-key-blacklist '("SPC" "gr" "gs" "gd" "K"))
   :init
   (evil-collection-init))
 
