@@ -25,6 +25,7 @@
     gopls
     nodePackages.pyright
 
+    firefox
     htop
     xclip
     ispell
@@ -44,10 +45,15 @@
     userName = "Jackson Ludwig";
   };
 
+  programs.neovim = {
+    enable = true;
+    package = pkgs.neovim-nightly;
+    withNodeJs = true;
+    extraConfig = builtins.readFile ../configs/nvim/init.vim;
+  };
+
   programs.emacs = {
     enable = true;
-    # package = pkgs.emacsGcc;
   };
-  # home.file.".emacs.d/Emacs.org".source = ../configs/emacs/Emacs.org;
   home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
 }
