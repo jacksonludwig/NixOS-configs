@@ -35,5 +35,14 @@ Config your configuration.nix, create a home.nix, and import or create any relev
 }
 ```
 
+## Email configuration for emacs/mu4e
+```bash
+# in ~/.gpass
+<password>
+
+# in ~/.authinfo
+machine smtp.gmail.com login <gmail address> password <password> port 465
+```
+
 ## TODO
 - [x] separate into per-machine configurations (e.g., only use awesomeWM config if using awesomeWM)

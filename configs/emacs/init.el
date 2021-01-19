@@ -2,7 +2,8 @@
 (defvar jackson/default-font-size 125)
 (defvar jackson/default-variable-font-size 125)
 
-(setq user-mail-address "jacksonludwig0@gmail.com")
+(setq user-full-name "Jackson Ludwig"
+	  user-mail-address "jacksonludwig0@gmail.com")
 
 ;; PACKAGE SETUP
 (require 'package)
@@ -315,7 +316,13 @@
 		  (:maildir "/[Gmail]/Sent Mail" :key ?s)
 		  (:maildir "/[Gmail]/Trash"     :key ?t)
 		  (:maildir "/[Gmail]/Drafts"    :key ?d)
-		  (:maildir "/[Gmail]/All Mail"  :key ?a))))
+		  (:maildir "/[Gmail]/All Mail"  :key ?a)))
+
+  ;; how to send the mail
+  (setq smtpmail-smtp-server       "smtp.gmail.com"
+		smtpmail-smtp-service      465
+		smtpmail-stream-type       'ssl
+		message-send-mail-function 'smtpmail-send-it))
 
 
 ;; SAVE CUSTOM VARS TO SEPARATE FILE
