@@ -30,6 +30,8 @@
     xclip
     ispell
     texlive.combined.scheme-medium
+	isync
+	mu
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka
