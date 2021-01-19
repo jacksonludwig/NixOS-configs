@@ -35,7 +35,7 @@ Config your configuration.nix, create a home.nix, and import or create any relev
 }
 ```
 
-## Email configuration for emacs/mu4e
+### Email configuration for emacs/mu4e
 ```bash
 # in ~/.gpass
 <password>
