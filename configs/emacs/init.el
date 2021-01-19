@@ -33,14 +33,16 @@
 (global-display-line-numbers-mode t)
 (setq display-line-numbers-type 'relative)
 
-(setq-default tab-width 4)
-(setq-default truncate-lines t)
+(setq-default tab-width 4)  ; Tab length
+(setq-default truncate-lines t) ; Don't wrap by default
+
+(setq help-window-select t) ; Auto switch to help buffers
 
 ;; FONT CONFIG
-(set-face-attribute 'default nil :font "JetBrains Mono" :height jackson/default-font-size)
+(set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono" :height jackson/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Iosevka" :height jackson/default-font-size)
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height jackson/default-variable-font-size :weight 'regular)
@@ -97,6 +99,7 @@
 
   (evil-declare-change-repeat 'company-complete-common) ;; avoid error on blank completion trigger
 
+  ;; core extra binds
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
@@ -125,8 +128,8 @@
 ;; MODELINE
 (use-package all-the-icons)
 
-;(use-package doom-modeline
-;  :init (doom-modeline-mode 1))
+;;(use-package doom-modeline
+;;  :init (doom-modeline-mode 1))
 
 
 ;; WHICH KEY
@@ -218,7 +221,10 @@
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
-  (setq flycheck-check-syntax-automatically '(save)))
+  (setq flycheck-check-syntax-automatically '(save))
+  :general
+  (general-nmap "[g" 'flycheck-previous-error) ;; Flycheck binds
+  (general-nmap "]g" 'flycheck-next-error))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
@@ -231,9 +237,9 @@
   (setq lsp-keymap-prefix "C-c l")
 
   :config
-  (setq lsp-enable-snippet nil) ; disable lsp snippet
-  (setq lsp-headerline-breadcrumb-enable nil) ; disable breadcrumb
-  (setq lsp-enable-symbol-highlighting nil) ; disable symbol highlight
+  (setq lsp-enable-snippet nil) ;; disable lsp snippet
+  (setq lsp-headerline-breadcrumb-enable nil) ;; disable breadcrumb
+  (setq lsp-enable-symbol-highlighting nil) ;; disable symbol highlight
   (lsp-enable-which-key-integration t))
 
 (use-package lsp-ui
