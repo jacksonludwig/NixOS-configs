@@ -318,6 +318,8 @@
 		  (:maildir "/[Gmail]/Drafts"    :key ?d)
 		  (:maildir "/[Gmail]/All Mail"  :key ?a)))
 
+  (setq mu4e-compose-format-flowed t)
+
   ;; how to send the mail
   (setq smtpmail-smtp-server       "smtp.gmail.com"
 		smtpmail-smtp-service      465
