@@ -312,7 +312,7 @@
   (setq mu4e-trash-folder  "/[Gmail]/Trash")
 
   (setq mu4e-maildir-shortcuts
-		'((:maildir "/Inbox"    :key ?i)
+		'((:maildir "/Inbox"             :key ?i)
 		  (:maildir "/[Gmail]/Sent Mail" :key ?s)
 		  (:maildir "/[Gmail]/Trash"     :key ?t)
 		  (:maildir "/[Gmail]/Drafts"    :key ?d)
