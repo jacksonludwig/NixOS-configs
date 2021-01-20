@@ -324,7 +324,11 @@
   (setq smtpmail-smtp-server       "smtp.gmail.com"
 		smtpmail-smtp-service      465
 		smtpmail-stream-type       'ssl
-		message-send-mail-function 'smtpmail-send-it))
+		message-send-mail-function 'smtpmail-send-it)
+
+  (general-define-key
+   :keymaps 'normal
+   "zq" 'quit-window))
 
 
 ;; SAVE CUSTOM VARS TO SEPARATE FILE
