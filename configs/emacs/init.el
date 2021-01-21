@@ -72,6 +72,7 @@
     :non-normal-prefix "C-c"
     :keymaps '(normal insert emacs))
 
+  ;; TODO delegate into correct packages
   (jackson/leader-binds
     "t"   '(:ignore t :which-key "toggles")
     "tt"  '(counsel-load-theme :which-key "choose theme")
