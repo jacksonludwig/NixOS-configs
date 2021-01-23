@@ -58,4 +58,8 @@
     enable = true;
   };
   home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
+
+  # Font config
+  home.file.".Xresources".source = ../configs/wsl_font_conf/.Xresources;
+  home.file.".config/fontconfig/fonts.conf".source = ../configs/wsl_font_conf/fonts.conf;
 }
