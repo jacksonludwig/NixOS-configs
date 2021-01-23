@@ -205,7 +205,7 @@
 
 ;; ORG SETUP
 ;; TODO IF NEEDED
-
+(setq org-directory "~/git_repos/emacs-org-mode")
 
 ;; BABEL LANGUAGES
 (org-babel-do-load-languages
