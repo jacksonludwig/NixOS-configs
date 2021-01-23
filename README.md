@@ -44,5 +44,8 @@ Config your configuration.nix, create a home.nix, and import or create any relev
 machine smtp.gmail.com login <gmail address> password <password> port 465
 ```
 
+### Better fonts in WSL2 + X410
+In ``configs/wsl_font_conf/``, move ``.Xresources`` to ``$HOME`` and move ``fonts.conf`` to ``/etc/fonts/``.
+
 ## TODO
 - [x] separate into per-machine configurations (e.g., only use awesomeWM config if using awesomeWM)
