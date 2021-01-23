@@ -93,6 +93,8 @@
     "SPC" '(projectile-find-file :which-key "find file in project")
     "pa"  '(projectile-add-known-project :which-key "add new project")
     "pd"  '(projectile-remove-known-project :which-key "remove known project")
+	"o"   '(:ignore t :which-key "open")
+    "ot"  '(term :which-key "open term")
     ))
 
 (use-package undo-fu)
@@ -206,6 +208,7 @@
 ;; ORG SETUP
 ;; TODO IF NEEDED
 (setq org-directory "~/git_repos/emacs-org-mode")
+
 
 ;; BABEL LANGUAGES
 (org-babel-do-load-languages
