@@ -45,7 +45,7 @@ machine smtp.gmail.com login <gmail address> password <password> port 465
 ```
 
 ### Better fonts in WSL2 + X410
-In ``configs/wsl_font_conf/``, copy ``.Xresources`` to ``$HOME`` and move ``fonts.conf`` to ``/etc/fonts/``.
+In ``configs/wsl_font_conf/``, copy ``.Xresources`` to ``$HOME`` and move ``local.conf`` to ``/etc/fonts/``.
 
 ## TODO
 - [x] separate into per-machine configurations (e.g., only use awesomeWM config if using awesomeWM)
