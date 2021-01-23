@@ -213,8 +213,10 @@
 
 
 ;; ORG SETUP
-;; TODO IF NEEDED
-(setq org-directory "~/git_repos/emacs-org-mode")
+(use-package org
+  :config
+  (setq org-directory "~/git_repos/emacs-org-mode"
+		org-ellipsis " [...]"))
 
 
 ;; BABEL LANGUAGES
@@ -306,7 +308,6 @@
 ;; EMAIL
 (use-package mu4e
   :ensure nil
-  ;; :defer 20 ; Wait until 20 seconds after startup
   :config
 
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
