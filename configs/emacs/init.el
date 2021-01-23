@@ -5,6 +5,13 @@
 (setq user-full-name "Jackson Ludwig"
 	  user-mail-address "jacksonludwig0@gmail.com")
 
+(defun jackson/bash ()
+  "Start a terminal emulator in a new window."
+  (interactive)
+  (split-window-sensibly)
+  (other-window 1)
+  (ansi-term (executable-find "bash")))
+
 ;; PACKAGE SETUP
 (require 'package)
 
@@ -94,7 +101,7 @@
     "pa"  '(projectile-add-known-project :which-key "add new project")
     "pd"  '(projectile-remove-known-project :which-key "remove known project")
 	"o"   '(:ignore t :which-key "open")
-    "ot"  '(term :which-key "open term")
+    "ot"  '(jackson/bash :which-key "open term")
     ))
 
 (use-package undo-fu)
