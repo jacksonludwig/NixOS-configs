@@ -271,11 +271,16 @@
   (setq lsp-ui-doc-position 'at-point)
   (setq lsp-ui-doc-enable nil)
   (setq lsp-ui-sideline-enable nil)
+
   :general
-  (general-nmap "K" 'lsp-ui-doc-glance)
-  (general-nmap "gs" 'lsp-signature-activate)
-  (general-nmap "gr" 'lsp-ui-peek-find-references)
-  (general-nmap "gd" 'lsp-ui-peek-find-definitions))
+  (general-nmap
+	"K" 'lsp-ui-doc-glance)
+  (general-nmap
+	"gs" 'lsp-signature-activate)
+  (general-nmap
+	"gr" 'lsp-ui-peek-find-references)
+  (general-nmap
+	"gd" 'lsp-ui-peek-find-definitions))
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
