@@ -255,6 +255,7 @@
   :hook
   (python-mode . lsp)
   (go-mode . lsp)
+  (web-mode . lsp)
 
   :init
   (setq lsp-keymap-prefix "C-c l")

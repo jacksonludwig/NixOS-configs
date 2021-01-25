@@ -24,6 +24,7 @@
 
     gopls
     nodePackages.pyright
+	nodePackages.typescript-language-server
 
     firefox
     discord
