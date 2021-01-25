@@ -55,6 +55,8 @@
 
 (setq help-window-select t) ; Auto switch to help buffers
 
+(defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
+
 ;; FONT CONFIG
 (set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
 
@@ -138,7 +140,7 @@
   :init
   ;; add modes manually as needed
   ;; use evil-collection-mode-list to see options
-  (evil-collection-init '(calendar))) 
+  (evil-collection-init '(calendar mu4e mu4e-conversation))) 
 
 
 ;; THEME
