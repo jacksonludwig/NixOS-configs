@@ -134,19 +134,20 @@
   :after evil
   :custom
   (evil-collection-company-use-tng nil)
-  (evil-collection-key-blacklist '("SPC" "gr" "gs" "gd" "K"))
+  (evil-collection-key-blacklist '("SPC"))
   :init
-  (evil-collection-init))
+  ;; add modes manually as needed
+  ;; use evil-collection-mode-list to see options
+  (evil-collection-init '(calendar))) 
 
 
 ;; THEME
+(use-package all-the-icons)
+
 (use-package doom-themes
+  :after all-the-icons
   :init
   (load-theme 'adwaita t))
-
-
-;; MODELINE
-(use-package all-the-icons)
 
 ;;(use-package doom-modeline
 ;;  :init (doom-modeline-mode 1))
@@ -275,12 +276,16 @@
 
   :general
   (general-nmap
+	:predicate 'lsp-ui-mode
 	"K" 'lsp-ui-doc-glance)
   (general-nmap
+	:predicate 'lsp-ui-mode
 	"gs" 'lsp-signature-activate)
   (general-nmap
+	:predicate 'lsp-ui-mode
 	"gr" 'lsp-ui-peek-find-references)
   (general-nmap
+	:predicate 'lsp-ui-mode
 	"gd" 'lsp-ui-peek-find-definitions))
 
 (use-package lsp-pyright
@@ -356,11 +361,7 @@
   (setq smtpmail-smtp-server       "smtp.gmail.com"
 		smtpmail-smtp-service      465
 		smtpmail-stream-type       'ssl
-		message-send-mail-function 'smtpmail-send-it)
-
-  (general-define-key
-   :keymaps 'normal
-   "zq" 'quit-window))
+		message-send-mail-function 'smtpmail-send-it))
 
 
 ;; SAVE CUSTOM VARS TO SEPARATE FILE
