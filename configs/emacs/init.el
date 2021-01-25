@@ -211,6 +211,8 @@
 
 ;; ORG SETUP
 (use-package org
+  :hook
+  (org-mode . visual-line-mode)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
 		org-ellipsis " [...]"))
