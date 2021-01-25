@@ -85,6 +85,9 @@
 
   programs.emacs = {
     enable = true;
+    extraPackages = epkgs: with epkgs; [
+        vterm
+    ];
   };
   home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
 }
