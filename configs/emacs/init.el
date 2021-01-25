@@ -333,8 +333,19 @@
 ;; EMAIL
 (use-package mu4e
   :ensure nil
-  :config
+  :init
+  (let ((mu4epath
+		 (concat
+		  (f-dirname
+		   (file-truename
+			(executable-find "mu")))
+		  "/../share/emacs/site-lisp/mu4e")))
+	(when (and
+		   (string-prefix-p "/nix/store/" mu4epath)
+		   (file-directory-p mu4epath))
+	  (add-to-list 'load-path mu4epath)))
 
+  :config
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (setq mu4e-change-filenames-when-moving t)
 

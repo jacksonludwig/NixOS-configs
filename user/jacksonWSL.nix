@@ -32,7 +32,7 @@
     ispell
     texlive.combined.scheme-medium
 	isync
-	mu
+    mu
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka
