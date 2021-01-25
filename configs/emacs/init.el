@@ -334,6 +334,7 @@
 (use-package mu4e
   :ensure nil
   :init
+  ;; This is a workaround so that mu4e is always found
   (let ((mu4epath
 		 (concat
 		  (f-dirname
