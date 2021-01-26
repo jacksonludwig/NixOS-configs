@@ -50,6 +50,9 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
+(setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
+(global-whitespace-mode 1)
+
 ;; FONT CONFIG
 (set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
 

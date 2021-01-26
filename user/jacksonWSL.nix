@@ -24,14 +24,14 @@
 
     gopls
     nodePackages.pyright
-	nodePackages.typescript-language-server
+    nodePackages.typescript-language-server
 
     firefox
     htop
     xclip
     ispell
     texlive.combined.scheme-medium
-	isync
+    isync
     mu
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
