@@ -44,6 +44,8 @@
 (setq display-line-numbers-type 'relative)
 
 (setq-default tab-width 4)  ; Tab length
+(setq-default indent-tabs-mode nil) ; Spaces, not tabs
+
 (setq-default truncate-lines t) ; Don't wrap by default
 
 (setq help-window-select t) ; Auto switch to help buffers
@@ -52,7 +54,7 @@
 
 (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode 1)
-
+          
 ;; FONT CONFIG
 (set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
 
@@ -66,7 +68,8 @@
 ;; DIMINISH
 (use-package diminish
   :config
-  (diminish 'eldoc-mode))
+  (diminish 'eldoc-mode)
+  (diminish 'global-whitespace-mode))
 
 
 ;; KEYBINDINGS
@@ -295,6 +298,9 @@
                           (lsp))))
 
 (use-package go-mode
+  :hook
+  (go-mode . (lambda ()
+               (setq indent-tabs-mode nil)))
   :config
   (setq lsp-gopls-staticcheck t)
   (setq lsp-gopls-complete-unimported t))
