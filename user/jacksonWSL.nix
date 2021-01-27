@@ -25,6 +25,7 @@
     gopls
     nodePackages.pyright
     nodePackages.typescript-language-server
+    nodePackages.npm
 
     firefox
     htop
