@@ -106,6 +106,12 @@
     "oT"  '(vterm :which-key "open term in current")
     ))
 
+(use-package vterm
+  :ensure nil
+  :config
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
+  (setq vterm-max-scrollback 5000))
+
 (use-package undo-fu)
 (use-package evil
   :init
@@ -140,7 +146,7 @@
   :init
   ;; add modes manually as needed
   ;; use evil-collection-mode-list to see options
-  (evil-collection-init '(calendar mu4e mu4e-conversation))) 
+  (evil-collection-init '(calendar mu4e mu4e-conversation vterm ansi-term term)))
 
 
 ;; THEME
