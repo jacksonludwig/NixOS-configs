@@ -157,9 +157,6 @@
   :init
   (load-theme 'adwaita t))
 
-;;(use-package doom-modeline
-;;  :init (doom-modeline-mode 1))
-
 
 ;; WHICH KEY
 (use-package which-key
@@ -335,7 +332,7 @@
 (use-package mu4e
   :ensure nil
   :init
-  ;; This is a workaround so that mu4e is always found
+  ;; This is a workaround so that mu4e is always found in nix's store
   (let ((mu4epath
 		 (concat
 		  (f-dirname
