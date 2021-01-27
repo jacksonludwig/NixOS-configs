@@ -101,7 +101,7 @@
     "SPC" '(projectile-find-file :which-key "find file in project")
     "pa"  '(projectile-add-known-project :which-key "add new project")
     "pd"  '(projectile-remove-known-project :which-key "remove known project")
-	"o"   '(:ignore t :which-key "open")
+    "o"   '(:ignore t :which-key "open")
     "ot"  '(vterm-other-window :which-key "open term")
     "oT"  '(vterm :which-key "open term in current")
     ))
@@ -110,7 +110,7 @@
   :ensure nil
   :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-  (setq vterm-max-scrollback 5000))
+  (setq vterm-max-scrollback 10000))
 
 (use-package undo-fu)
 (use-package evil
