@@ -44,5 +44,8 @@ Config your configuration.nix, create a home.nix, and import or create any relev
 machine smtp.gmail.com login <gmail address> password <password> port 465
 ```
 
+### If any font issues are encountered on WSL
+run ``xrdb -merge ~/.Xresources`` after running ``home-manager switch`` at least once.
+
 ## TODO
 - [x] separate into per-machine configurations (e.g., only use awesomeWM config if using awesomeWM)

@@ -281,9 +281,9 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
   :config
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-enable nil)
-  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-ui-doc-position 'at-point
+        lsp-ui-doc-enable nil
+        lsp-ui-sideline-enable nil)
 
   :general
   (general-nmap
