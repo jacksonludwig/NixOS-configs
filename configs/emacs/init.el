@@ -154,7 +154,8 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'adwaita t))
+  (load-theme 'adwaita t)
+  )
 
 
 ;; WHICH KEY
@@ -210,7 +211,7 @@
   (org-mode . visual-line-mode)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
-		org-ellipsis " [...]"))
+		))
 
 
 ;; BABEL LANGUAGES
@@ -235,6 +236,11 @@
 
 
 ;; LSP MODE AND OTHER LANG SUPPORT
+
+;; Better docs with eglot and maybe other things
+(use-package markdown-mode)
+
+;; Better diagnostics with and without lsp
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
@@ -259,7 +265,22 @@
   (setq lsp-enable-snippet nil) ;; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ;; disable breadcrumb
   (setq lsp-enable-symbol-highlighting nil) ;; disable symbol highlight
-  (lsp-enable-which-key-integration t))
+  (lsp-enable-which-key-integration t)
+
+  ;; Make help buffers nicer
+  (add-to-list 'display-buffer-alist
+             '((lambda (buffer _) (with-current-buffer buffer
+                                    (seq-some (lambda (mode)
+                                                (derived-mode-p mode))
+                                              '(help-mode))))
+               (display-buffer-reuse-window display-buffer-below-selected)
+               (reusable-frames . visible)
+               (window-height . 0.30)))
+  :general
+  (general-nmap
+    :predicate 'lsp-mode
+    "K" 'lsp-describe-thing-at-point)
+  )
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
@@ -269,9 +290,6 @@
         lsp-ui-sideline-enable nil)
 
   :general
-  (general-nmap
-	:predicate 'lsp-ui-mode
-	"K" 'lsp-ui-doc-glance)
   (general-nmap
 	:predicate 'lsp-ui-mode
 	"gs" 'lsp-signature-activate)
@@ -293,7 +311,8 @@
                (setq indent-tabs-mode nil)))
   :config
   (setq lsp-gopls-staticcheck t)
-  (setq lsp-gopls-complete-unimported t))
+  (setq lsp-gopls-complete-unimported t)
+  )
 
 (use-package web-mode  :ensure t
   :mode (("\\.js\\'" . web-mode)
@@ -328,6 +347,7 @@
 
 
 ;; EMAIL
+(use-package f) ;; used in workaround to find mu4e
 (use-package mu4e
   :ensure nil
   :init
