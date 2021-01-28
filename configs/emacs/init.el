@@ -77,8 +77,7 @@
   :config
   (general-create-definer jackson/leader-binds
     :prefix "SPC"
-    :non-normal-prefix "C-c"
-    :keymaps '(normal insert emacs))
+    :keymaps '(normal))
 
   ;; TODO delegate into correct packages
   (jackson/leader-binds
