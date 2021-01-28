@@ -302,7 +302,7 @@
          ("\\.tsx\\'" . web-mode)
          ("\\.html\\'" . web-mode)
          ("\\.vue\\'" . web-mode)
-	 ("\\.json\\'" . web-mode))
+         ("\\.json\\'" . web-mode))
   :commands web-mode
   :config
   (setq web-mode-content-types-alist
