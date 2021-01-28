@@ -237,7 +237,7 @@
 
 ;; LSP MODE AND OTHER LANG SUPPORT
 
-;; Better docs with eglot and maybe other things
+;; Better docs with eglot (if using) and maybe other things
 (use-package markdown-mode)
 
 ;; Better diagnostics with and without lsp
@@ -261,10 +261,15 @@
   (setq lsp-keymap-prefix "C-c l")
 
   :config
+  (setq gc-cons-threshold 100000000)
+  (setq lsp-completion-provider :capf)
   (setq create-lockfiles nil) ;; disable lockfiles because they annoy some LSP
+
   (setq lsp-enable-snippet nil) ;; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ;; disable breadcrumb
   (setq lsp-enable-symbol-highlighting nil) ;; disable symbol highlight
+  (setq lsp-enable-links nil) ;; disable links
+  
   (lsp-enable-which-key-integration t)
 
   ;; Make help buffers nicer
@@ -280,6 +285,9 @@
   (general-nmap
     :predicate 'lsp-mode
     "K" 'lsp-describe-thing-at-point)
+  (general-nmap
+	:predicate 'lsp-mode
+	"gs" 'lsp-signature-activate)
   )
 
 (use-package lsp-ui
@@ -290,9 +298,6 @@
         lsp-ui-sideline-enable nil)
 
   :general
-  (general-nmap
-	:predicate 'lsp-ui-mode
-	"gs" 'lsp-signature-activate)
   (general-nmap
 	:predicate 'lsp-ui-mode
 	"gr" 'lsp-ui-peek-find-references)
