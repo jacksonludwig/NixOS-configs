@@ -363,6 +363,10 @@
 		   (file-directory-p mu4epath))
 	  (add-to-list 'load-path mu4epath)))
 
+  :hook
+  (mu4e-compose-mode . (lambda ()
+                         (use-hard-newlines -1)))
+  
   :config
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (setq mu4e-change-filenames-when-moving t)
