@@ -1,9 +1,15 @@
-;; VARS
+;; CUSTOM VARS
 (defvar jackson/default-font-size 125)
 (defvar jackson/default-variable-font-size 125)
 
 (setq user-full-name "Jackson Ludwig"
 	  user-mail-address "jacksonludwig0@gmail.com")
+
+(defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
+  "Major modes on which to disable the linum mode, exempts them from global requirement"
+  :group 'display-line-numbers
+  :type 'list
+  :version "green")
 
 ;; PACKAGE SETUP
 (require 'package)
@@ -107,6 +113,9 @@
 
 (use-package vterm
   :ensure nil
+  :hook
+  (vterm-mode . (lambda ()
+                  (display-line-numbers-mode 0)))
   :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
   (setq vterm-max-scrollback 10000))
@@ -124,9 +133,15 @@
         evil-split-window-below t)
   :hook
   (evil-insert-state-entry . (lambda ()
-                         (setq display-line-numbers t)))
+                              (if (and
+                                   (not (member major-mode display-line-numbers-exempt-modes))
+                                   (not (minibufferp)))
+                                  (setq display-line-numbers t))))
   (evil-insert-state-exit . (lambda ()
-                         (setq display-line-numbers 'relative)))
+                              (if (and
+                                   (not (member major-mode display-line-numbers-exempt-modes))
+                                   (not (minibufferp)))
+                                  (setq display-line-numbers 'relative))))
   :config
   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
   (evil-mode 1)
