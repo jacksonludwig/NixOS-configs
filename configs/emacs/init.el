@@ -392,6 +392,7 @@
 		  (:maildir "/[Gmail]/All Mail"  :key ?a)))
 
   (setq mu4e-compose-format-flowed t)
+  (setq mu4e-headers-sort-direction "ascending")
 
   ;; how to send the mail
   (setq smtpmail-smtp-server       "smtp.gmail.com"
