@@ -284,6 +284,8 @@
   (python-mode . lsp)
   (go-mode . lsp)
   (web-mode . lsp)
+  (help-mode . visual-line-mode)
+                 
 
   :init
   (setq lsp-keymap-prefix "C-c l")
