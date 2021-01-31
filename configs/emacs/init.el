@@ -277,6 +277,24 @@
   (general-nmap "[g" 'flycheck-previous-error) ;; Flycheck binds
   (general-nmap "]g" 'flycheck-next-error))
 
+;; Snippets
+(use-package yasnippet
+  :config
+  (yas-global-mode 1)
+  (define-key yas-minor-mode-map [(tab)] nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  :general
+  (general-imap
+    :keymaps 'yas-minor-mode-map
+    "C-l" #'yas-expand
+    "C-j" #'yas-next-field
+    "C-k" #'yas-prev-field)
+  )
+
+(use-package yasnippet-snippets
+  :after yasnippet)
+
+;; Lsp mode config
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
 
@@ -284,8 +302,7 @@
   (python-mode . lsp)
   (go-mode . lsp)
   (web-mode . lsp)
-  (help-mode . visual-line-mode)
-                 
+  (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -316,8 +333,8 @@
     :predicate 'lsp-mode
     "K" 'lsp-describe-thing-at-point)
   (general-nmap
-	:predicate 'lsp-mode
-	"gs" 'lsp-signature-activate)
+    :predicate 'lsp-mode
+    "gs" 'lsp-signature-activate)
   )
 
 (use-package lsp-ui
