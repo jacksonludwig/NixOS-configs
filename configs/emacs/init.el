@@ -261,6 +261,8 @@
   (setq company-idle-delay nil)
   (global-company-mode t))
 
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 ;; LSP MODE AND OTHER LANG SUPPORT
 
