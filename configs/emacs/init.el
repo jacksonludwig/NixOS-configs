@@ -122,7 +122,9 @@
         evil-want-C-u-scroll t
         evil-want-C-i-jump nil
         evil-undo-system 'undo-fu
-        evil-mode-line-format nil)
+        evil-mode-line-format nil
+        evil-vsplit-window-right t
+        evil-split-window-below t)
   :config
   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
   (evil-mode 1)
@@ -153,6 +155,16 @@
   :after all-the-icons
   :init
   (load-theme 'doom-one t)
+  )
+
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-height 30
+        doom-modeline-major-mode-icon nil)
+  (doom-modeline-def-modeline 'main
+    '(bar window-number matches buffer-info remote-host buffer-position selection-info)
+    '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
   )
 
 
