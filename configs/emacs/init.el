@@ -240,6 +240,7 @@
   :init (global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically '(save))
+  
   :general
   (general-nmap "[g" 'flycheck-previous-error) ;; Flycheck binds
   (general-nmap "]g" 'flycheck-next-error))

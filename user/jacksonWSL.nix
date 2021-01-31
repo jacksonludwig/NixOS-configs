@@ -21,10 +21,10 @@
     go
     jdk11
     nodejs
+    nodePackages.typescript
 
     gopls
     nodePackages.pyright
-    nodePackages.typescript-language-server
     nodePackages.npm
 
     firefox
