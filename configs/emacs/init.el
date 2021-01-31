@@ -152,7 +152,7 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'adwaita t)
+  (load-theme 'doom-one t)
   )
 
 
@@ -314,7 +314,6 @@
   (go-mode . (lambda ()
                (setq indent-tabs-mode nil)))
   :config
-  (setq lsp-gopls-staticcheck t)
   (setq lsp-gopls-complete-unimported t)
   )
 
