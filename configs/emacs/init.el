@@ -107,9 +107,6 @@
 
 (use-package vterm
   :ensure nil
-  :hook
-  (vterm-mode . (lambda()
-                  (display-line-numbers-mode 0)))
   :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
   (setq vterm-max-scrollback 10000))
@@ -125,6 +122,11 @@
         evil-mode-line-format nil
         evil-vsplit-window-right t
         evil-split-window-below t)
+  :hook
+  (evil-insert-state-entry . (lambda ()
+                         (setq display-line-numbers t)))
+  (evil-insert-state-exit . (lambda ()
+                         (setq display-line-numbers 'relative)))
   :config
   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
   (evil-mode 1)
