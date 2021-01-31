@@ -107,6 +107,9 @@
 
 (use-package vterm
   :ensure nil
+  :hook
+  (vterm-mode . (lambda()
+                  (display-line-numbers-mode 0)))
   :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
   (setq vterm-max-scrollback 10000))
