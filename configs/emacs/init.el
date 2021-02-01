@@ -107,8 +107,6 @@
     "pa"  '(projectile-add-known-project :which-key "add new project")
     "pd"  '(projectile-remove-known-project :which-key "remove known project")
     "o"   '(:ignore t :which-key "open")
-    "ot"  '(vterm-other-window :which-key "open term")
-    "oT"  '(vterm :which-key "open term in current")
     ))
 
 (use-package vterm
@@ -117,8 +115,24 @@
   (vterm-mode . (lambda ()
                   (display-line-numbers-mode 0)))
   :config
-  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-  (setq vterm-max-scrollback 10000)
+  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"  ;; Set this to match your custom shell prompt
+        vterm-max-scrollback 10000))
+
+(use-package vterm-toggle
+  :config
+  (jackson/leader-binds
+    "ot"  '(vterm-toggle :which-key "toggle vterm")
+    )
+  (setq vterm-toggle-fullscreen-p nil)
+  (add-to-list 'display-buffer-alist
+               '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 (display-buffer-reuse-window display-buffer-in-direction)
+                 ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+                 (direction . bottom)
+                 (dedicated . t) ;dedicated is supported in emacs27
+                 (reusable-frames . visible)
+                 (window-height . 0.3)))
   )
 
 (use-package undo-fu)
