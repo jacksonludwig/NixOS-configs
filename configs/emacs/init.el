@@ -106,6 +106,7 @@
     "SPC" '(projectile-find-file :which-key "find file in project")
     "pa"  '(projectile-add-known-project :which-key "add new project")
     "pd"  '(projectile-remove-known-project :which-key "remove known project")
+    "pp"  '(projectile-switch-project :which-key "switch to known project")
     "o"   '(:ignore t :which-key "open")
     ))
 
@@ -180,10 +181,10 @@
   (evil-collection-init '(calendar dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
 
 
-;; THEME
+;; THEME/VISUAL
 (use-package all-the-icons)
 
-;; DASHBOARD
+;; start screen
 (use-package dashboard
   :ensure t
   :config
@@ -317,7 +318,6 @@
   (prog-mode . yas-minor-mode)
   (org-mode  . yas-minor-mode)
   :config
-  ;; (yas-global-mode 1)
   (define-key yas-minor-mode-map [(tab)] nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   :general
@@ -329,8 +329,7 @@
     "C-k" #'yas-prev-field)
   )
 
-(use-package yasnippet-snippets
-  :after yasnippet)
+(use-package yasnippet-snippets)
 
 ;; Lsp mode config
 (use-package lsp-mode
