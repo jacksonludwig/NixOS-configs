@@ -118,7 +118,8 @@
                   (display-line-numbers-mode 0)))
   :config
   (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")  ;; Set this to match your custom shell prompt
-  (setq vterm-max-scrollback 10000))
+  (setq vterm-max-scrollback 10000)
+  )
 
 (use-package undo-fu)
 (use-package evil
@@ -162,11 +163,25 @@
   :init
   ;; add modes manually as needed
   ;; use evil-collection-mode-list to see options
-  (evil-collection-init '(calendar mu4e mu4e-conversation vterm ansi-term term)))
+  (evil-collection-init '(calendar dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
 
 
 ;; THEME
 (use-package all-the-icons)
+
+;; DASHBOARD
+(use-package dashboard
+  :ensure t
+  :config
+  (setq dashboard-startup-banner (concat user-emacs-directory "splash.png")
+        dashboard-banner-logo-title "Emacs")
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))
+  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+  (setq dashboard-footer-messages '("Configured by Jackson"))
+  (dashboard-setup-startup-hook))
 
 (use-package doom-themes
   :after all-the-icons
@@ -264,6 +279,7 @@
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
+
 ;; LSP MODE AND OTHER LANG SUPPORT
 
 ;; Better docs with eglot (if using) and maybe other things
@@ -281,12 +297,16 @@
 
 ;; Snippets
 (use-package yasnippet
+  :hook
+  (prog-mode . yas-minor-mode)
+  (org-mode  . yas-minor-mode)
   :config
-  (yas-global-mode 1)
+  ;; (yas-global-mode 1)
   (define-key yas-minor-mode-map [(tab)] nil)
   (define-key yas-minor-mode-map (kbd "TAB") nil)
   :general
   (general-imap
+    :predicate 'yas-minor-mode
     :keymaps 'yas-minor-mode-map
     "C-l" #'yas-expand
     "C-j" #'yas-next-field
