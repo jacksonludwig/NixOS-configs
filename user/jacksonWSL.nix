@@ -27,7 +27,8 @@
     nodePackages.pyright
     nodePackages.npm
 
-    firefox
+    #firefox
+    google-chrome
     htop
     xclip
     ispell
