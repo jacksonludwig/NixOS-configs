@@ -255,7 +255,6 @@
 (use-package ivy-prescient
   :after counsel
   :config
-  (setq prescient-filter-method '(literal regexp initialism))
   (ivy-prescient-mode 1)
   (prescient-persist-mode))
 
