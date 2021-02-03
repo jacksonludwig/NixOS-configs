@@ -367,9 +367,7 @@
   :general
   (general-nmap
     :predicate 'lsp-mode
-    "K" 'lsp-describe-thing-at-point)
-  (general-nmap
-    :predicate 'lsp-mode
+    "K" 'lsp-describe-thing-at-point
     "gs" 'lsp-signature-activate)
   )
 
@@ -383,9 +381,7 @@
   :general
   (general-nmap
 	:predicate 'lsp-ui-mode
-	"gr" 'lsp-ui-peek-find-references)
-  (general-nmap
-	:predicate 'lsp-ui-mode
+	"gr" 'lsp-ui-peek-find-references
 	"gd" 'lsp-ui-peek-find-definitions))
 
 (use-package lsp-pyright
