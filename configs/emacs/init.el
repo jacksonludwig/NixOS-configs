@@ -79,35 +79,21 @@
 
 ;; KEYBINDINGS
 (use-package general
-  ;; :config
-  ;; (general-create-definer jackson/leader-binds
-  ;;   :prefix "SPC"
-  ;;   :keymaps '(normal))
+  :config
+  (general-create-definer jackson/leader-binds
+    :prefix "SPC")
 
-  ;; ;; TODO delegate into correct packages
-  ;; (jackson/leader-binds
-  ;;   "t"   '(:ignore t :which-key "toggles")
-  ;;   "tt"  '(counsel-load-theme :which-key "choose theme")
-  ;;   "f"   '(:ignore t :which-key "files")
-  ;;   "fr"  '(counsel-recentf :which-key "recent files")
-  ;;   "ff"  '(counsel-find-file :which-key "find files")
-  ;;   ":"   '(execute-extended-command :which-key "run M-x")
-  ;;   "b"   '(:ignore t :which-key "buffers")
-  ;;   "bb"  '(counsel-switch-buffer :which-key "switch buffer")
-  ;;   "bk"  '(kill-current-buffer :which-key "kill current buffer")
-  ;;   "bK"  '(kill-buffer :which-key "interactive kill buffer")
-  ;;   "bs"  '(save-buffer :which-key "save current buffer")
-  ;;   "bp"  '(previous-buffer :which-key "previous buffer")
-  ;;   "bn"  '(next-buffer :which-key "next buffer")
-  ;;   "q"   '(:ignore t :which-key "exit menu")
-  ;;   "qq"  '(kill-emacs :which-key "kill emacs")
-  ;;   "p"   '(:ignore t :which-key "projectile")
-  ;;   "SPC" '(projectile-find-file :which-key "find file in project")
-  ;;   "pa"  '(projectile-add-known-project :which-key "add new project")
-  ;;   "pd"  '(projectile-remove-known-project :which-key "remove known project")
-  ;;   "pp"  '(projectile-switch-project :which-key "switch to known project")
-  ;;   "o"   '(:ignore t :which-key "open")
-  ;;   )
+  (jackson/leader-binds
+    "t"   '(:ignore t :which-key "toggles")
+    "tt"  '(counsel-load-theme :which-key "choose theme")
+    "f"   '(:ignore t :which-key "files")
+    "fr"  '(counsel-recentf :which-key "recent files")
+    "ff"  '(counsel-find-file :which-key "find files")
+    "bn"  '(next-buffer :which-key "next buffer")
+    "q"   '(:ignore t :which-key "exit menu")
+    "qq"  '(kill-emacs :which-key "kill emacs")
+    "o"   '(:ignore t :which-key "open")
+    )
   )
 
 (use-package vterm
@@ -121,9 +107,9 @@
 
 (use-package vterm-toggle
   :config
-  ;; (jackson/leader-binds
-  ;;   "ot"  '(vterm-toggle :which-key "toggle vterm")
-  ;;   )
+  (jackson/leader-binds
+    "ot"  '(vterm-toggle :which-key "toggle vterm")
+    )
   (setq vterm-toggle-fullscreen-p nil)
   (add-to-list 'display-buffer-alist
                '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
