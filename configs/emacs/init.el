@@ -178,7 +178,7 @@
   :init
   ;; add modes manually as needed
   ;; use evil-collection-mode-list to see options
-  (evil-collection-init '(calendar dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
+  (evil-collection-init '(calendar (indent "indent") dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
 
 
 ;; THEME/VISUAL
