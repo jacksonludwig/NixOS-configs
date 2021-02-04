@@ -47,7 +47,6 @@
 
 (column-number-mode)
 (global-display-line-numbers-mode t)
-(setq display-line-numbers-type 'relative)
 
 (setq-default tab-width 4)  ; Tab length
 (setq-default indent-tabs-mode nil) ; Spaces, not tabs
@@ -80,35 +79,36 @@
 
 ;; KEYBINDINGS
 (use-package general
-  :config
-  (general-create-definer jackson/leader-binds
-    :prefix "SPC"
-    :keymaps '(normal))
+  ;; :config
+  ;; (general-create-definer jackson/leader-binds
+  ;;   :prefix "SPC"
+  ;;   :keymaps '(normal))
 
-  ;; TODO delegate into correct packages
-  (jackson/leader-binds
-    "t"   '(:ignore t :which-key "toggles")
-    "tt"  '(counsel-load-theme :which-key "choose theme")
-    "f"   '(:ignore t :which-key "files")
-    "fr"  '(counsel-recentf :which-key "recent files")
-    "ff"  '(counsel-find-file :which-key "find files")
-    ":"   '(execute-extended-command :which-key "run M-x")
-    "b"   '(:ignore t :which-key "buffers")
-    "bb"  '(counsel-switch-buffer :which-key "switch buffer")
-    "bk"  '(kill-current-buffer :which-key "kill current buffer")
-    "bK"  '(kill-buffer :which-key "interactive kill buffer")
-    "bs"  '(save-buffer :which-key "save current buffer")
-    "bp"  '(previous-buffer :which-key "previous buffer")
-    "bn"  '(next-buffer :which-key "next buffer")
-    "q"   '(:ignore t :which-key "exit menu")
-    "qq"  '(kill-emacs :which-key "kill emacs")
-    "p"   '(:ignore t :which-key "projectile")
-    "SPC" '(projectile-find-file :which-key "find file in project")
-    "pa"  '(projectile-add-known-project :which-key "add new project")
-    "pd"  '(projectile-remove-known-project :which-key "remove known project")
-    "pp"  '(projectile-switch-project :which-key "switch to known project")
-    "o"   '(:ignore t :which-key "open")
-    ))
+  ;; ;; TODO delegate into correct packages
+  ;; (jackson/leader-binds
+  ;;   "t"   '(:ignore t :which-key "toggles")
+  ;;   "tt"  '(counsel-load-theme :which-key "choose theme")
+  ;;   "f"   '(:ignore t :which-key "files")
+  ;;   "fr"  '(counsel-recentf :which-key "recent files")
+  ;;   "ff"  '(counsel-find-file :which-key "find files")
+  ;;   ":"   '(execute-extended-command :which-key "run M-x")
+  ;;   "b"   '(:ignore t :which-key "buffers")
+  ;;   "bb"  '(counsel-switch-buffer :which-key "switch buffer")
+  ;;   "bk"  '(kill-current-buffer :which-key "kill current buffer")
+  ;;   "bK"  '(kill-buffer :which-key "interactive kill buffer")
+  ;;   "bs"  '(save-buffer :which-key "save current buffer")
+  ;;   "bp"  '(previous-buffer :which-key "previous buffer")
+  ;;   "bn"  '(next-buffer :which-key "next buffer")
+  ;;   "q"   '(:ignore t :which-key "exit menu")
+  ;;   "qq"  '(kill-emacs :which-key "kill emacs")
+  ;;   "p"   '(:ignore t :which-key "projectile")
+  ;;   "SPC" '(projectile-find-file :which-key "find file in project")
+  ;;   "pa"  '(projectile-add-known-project :which-key "add new project")
+  ;;   "pd"  '(projectile-remove-known-project :which-key "remove known project")
+  ;;   "pp"  '(projectile-switch-project :which-key "switch to known project")
+  ;;   "o"   '(:ignore t :which-key "open")
+  ;;   )
+  )
 
 (use-package vterm
   :ensure nil
@@ -121,9 +121,9 @@
 
 (use-package vterm-toggle
   :config
-  (jackson/leader-binds
-    "ot"  '(vterm-toggle :which-key "toggle vterm")
-    )
+  ;; (jackson/leader-binds
+  ;;   "ot"  '(vterm-toggle :which-key "toggle vterm")
+  ;;   )
   (setq vterm-toggle-fullscreen-p nil)
   (add-to-list 'display-buffer-alist
                '((lambda(bufname _) (with-current-buffer bufname (equal major-mode 'vterm-mode)))
@@ -137,44 +137,44 @@
   )
 
 (use-package undo-fu)
-(use-package evil
-  :init
-  (setq evil-want-keybinding nil
-        evil-want-integration t
-        evil-want-C-u-scroll t
-        evil-want-C-i-jump nil
-        evil-undo-system 'undo-fu
-        evil-mode-line-format nil
-        evil-vsplit-window-right t
-        evil-split-window-below t)
-  :hook
-  (evil-insert-state-entry . (lambda ()
-                              (if (and
-                                   (not (member major-mode display-line-numbers-exempt-modes))
-                                   (not (minibufferp)))
-                                  (setq display-line-numbers t))))
-  (evil-insert-state-exit . (lambda ()
-                              (if (and
-                                   (not (member major-mode display-line-numbers-exempt-modes))
-                                   (not (minibufferp)))
-                                  (setq display-line-numbers 'relative))))
-  :config
-  (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
-  (evil-mode 1)
+;; (use-package evil
+;;   :init
+;;   (setq evil-want-keybinding nil
+;;         evil-want-integration t
+;;         evil-want-C-u-scroll t
+;;         evil-want-C-i-jump nil
+;;         evil-undo-system 'undo-fu
+;;         evil-mode-line-format nil
+;;         evil-vsplit-window-right t
+;;         evil-split-window-below t)
+;;   :hook
+;;   (evil-insert-state-entry . (lambda ()
+;;                               (if (and
+;;                                    (not (member major-mode display-line-numbers-exempt-modes))
+;;                                    (not (minibufferp)))
+;;                                   (setq display-line-numbers t))))
+;;   (evil-insert-state-exit . (lambda ()
+;;                               (if (and
+;;                                    (not (member major-mode display-line-numbers-exempt-modes))
+;;                                    (not (minibufferp)))
+;;                                   (setq display-line-numbers 'relative))))
+;;   :config
+;;   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
+;;   (evil-mode 1)
 
-  (evil-declare-change-repeat 'company-complete-common) ;; avoid error on blank completion trigger
+;;   (evil-declare-change-repeat 'company-complete-common) ;; avoid error on blank completion trigger
 
-  (evil-set-initial-state 'messages-buffer-mode 'normal))
+;;   (evil-set-initial-state 'messages-buffer-mode 'normal))
 
-(use-package evil-collection
-  :after evil
-  :custom
-  (evil-collection-company-use-tng nil)
-  (evil-collection-key-blacklist '("SPC"))
-  :init
-  ;; add modes manually as needed
-  ;; use evil-collection-mode-list to see options
-  (evil-collection-init '(calendar (indent "indent") dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
+;; (use-package evil-collection
+;;   :after evil
+;;   :custom
+;;   (evil-collection-company-use-tng nil)
+;;   (evil-collection-key-blacklist '("SPC"))
+;;   :init
+;;   ;; add modes manually as needed
+;;   ;; use evil-collection-mode-list to see options
+;;   (evil-collection-init '(calendar (indent "indent") dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
 
 
 ;; THEME/VISUAL
@@ -187,7 +187,7 @@
   (setq dashboard-startup-banner (concat user-emacs-directory "splash.png")
         dashboard-banner-logo-title "Emacs")
   (setq dashboard-items '(
-                          ;; (recents  . 5)
+                          (recents  . 5)
                           ;; (bookmarks . 5)
                           (projects . 5)
                           (agenda . 5)
@@ -282,10 +282,10 @@
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous))
-  :general
-  (general-imap "C-SPC" 'company-complete-common)
+  ;; :general
+  ;; (general-imap "C-SPC" 'company-complete-common)
   :config
-  (setq company-idle-delay nil)
+  ;; (setq company-idle-delay nil)
   (global-company-mode t))
 
 (use-package company-box
@@ -303,25 +303,26 @@
   :config
   (setq flycheck-check-syntax-automatically '(save))
   
-  :general
-  (general-nmap "[g" 'flycheck-previous-error) ;; Flycheck binds
-  (general-nmap "]g" 'flycheck-next-error))
+  ;; :general
+  ;; (general-nmap "[g" 'flycheck-previous-error) ;; Flycheck binds
+  ;; (general-nmap "]g" 'flycheck-next-error)
+  )
 
 ;; Snippets
 (use-package yasnippet
   :hook
   (prog-mode . yas-minor-mode)
   (org-mode  . yas-minor-mode)
-  :config
-  (define-key yas-minor-mode-map [(tab)] nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-  :general
-  (general-imap
-    :predicate 'yas-minor-mode
-    :keymaps 'yas-minor-mode-map
-    "C-l" #'yas-expand
-    "C-j" #'yas-next-field
-    "C-k" #'yas-prev-field)
+  ;; :config
+  ;; (define-key yas-minor-mode-map [(tab)] nil)
+  ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
+  ;; :general
+  ;; (general-imap
+  ;;   :predicate 'yas-minor-mode
+  ;;   :keymaps 'yas-minor-mode-map
+  ;;   "C-l" #'yas-expand
+  ;;   "C-j" #'yas-next-field
+  ;;   "C-k" #'yas-prev-field)
   )
 
 (use-package yasnippet-snippets)
@@ -360,11 +361,11 @@
                (display-buffer-reuse-window display-buffer-below-selected)
                (reusable-frames . visible)
                (window-height . 0.30)))
-  :general
-  (general-nmap
-    :predicate 'lsp-mode
-    "K" 'lsp-describe-thing-at-point
-    "gs" 'lsp-signature-activate)
+  ;; :general
+  ;; (general-nmap
+  ;;   :predicate 'lsp-mode
+  ;;   "K" 'lsp-describe-thing-at-point
+  ;;   "gs" 'lsp-signature-activate)
   )
 
 (use-package lsp-ui
@@ -374,11 +375,12 @@
         lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil)
 
-  :general
-  (general-nmap
-	:predicate 'lsp-ui-mode
-	"gr" 'lsp-ui-peek-find-references
-	"gd" 'lsp-ui-peek-find-definitions))
+  ;; :general
+  ;; (general-nmap
+  ;;   :predicate 'lsp-ui-mode
+  ;;   "gr" 'lsp-ui-peek-find-references
+  ;;   "gd" 'lsp-ui-peek-find-definitions)
+  )
 
 (use-package lsp-pyright
   :hook (python-mode . (lambda ()
