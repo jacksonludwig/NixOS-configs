@@ -27,8 +27,7 @@
     nodePackages.pyright
     nodePackages.npm
 
-    #firefox
-    google-chrome
+    firefox
     discord
     htop
     scrot
