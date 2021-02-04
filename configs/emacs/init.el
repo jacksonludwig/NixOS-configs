@@ -164,10 +164,6 @@
 
   (evil-declare-change-repeat 'company-complete-common) ;; avoid error on blank completion trigger
 
-  ;; core extra binds
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
   (evil-set-initial-state 'messages-buffer-mode 'normal))
 
 (use-package evil-collection
@@ -269,7 +265,7 @@
   (org-mode . visual-line-mode)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
-		))
+        org-agenda-files '("~/git_repos/emacs-org-mode/School.org")))
 
 
 ;; BABEL LANGUAGES
