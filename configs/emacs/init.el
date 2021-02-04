@@ -81,7 +81,7 @@
 (use-package general
   :config
   (general-create-definer jackson/leader-binds
-    :prefix "SPC")
+    :prefix "C-c")
 
   (jackson/leader-binds
     "t"   '(:ignore t :which-key "toggles")
