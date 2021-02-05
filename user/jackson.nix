@@ -41,6 +41,7 @@
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka
+    fira-code
     roboto-mono
     jetbrains-mono
 

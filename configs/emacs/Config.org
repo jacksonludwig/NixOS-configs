@@ -193,36 +193,36 @@
 #+begin_src emacs-lisp
   (use-package all-the-icons)
 
-  ;; start screen
-  (use-package dashboard
-    :ensure t
-    :config
-    (setq dashboard-startup-banner (concat user-emacs-directory "splash.png")
-          dashboard-banner-logo-title "Emacs")
-    (setq dashboard-items '(
-                            (recents  . 5)
-                            (projects . 5)
-                            (agenda . 5)
-                            ))
-    (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
-    (setq dashboard-footer-messages '("Configured by Jackson"))
-    (dashboard-setup-startup-hook))
+   ;; start screen
+   (use-package dashboard
+     :ensure t
+     :config
+     (setq dashboard-startup-banner (concat user-emacs-directory "splash.png")
+           dashboard-banner-logo-title "Emacs")
+     (setq dashboard-items '(
+                             (recents  . 5)
+                             (projects . 5)
+                             (agenda . 5)
+                             ))
+     (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
+     (setq dashboard-footer-messages '("Configured by Jackson"))
+     (dashboard-setup-startup-hook))
 
-    (use-package doom-themes
-      :after all-the-icons
+   (use-package doom-themes
+     :after all-the-icons
      :init
-      (load-theme 'doom-one t)
-      )
-
-  (use-package doom-modeline
-    :hook (after-init . doom-modeline-mode)
-    :config
-    (setq doom-modeline-height 30
-          doom-modeline-major-mode-icon nil)
-    (doom-modeline-def-modeline 'main
-      '(bar window-number matches buffer-info remote-host buffer-position selection-info)
-      '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
-    )
+     (load-theme 'doom-one t)
+     )
+  
+   (use-package doom-modeline
+     :hook (after-init . doom-modeline-mode)
+     :config
+     (setq doom-modeline-height 30
+           doom-modeline-major-mode-icon nil)
+     (doom-modeline-def-modeline 'main
+       '(bar window-number matches buffer-info remote-host buffer-position selection-info)
+       '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
+     )
 #+end_src
 * LSP and other language support
 ** Company
