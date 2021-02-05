@@ -5,11 +5,6 @@
 (setq user-full-name "Jackson Ludwig"
 	  user-mail-address "jacksonludwig0@gmail.com")
 
-(defcustom display-line-numbers-exempt-modes '(vterm-mode eshell-mode shell-mode term-mode ansi-term-mode)
-  "Major modes on which to disable the linum mode, exempts them from global requirement"
-  :group 'display-line-numbers
-  :type 'list
-  :version "green")
 
 ;; PACKAGE SETUP
 (require 'package)
@@ -59,6 +54,7 @@
 
 (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode 1)
+
           
 ;; FONT CONFIG
 (set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
@@ -119,44 +115,6 @@
   )
 
 (use-package undo-fu)
-;; (use-package evil
-;;   :init
-;;   (setq evil-want-keybinding nil
-;;         evil-want-integration t
-;;         evil-want-C-u-scroll t
-;;         evil-want-C-i-jump nil
-;;         evil-undo-system 'undo-fu
-;;         evil-mode-line-format nil
-;;         evil-vsplit-window-right t
-;;         evil-split-window-below t)
-;;   :hook
-;;   (evil-insert-state-entry . (lambda ()
-;;                               (if (and
-;;                                    (not (member major-mode display-line-numbers-exempt-modes))
-;;                                    (not (minibufferp)))
-;;                                   (setq display-line-numbers t))))
-;;   (evil-insert-state-exit . (lambda ()
-;;                               (if (and
-;;                                    (not (member major-mode display-line-numbers-exempt-modes))
-;;                                    (not (minibufferp)))
-;;                                   (setq display-line-numbers 'relative))))
-;;   :config
-;;   (general-evil-setup) ;; enable imap, nmap, etc for keybinds in other places
-;;   (evil-mode 1)
-
-;;   (evil-declare-change-repeat 'company-complete-common) ;; avoid error on blank completion trigger
-
-;;   (evil-set-initial-state 'messages-buffer-mode 'normal))
-
-;; (use-package evil-collection
-;;   :after evil
-;;   :custom
-;;   (evil-collection-company-use-tng nil)
-;;   (evil-collection-key-blacklist '("SPC"))
-;;   :init
-;;   ;; add modes manually as needed
-;;   ;; use evil-collection-mode-list to see options
-;;   (evil-collection-init '(calendar (indent "indent") dired dashboard mu4e mu4e-conversation vterm ansi-term term)))
 
 
 ;; THEME/VISUAL
@@ -260,8 +218,6 @@
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous))
-  ;; :general
-  ;; (general-imap "C-SPC" 'company-complete-common)
   :config
   ;; (setq company-idle-delay nil)
   (global-company-mode t))
@@ -288,16 +244,6 @@
   :hook
   (prog-mode . yas-minor-mode)
   (org-mode  . yas-minor-mode)
-  ;; :config
-  ;; (define-key yas-minor-mode-map [(tab)] nil)
-  ;; (define-key yas-minor-mode-map (kbd "TAB") nil)
-  ;; :general
-  ;; (general-imap
-  ;;   :predicate 'yas-minor-mode
-  ;;   :keymaps 'yas-minor-mode-map
-  ;;   "C-l" #'yas-expand
-  ;;   "C-j" #'yas-next-field
-  ;;   "C-k" #'yas-prev-field)
   )
 
 (use-package yasnippet-snippets)
@@ -338,11 +284,6 @@
                (display-buffer-reuse-window display-buffer-below-selected)
                (reusable-frames . visible)
                (window-height . 0.30)))
-  ;; :general
-  ;; (general-nmap
-  ;;   :predicate 'lsp-mode
-  ;;   "K" 'lsp-describe-thing-at-point
-  ;;   "gs" 'lsp-signature-activate)
   )
 
 (use-package lsp-ui
@@ -351,12 +292,6 @@
   (setq lsp-ui-doc-position 'at-point
         lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil)
-
-  ;; :general
-  ;; (general-nmap
-  ;;   :predicate 'lsp-ui-mode
-  ;;   "gr" 'lsp-ui-peek-find-references
-  ;;   "gd" 'lsp-ui-peek-find-definitions)
   )
 
 (use-package lsp-pyright
