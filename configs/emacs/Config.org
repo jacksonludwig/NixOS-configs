@@ -351,6 +351,7 @@
     :config
     (setq org-directory "~/git_repos/emacs-org-mode"
           org-agenda-files '("~/git_repos/emacs-org-mode/School.org")
+          org-special-ctrl-a/e t
           org-src-tab-acts-natively t))
 
   ;; BABEL LANGUAGES
