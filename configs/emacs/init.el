@@ -322,7 +322,7 @@
   (setq lsp-completion-provider :capf)
   (setq create-lockfiles nil) ;; disable lockfiles because they annoy some LSP
 
-  (setq lsp-enable-snippet nil) ;; disable lsp snippet
+  ;; (setq lsp-enable-snippet nil) ;; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ;; disable breadcrumb
   (setq lsp-enable-symbol-highlighting nil) ;; disable symbol highlight
   (setq lsp-enable-links nil) ;; disable links
