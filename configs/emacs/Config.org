@@ -1,4 +1,4 @@
-#+title Init.el Generator
+#+title Init config
 #+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 
 * Core settings and variables
