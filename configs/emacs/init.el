@@ -89,7 +89,6 @@
     "f"   '(:ignore t :which-key "files")
     "fr"  '(counsel-recentf :which-key "recent files")
     "ff"  '(counsel-find-file :which-key "find files")
-    "bn"  '(next-buffer :which-key "next buffer")
     "q"   '(:ignore t :which-key "exit menu")
     "qq"  '(kill-emacs :which-key "kill emacs")
     "o"   '(:ignore t :which-key "open")
@@ -100,10 +99,7 @@
   :ensure nil
   :hook
   (vterm-mode . (lambda ()
-                  (display-line-numbers-mode 0)))
-  :config
-  (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *"  ;; Set this to match your custom shell prompt
-        vterm-max-scrollback 10000))
+                  (display-line-numbers-mode 0))))
 
 (use-package vterm-toggle
   :config
@@ -174,7 +170,6 @@
         dashboard-banner-logo-title "Emacs")
   (setq dashboard-items '(
                           (recents  . 5)
-                          ;; (bookmarks . 5)
                           (projects . 5)
                           (agenda . 5)
                           ))
@@ -210,9 +205,6 @@
 ;; IVY
 (use-package counsel
   :diminish counsel-mode
-  :bind (("C-M-j" . 'counsel-switch-buffer)
-         :map minibuffer-local-map
-         ("C-r" . 'counsel-minibuffer-history))
   :config
   (counsel-mode 1))
 
