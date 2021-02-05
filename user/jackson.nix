@@ -90,6 +90,6 @@
         vterm
     ];
   };
-  home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
+  # home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
   home.file.".emacs.d/splash.png".source = ../configs/emacs/splash.png;
 }

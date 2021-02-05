@@ -201,7 +201,8 @@
   (org-mode . visual-line-mode)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
-        org-agenda-files '("~/git_repos/emacs-org-mode/School.org")))
+        org-agenda-files '("~/git_repos/emacs-org-mode/School.org")
+        org-src-tab-acts-natively t))
 
 
 ;; BABEL LANGUAGES
@@ -233,10 +234,6 @@
   :init (global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically '(save))
-  
-  ;; :general
-  ;; (general-nmap "[g" 'flycheck-previous-error) ;; Flycheck binds
-  ;; (general-nmap "]g" 'flycheck-next-error)
   )
 
 ;; Snippets
