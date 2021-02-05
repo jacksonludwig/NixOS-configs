@@ -48,7 +48,7 @@
 (column-number-mode)
 (global-display-line-numbers-mode t)
 
-(setq-default tab-width 4)  ; Tab length
+(setq-default tab-width 2)  ; Tab length
 (setq-default indent-tabs-mode nil) ; Spaces, not tabs
 
 (setq-default truncate-lines t) ; Don't wrap by default
@@ -383,7 +383,13 @@
   :commands web-mode
   :config
   (setq web-mode-content-types-alist
-	'(("jsx" . "\\.js[x]?\\'")))
+	    '(("jsx" . "\\.js[x]?\\'")))
+  :custom
+  (web-mode-markup-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2)
+  (web-mode-style-padding 2)
+  (web-mode-script-padding 2)
   )
 
 
