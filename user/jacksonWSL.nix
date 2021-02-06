@@ -7,6 +7,7 @@
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     }))
   ];
+  
 
   # packages to install
   home.packages = with pkgs; [
