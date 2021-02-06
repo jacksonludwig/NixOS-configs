@@ -18,6 +18,10 @@
 * Straight/Use-package combined setup
 #+begin_src emacs-lisp
 ;; Bootstrap straight
+;; -- Variables
+(setq straight-use-package-by-default t)
+
+;; -- Bootstrap `straight.el'
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -31,10 +35,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; Use-package as the package configuration tool of choice
 (straight-use-package 'use-package)
-;; Force use-package to use straight.el to automatically install missing packages
-(setq straight-use-package-by-default t)
 #+end_src
 * Basic UI Setup
 #+begin_src emacs-lisp
