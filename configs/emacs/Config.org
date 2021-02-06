@@ -352,8 +352,13 @@
   (setq org-directory "~/git_repos/emacs-org-mode"
         org-agenda-files '("~/git_repos/emacs-org-mode/School.org")
         org-src-tab-acts-natively t
-        org-special-ctrl-a/e t
-        org-src-preserve-indentation t))
+        org-src-preserve-indentation t
+        org-special-ctrl-a/e t)
+  ;; Following two lines are a workaround so that special a/e works
+  ;; in visual line mode.
+  (define-key org-mode-map "\C-a" 'org-beginning-of-line)
+  (define-key org-mode-map "\C-e" 'org-end-of-line)
+  )
 
 ;; BABEL LANGUAGES
 (org-babel-do-load-languages
