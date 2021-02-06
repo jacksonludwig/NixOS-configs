@@ -38,27 +38,28 @@
 #+end_src
 * Basic UI Setup
 #+begin_src emacs-lisp
-  (scroll-bar-mode -1)        ; Disable visible scrollbar
-  (tool-bar-mode -1)          ; Disable the toolbar
-  (tooltip-mode -1)           ; Disable tooltips
+    (scroll-bar-mode -1)        ; Disable visible scrollbar
+    (tool-bar-mode -1)          ; Disable the toolbar
+    (tooltip-mode -1)           ; Disable tooltips
 
-  (menu-bar-mode -1)          ; Disable the menu bar
-  (setq visible-bell t)       ; Visual bell
+    (menu-bar-mode -1)          ; Disable the menu bar
+    (setq visible-bell t)       ; Visual bell
 
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
+    (column-number-mode)
+    (global-display-line-numbers-mode t)
 
-  (setq-default tab-width 2)  ; Tab length
-  (setq-default indent-tabs-mode nil) ; Spaces, not tabs
+    (setq-default tab-width 2)  ; Tab length
+    (setq-default indent-tabs-mode nil) ; Spaces, not tabs
 
-  (setq-default truncate-lines t) ; Don't wrap by default
+    (setq-default truncate-lines t) ; Don't wrap by default
 
-  (setq help-window-select t) ; Auto switch to help buffers
+    (setq help-window-select t) ; Auto switch to help buffers
 
-  (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
+    (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
-  (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
-  (global-whitespace-mode 1)
+    (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
+    (global-whitespace-mode 1)
+  (setq thing t)
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
@@ -351,8 +352,9 @@
     :config
     (setq org-directory "~/git_repos/emacs-org-mode"
           org-agenda-files '("~/git_repos/emacs-org-mode/School.org")
-          org-src-tab-acts-natively t
-          org-special-ctrl-a/e t))
+          org-special-ctrl-a t
+          org-special-ctrl-e t
+          org-src-tab-acts-natively t))
 
   ;; BABEL LANGUAGES
   (org-babel-do-load-languages
