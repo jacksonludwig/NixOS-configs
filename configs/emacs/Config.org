@@ -212,7 +212,7 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'doom-one t)
+  (load-theme 'doom-molokai t)
   )
 
 (use-package doom-modeline
