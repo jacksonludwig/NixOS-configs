@@ -281,6 +281,9 @@
   (setq lsp-headerline-breadcrumb-enable nil) ;; disable breadcrumb
   (setq lsp-enable-symbol-highlighting nil) ;; disable symbol highlight
   (setq lsp-enable-links nil) ;; disable links
+
+  (setq lsp-enable-indentation nil) ;; Don't let LSP mess with indentation
+  (setq lsp-enable-on-type-formatting nil) ;; Don't ever format unless we say so
   
   (lsp-enable-which-key-integration t)
 
