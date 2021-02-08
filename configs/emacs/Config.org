@@ -98,14 +98,8 @@
     "o"   '(:ignore t :which-key "open")
     )
 
-  ;; Custom global bind overwrites
-  (defun beginning-of-line-or-indentation ()
-    "move to beginning of line, or indentation"
-    (interactive)
-    (if (bolp)
-        (back-to-indentation)
-      (beginning-of-line)))
-  (global-set-key (kbd "C-S-a") 'beginning-of-line-or-indentation) ;; go to beginning of text
+  ;; Custom overwrites, globals, etc
+  (global-set-key (kbd "C-S-a") 'back-to-indentation) ;; go to beginning of text
   )
 #+end_src
 ** Which-key
@@ -231,31 +225,19 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'wombat t)
-  :config
-  (let ((custom--inhibit-theme-enable nil))
-    (custom-theme-set-faces
-     'wombat
-     '(company-scrollbar-bg ((t (:background "#303030"))))
-     '(company-scrollbar-fg ((t (:background "#99968b"))))
-     '(company-tooltip ((t (:background "#303030"))))
-     '(company-tooltip-annotation ((t (:inherit (quote font-lock-comment-face)))))
-     '(company-tooltip-common ((t (:inherit (quote font-lock-comment-face)))))
-     '(company-tooltip-common-selection ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
-     '(company-tooltip-mouse ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
-     '(company-tooltip-selection ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
-     '(vertical-border ((t (:foreground "#303030"))))))
+  (load-theme 'doom-one t)
   )
 
-;;(use-package doom-modeline
-;;  :hook (after-init . doom-modeline-mode)
-;;  :config
-;;  (setq doom-modeline-height 30
-;;        doom-modeline-major-mode-icon nil)
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-height 30
+        doom-modeline-bar-width 2
+        doom-modeline-major-mode-icon nil)
 ;;  (doom-modeline-def-modeline 'main
 ;;    '(bar window-number matches buffer-info remote-host buffer-position selection-info)
 ;;    '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
-;;  )
+  )
 #+end_src
 * LSP and other language support
 ** Company
