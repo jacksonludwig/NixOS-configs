@@ -58,8 +58,8 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
-(setq whitespace-style '(trailing face empty tabs tab-mark)) ; show whitespace
-(global-whitespace-mode)
+(setq whitespace-style '(face trailing tabs tab-mark)) ; show whitespace
+(global-whitespace-mode t)
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
@@ -171,7 +171,13 @@
 #+end_src
 ** Undo-fu
 #+begin_src emacs-lisp
-(use-package undo-fu)
+(use-package undo-fu
+  :config
+  (global-unset-key (kbd "C-M-/"))
+  (global-set-key (kbd "C-M-/") 'undo-fu-only-redo)
+  (global-unset-key (kbd "C-/"))
+  (global-set-key (kbd "C-/") 'undo-fu-only-undo)
+  )
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp
@@ -212,7 +218,20 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'doom-molokai t)
+  (load-theme 'wombat t)
+  :config
+  (let ((custom--inhibit-theme-enable nil))
+    (custom-theme-set-faces
+     'wombat
+     '(company-scrollbar-bg ((t (:background "#303030"))))
+     '(company-scrollbar-fg ((t (:background "#99968b"))))
+     '(company-tooltip ((t (:background "#303030"))))
+     '(company-tooltip-annotation ((t (:inherit (quote font-lock-comment-face)))))
+     '(company-tooltip-common ((t (:inherit (quote font-lock-comment-face)))))
+     '(company-tooltip-common-selection ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
+     '(company-tooltip-mouse ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
+     '(company-tooltip-selection ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
+     '(vertical-border ((t (:foreground "#303030"))))))
   )
 
 ;;(use-package doom-modeline
@@ -356,8 +375,10 @@
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
         org-agenda-files '("~/git_repos/emacs-org-mode/School.org")
-        org-src-tab-acts-natively t
-        org-src-preserve-indentation t
+        org-src-tab-acts-natively t ;; Better tabs in source blocks
+        org-src-preserve-indentation t ;; Don't auto tab in source block
+        org-catch-invisible-edits 'smart ;; Possibly better editing with folds
+        org-ellipsis "⤵" ;; ellipsis
         org-special-ctrl-a/e t)
   ;; Following two lines are a workaround so that special a/e works
   ;; in visual line mode.
