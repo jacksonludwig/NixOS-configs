@@ -58,7 +58,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
-(setq whitespace-style '(face trailing tabs tab-mark)) ; show whitespace
+(setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode t)
 #+end_src
 * Font setup
@@ -305,7 +305,7 @@
 
   (setq lsp-enable-indentation nil) ;; Don't let LSP mess with indentation
   (setq lsp-enable-on-type-formatting nil) ;; Don't ever format unless we say so
-  
+
   (lsp-enable-which-key-integration t)
 
   ;; Make help buffers nicer
@@ -425,7 +425,7 @@
   :hook
   (mu4e-compose-mode . (lambda ()
                          (use-hard-newlines -1)))
-  
+
   :config
   ;; This is set to 't' to avoid mail syncing issues when using mbsync
   (setq mu4e-change-filenames-when-moving t)
