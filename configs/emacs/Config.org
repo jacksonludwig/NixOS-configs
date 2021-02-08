@@ -86,19 +86,26 @@
 #+begin_src emacs-lisp
 (use-package general
   :config
+  (global-unset-key (kbd "M-m"))
   (general-create-definer jackson/leader-binds
-    :prefix "C-c")
+    :prefix "M-m")
 
   (jackson/leader-binds
     "t"   '(:ignore t :which-key "toggles")
-    "tt"  '(counsel-load-theme :which-key "choose theme")
     "f"   '(:ignore t :which-key "files")
-    "fr"  '(counsel-recentf :which-key "recent files")
-    "ff"  '(counsel-find-file :which-key "find files")
     "q"   '(:ignore t :which-key "exit menu")
     "qq"  '(kill-emacs :which-key "kill emacs")
     "o"   '(:ignore t :which-key "open")
     )
+
+  ;; Custom global bind overwrites
+  (defun beginning-of-line-or-indentation ()
+    "move to beginning of line, or indentation"
+    (interactive)
+    (if (bolp)
+        (back-to-indentation)
+      (beginning-of-line)))
+  (global-set-key (kbd "C-S-a") 'beginning-of-line-or-indentation) ;; go to beginning of text
   )
 #+end_src
 ** Which-key
@@ -132,7 +139,13 @@
          ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
   :config
-  (ivy-mode 1))
+  (ivy-mode 1)
+
+  (jackson/leader-binds
+    "fr"  '(counsel-recentf :which-key "recent files")
+    "ff"  '(counsel-find-file :which-key "find files")
+    "tt"  '(counsel-load-theme :which-key "choose theme")
+    ))
 
 (use-package ivy-prescient
   :after counsel
@@ -187,7 +200,7 @@
   :config
   (projectile-mode)
   :bind-keymap
-  ("C-c p" . projectile-command-map)
+  ("M-m p" . projectile-command-map)
   :init
   ;; NOTE: Set this to the folder where you keep your Git repos!
   (when (file-directory-p "~/git_repos/")
@@ -289,7 +302,7 @@
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
-  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-keymap-prefix "M-m l")
 
   :config
   (setq gc-cons-threshold 100000000)
