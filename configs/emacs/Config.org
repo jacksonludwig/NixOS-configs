@@ -320,7 +320,13 @@
   (setq lsp-ui-doc-position 'at-point
         lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil)
-  )
+  :general
+  (general-define-key
+   :predicate '(lsp-mode)
+   :keymaps 'lsp-mode-map
+   "M-?" 'lsp-ui-peek-find-references
+   "M-." 'lsp-ui-peek-find-definition
+  ))
 #+end_src
 ** Major mode config
 *** Python
