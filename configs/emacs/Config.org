@@ -46,6 +46,7 @@
 (menu-bar-mode -1)          ; Disable the menu bar
 (setq visible-bell t)       ; Visual bell
 
+(column-number-mode)
 ;; (global-display-line-numbers-mode t) ; line numbers
 
 (setq-default tab-width 2)  ; Tab length
@@ -214,15 +215,15 @@
   (load-theme 'doom-molokai t)
   )
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :config
-  (setq doom-modeline-height 30
-        doom-modeline-major-mode-icon nil)
-  (doom-modeline-def-modeline 'main
-    '(bar window-number matches buffer-info remote-host buffer-position selection-info)
-    '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
-  )
+;;(use-package doom-modeline
+;;  :hook (after-init . doom-modeline-mode)
+;;  :config
+;;  (setq doom-modeline-height 30
+;;        doom-modeline-major-mode-icon nil)
+;;  (doom-modeline-def-modeline 'main
+;;    '(bar window-number matches buffer-info remote-host buffer-position selection-info)
+;;    '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
+;;  )
 #+end_src
 * LSP and other language support
 ** Company
@@ -250,6 +251,7 @@
 ** Yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet
+  :diminish yas-minor-mode
   :hook
   (prog-mode . yas-minor-mode)
   )
