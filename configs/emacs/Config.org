@@ -58,8 +58,8 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
-(setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
-(global-whitespace-mode 1)
+(setq whitespace-style '(trailing face empty tabs tab-mark)) ; show whitespace
+(global-whitespace-mode)
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
