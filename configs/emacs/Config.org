@@ -80,7 +80,8 @@
 (use-package diminish
   :config
   (diminish 'eldoc-mode)
-  (diminish 'global-whitespace-mode))
+  (diminish 'global-whitespace-mode)
+  (diminish 'visual-line-mode))
 #+end_src
 ** General
 #+begin_src emacs-lisp
@@ -223,19 +224,29 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'doom-one t)
+  (load-theme 'wombat t)
+  :config
+  (let ((custom--inhibit-theme-enable nil))
+    (custom-theme-set-faces
+     'wombat
+     '(company-scrollbar-bg ((t (:background "#303030"))))
+     '(company-scrollbar-fg ((t (:background "#99968b"))))
+     '(company-tooltip ((t (:background "#303030"))))
+     '(company-tooltip-annotation ((t (:inherit (quote font-lock-comment-face)))))
+     '(company-tooltip-common ((t (:inherit (quote font-lock-comment-face)))))
+     '(company-tooltip-common-selection ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
+     '(company-tooltip-mouse ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
+     '(company-tooltip-selection ((t (:inherit (quote font-lock-keyword-face) :weight normal))))
+     '(vertical-border ((t (:foreground "#303030"))))))
   )
 
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :config
-  (setq doom-modeline-height 34
-        doom-modeline-bar-width 2
-        doom-modeline-major-mode-icon nil)
-;;  (doom-modeline-def-modeline 'main
-;;    '(bar window-number matches buffer-info remote-host buffer-position selection-info)
-;;    '(objed-state misc-info persp-name irc mu4e github debug input-method buffer-encoding lsp major-mode process vcs checker))
-  )
+;;(use-package doom-modeline
+;;  :hook (after-init . doom-modeline-mode)
+;;  :config
+;;  (setq doom-modeline-height 34
+;;        doom-modeline-bar-width 2
+;;        doom-modeline-major-mode-icon nil)
+;;  )
 #+end_src
 * LSP and other language support
 ** Company
