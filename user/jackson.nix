@@ -40,7 +40,7 @@
 	mu
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
-    iosevka
+    iosevka-bin
     fira-code
     roboto-mono
     jetbrains-mono

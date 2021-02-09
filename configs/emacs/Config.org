@@ -244,12 +244,15 @@
 #+begin_src emacs-lisp
 (use-package company
   :diminish company-mode
+  :hook
+  (prog-mode . company-mode)
+  (org-mode . company-mode)
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
-  :config
-  ;; (setq company-idle-delay nil)
-  (global-company-mode t))
+  :custom
+  (company-minimum-prefix-length 1)
+  )
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
