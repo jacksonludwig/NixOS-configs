@@ -245,8 +245,7 @@
 (use-package company
   :diminish company-mode
   :hook
-  (prog-mode . company-mode)
-  (org-mode . company-mode)
+  (after-init . global-company-mode)
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
@@ -345,8 +344,6 @@
   :hook
   (go-mode . (lambda ()
                (setq indent-tabs-mode nil)))
-  :config
-  (setq lsp-gopls-complete-unimported t)
   )
 #+end_src
 *** Web
