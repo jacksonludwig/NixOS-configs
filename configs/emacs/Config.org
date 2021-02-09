@@ -106,9 +106,7 @@
 #+begin_src emacs-lisp
 (use-package which-key
   :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 1))
+  :diminish which-key-mode)
 #+end_src
 ** Counsel/Ivy
 #+begin_src emacs-lisp
@@ -261,7 +259,7 @@
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
-  (setq flycheck-check-syntax-automatically '(save))
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
   )
 #+end_src
 ** Yasnippet
@@ -348,14 +346,15 @@
 #+end_src
 *** Web
 #+begin_src emacs-lisp
-(use-package web-mode  :ensure t
-  :mode (("\\.js\\'" . web-mode)
-         ("\\.jsx\\'" . web-mode)
-         ("\\.ts\\'" . web-mode)
-         ("\\.tsx\\'" . web-mode)
-         ("\\.html\\'" . web-mode)
-         ("\\.vue\\'" . web-mode)
-         ("\\.json\\'" . web-mode))
+(use-package web-mode
+  :mode
+  (("\\.js\\'" . web-mode)
+   ("\\.jsx\\'" . web-mode)
+   ("\\.ts\\'" . web-mode)
+   ("\\.tsx\\'" . web-mode)
+   ("\\.html\\'" . web-mode)
+   ("\\.vue\\'" . web-mode)
+   ("\\.json\\'" . web-mode))
   :commands web-mode
   :config
   (setq web-mode-content-types-alist
