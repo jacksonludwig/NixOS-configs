@@ -221,23 +221,24 @@
   (setq dashboard-footer-messages '("Configured by Jackson"))
   (dashboard-setup-startup-hook))
 
-;;(use-package doom-modeline
-;;  :after all-the-icons
-;;  :hook
-;;  (after-init . doom-modeline-mode)
-;;  :config
-;;  (setq doom-modeline-height 34
-;;        doom-modeline-bar-width 2
-;;        doom-modeline-major-mode-icon nil)
-;;  )
+(use-package doom-modeline
+  :after all-the-icons
+  :hook
+  (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-bar-width 1
+        doom-modeline-major-mode-icon nil)
+  )
 
 (use-package doom-themes
+  :after doom-modeline
   :init
   (load-theme 'doom-one-light t)
   :config
   (custom-set-faces
-  '(org-block-end-line ((t (:background "#"))))
-  '(org-block-begin-line ((t (:background "#"))))
+  '(org-block-end-line ((t (:background "#")))) ;; avoid bleeding when folded
+  '(org-block-begin-line ((t (:background "#")))) ;; symmetry
+  '(doom-modeline-bar ((t (:background nil)))) ;; hide bar
   ))
 
 #+end_src
