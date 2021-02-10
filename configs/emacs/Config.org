@@ -221,19 +221,25 @@
   (setq dashboard-footer-messages '("Configured by Jackson"))
   (dashboard-setup-startup-hook))
 
-(use-package doom-themes
-  :after all-the-icons
-  :init
-  (load-theme 'doom-one-light t)
-  )
-
 ;;(use-package doom-modeline
-;;  :hook (after-init . doom-modeline-mode)
+;;  :after all-the-icons
+;;  :hook
+;;  (after-init . doom-modeline-mode)
 ;;  :config
 ;;  (setq doom-modeline-height 34
 ;;        doom-modeline-bar-width 2
 ;;        doom-modeline-major-mode-icon nil)
 ;;  )
+
+(use-package doom-themes
+  :init
+  (load-theme 'doom-one-light t)
+  :config
+  (custom-set-faces
+  '(org-block-end-line ((t (:background "#"))))
+  '(org-block-begin-line ((t (:background "#"))))
+  ))
+
 #+end_src
 * LSP and other language support
 ** Company
