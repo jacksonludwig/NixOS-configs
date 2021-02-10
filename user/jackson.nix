@@ -43,6 +43,7 @@
     iosevka-bin
     fira-code
     roboto-mono
+    source-code-pro
     jetbrains-mono
 
     neofetch

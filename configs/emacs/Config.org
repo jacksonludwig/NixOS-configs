@@ -69,10 +69,10 @@
 (set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Iosevka" :height jackson/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Iosevka")
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans" :height jackson/default-variable-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "DejaVu Sans")
 #+end_src
 * Core packages and keybinds
 ** Diminish
@@ -224,7 +224,7 @@
 (use-package doom-themes
   :after all-the-icons
   :init
-  (load-theme 'doom-molokai t)
+  (load-theme 'doom-one-light t)
   )
 
 ;;(use-package doom-modeline

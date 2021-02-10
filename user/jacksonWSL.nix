@@ -41,6 +41,7 @@
     roboto-mono
     fira-code
     jetbrains-mono
+    source-code-pro
 
     neofetch
   ];
