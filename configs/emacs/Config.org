@@ -254,7 +254,8 @@
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
   :config
-  (setq company-idle-delay 1.0)
+  (setq company-idle-delay 1.0
+        company-minimum-prefix-length 1)
   )
 #+end_src
 ** Flycheck
