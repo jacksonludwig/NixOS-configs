@@ -253,6 +253,8 @@
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
+  :config
+  (setq company-idle-delay 1.0)
   )
 #+end_src
 ** Flycheck
@@ -263,7 +265,7 @@
 (use-package flycheck
   :init (global-flycheck-mode)
   :config
-  (setq flycheck-check-syntax-automatically '(mode-enabled save))
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
   )
 #+end_src
 ** Yasnippet
