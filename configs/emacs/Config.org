@@ -1,5 +1,6 @@
 #+title: Init.el Generator
-#+PROPERTY: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
+#+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
+#+startup: fold
 
 * Core settings and variables
 #+begin_src emacs-lisp
@@ -264,8 +265,9 @@
 (use-package markdown-mode)
 
 (use-package flycheck
-  :init (global-flycheck-mode)
-  :config
+  :hook
+  (prog-mode . flycheck-mode)
+  :init
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   )
 #+end_src
