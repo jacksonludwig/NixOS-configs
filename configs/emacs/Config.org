@@ -237,10 +237,10 @@
   (load-theme 'doom-one-light t)
   :config
   (custom-set-faces
-  '(org-block-end-line ((t (:background "#")))) ;; avoid bleeding when folded
-  '(org-block-begin-line ((t (:background "#")))) ;; symmetry
-  '(doom-modeline-bar ((t (:background nil)))) ;; hide bar
-  ))
+   '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
+   '(org-block-begin-line ((t (:background nil)))) ;; symmetry
+   '(doom-modeline-bar ((t (:background nil)))) ;; hide bar
+   ))
 
 #+end_src
 * LSP and other language support
@@ -333,7 +333,7 @@
    :keymaps 'lsp-mode-map
    "M-?" 'lsp-ui-peek-find-references
    "M-." 'lsp-ui-peek-find-definitions
-  ))
+   ))
 #+end_src
 ** Major mode config
 *** Python
@@ -378,18 +378,18 @@
 #+begin_src emacs-lisp
 (use-package org
   :init
-  (setq org-startup-indented t)
-  :hook
-  (org-mode . visual-line-mode)
-  :config
-  (setq org-directory "~/git_repos/emacs-org-mode"
-        org-agenda-files '("~/git_repos/emacs-org-mode/School.org")
+  (setq org-startup-indented t
+        org-indent-indentation-per-level 1
         org-src-tab-acts-natively t ;; Better tabs in source blocks
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
         org-ellipsis "⤵" ;; ellipsis
-        org-cycle-separator-lines 1 ;; num of blank lines to separate from headings
         org-special-ctrl-a/e t)
+  :hook
+  (org-mode . visual-line-mode)
+  :config
+  (setq org-directory "~/git_repos/emacs-org-mode"
+        org-agenda-files '("~/git_repos/emacs-org-mode/School.org"))
   ;; Following two lines are a workaround so that special a/e works
   ;; in visual line mode.
   (define-key org-mode-map "\C-a" 'org-beginning-of-line)
