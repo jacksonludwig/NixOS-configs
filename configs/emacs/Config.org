@@ -66,10 +66,10 @@
 (defvar jackson/default-font-size 125)
 (defvar jackson/default-variable-font-size 125)
 
-(set-face-attribute 'default nil :font "Iosevka" :height jackson/default-font-size)
+(set-face-attribute 'default nil :font "Jetbrains Mono" :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Iosevka")
+(set-face-attribute 'fixed-pitch nil :font "Jetbrains Mono")
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans")
@@ -227,6 +227,7 @@
   (after-init . doom-modeline-mode)
   :config
   (setq doom-modeline-bar-width 1
+        doom-modeline-height 29
         doom-modeline-major-mode-icon nil)
   )
 
@@ -328,7 +329,7 @@
    :predicate '(lsp-mode)
    :keymaps 'lsp-mode-map
    "M-?" 'lsp-ui-peek-find-references
-   "M-." 'lsp-ui-peek-find-definition
+   "M-." 'lsp-ui-peek-find-definitions
   ))
 #+end_src
 ** Major mode config
