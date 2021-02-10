@@ -377,6 +377,8 @@
 *** Org
 #+begin_src emacs-lisp
 (use-package org
+  :init
+  (setq org-startup-indented t)
   :hook
   (org-mode . visual-line-mode)
   :config
@@ -386,6 +388,7 @@
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
         org-ellipsis "⤵" ;; ellipsis
+        org-cycle-separator-lines 1 ;; num of blank lines to separate from headings
         org-special-ctrl-a/e t)
   ;; Following two lines are a workaround so that special a/e works
   ;; in visual line mode.
