@@ -255,9 +255,11 @@
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
   :config
-  (setq company-idle-delay 1.0
+  (setq company-idle-delay nil
         company-minimum-prefix-length 1
         company-dabbrev-downcase nil)
+  :general
+  ("C-M-[" 'company-complete)
   )
 
 (use-package company-box
