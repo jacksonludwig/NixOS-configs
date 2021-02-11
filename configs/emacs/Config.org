@@ -264,6 +264,7 @@
 
 (use-package company-box
   :hook (company-mode . company-box-mode)
+  :diminish
   :config
   (setq company-box-doc-enable nil)
   )
