@@ -256,7 +256,8 @@
               ("C-p" . company-select-previous))
   :config
   (setq company-idle-delay 1.0
-        company-minimum-prefix-length 1)
+        company-minimum-prefix-length 1
+        company-dabbrev-downcase nil)
   )
 #+end_src
 ** Flycheck
@@ -380,8 +381,9 @@
 #+begin_src emacs-lisp
 (use-package org
   :init
-  (setq org-startup-indented t
-        org-indent-indentation-per-level 1
+  (setq org-adapt-indentation nil
+        org-startup-indented t
+        org-indent-indentation-per-level 1        
         org-src-tab-acts-natively t ;; Better tabs in source blocks
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
