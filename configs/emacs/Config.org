@@ -259,6 +259,12 @@
         company-minimum-prefix-length 1
         company-dabbrev-downcase nil)
   )
+
+(use-package company-box
+  :hook (company-mode . company-box-mode)
+  :config
+  (setq company-box-doc-enable nil)
+  )
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
