@@ -64,12 +64,13 @@
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 125)
+(defvar jackson/default-font-size 123)
+(defvar jackson/main-font "Jetbrains Mono")
 
-(set-face-attribute 'default nil :font "Jetbrains Mono" :height jackson/default-font-size)
+(set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Jetbrains Mono")
+(set-face-attribute 'fixed-pitch nil :font jackson/main-font)
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :font "DejaVu Sans")
