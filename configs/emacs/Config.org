@@ -38,7 +38,8 @@
 
 (straight-use-package 'use-package)
 #+end_src
-* Basic UI Setup
+* Basic Setup
+** UI
 #+begin_src emacs-lisp
 (scroll-bar-mode -1)        ; Disable visible scrollbar
 (tool-bar-mode -1)          ; Disable the toolbar
@@ -46,7 +47,9 @@
 
 (menu-bar-mode -1)          ; Disable the menu bar
 (setq visible-bell t)       ; Visual bell
-
+#+end_src
+** Built-in setting changes
+#+begin_src emacs-lisp
 (column-number-mode)
 ;; (global-display-line-numbers-mode t) ; line numbers
 
@@ -62,7 +65,7 @@
 (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode t)
 
-(electric-pair-mode t)
+(add-hook 'prog-mode-hook 'electric-pair-local-mode) ; electric pair only in prog modes
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
@@ -244,7 +247,7 @@
    '(doom-modeline-bar ((t (:background nil)))) ;; hide bar
    ))
 #+end_src
-* LSP and other language support
+* Language and related support
 ** Company
 #+begin_src emacs-lisp
 (use-package company
@@ -280,6 +283,7 @@
   :diminish yas-minor-mode
   :hook
   (prog-mode . yas-minor-mode)
+  (org-mode . yas-minor-mode)
   )
 
 (use-package yasnippet-snippets)
