@@ -61,6 +61,8 @@
 
 (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode t)
+
+(electric-pair-mode t)
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
@@ -209,7 +211,6 @@
 
 ;; start screen
 (use-package dashboard
-  :ensure t
   :config
   (setq dashboard-startup-banner (concat user-emacs-directory "splash.png")
         dashboard-banner-logo-title "Emacs")
