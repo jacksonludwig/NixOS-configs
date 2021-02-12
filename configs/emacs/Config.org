@@ -78,7 +78,7 @@
 (set-face-attribute 'fixed-pitch nil :font jackson/main-font)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "DejaVu Sans")
+(set-face-attribute 'variable-pitch nil :font "Overpass")
 #+end_src
 * Core packages and keybinds
 ** Diminish
@@ -389,6 +389,7 @@
   )
 #+end_src
 *** Org
+**** General Settings
 #+begin_src emacs-lisp
 (use-package org
   :init
@@ -410,7 +411,9 @@
   (define-key org-mode-map "\C-a" 'org-beginning-of-line)
   (define-key org-mode-map "\C-e" 'org-end-of-line)
   )
-
+#+end_src
+**** Babel settings
+#+begin_src emacs-lisp
 ;; BABEL LANGUAGES
 (org-babel-do-load-languages
  'org-babel-load-languages

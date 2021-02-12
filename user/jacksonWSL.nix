@@ -42,6 +42,7 @@
     fira-code
     jetbrains-mono
     source-code-pro
+    overpass
 
     neofetch
   ];

@@ -45,6 +45,7 @@
     roboto-mono
     source-code-pro
     jetbrains-mono
+    overpass
 
     neofetch
   ];
