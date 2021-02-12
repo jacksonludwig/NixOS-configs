@@ -242,7 +242,6 @@
    '(org-block-begin-line ((t (:background nil)))) ;; symmetry
    '(doom-modeline-bar ((t (:background nil)))) ;; hide bar
    ))
-
 #+end_src
 * LSP and other language support
 ** Company
