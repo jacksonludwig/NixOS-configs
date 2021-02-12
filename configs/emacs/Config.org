@@ -64,8 +64,8 @@
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 130)
-(defvar jackson/main-font "Source Code Pro")
+(defvar jackson/default-font-size 123)
+(defvar jackson/main-font "Jetbrains Mono")
 
 (set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
 
