@@ -209,9 +209,12 @@
   :config (counsel-projectile-mode))
 #+end_src
 * Visual and theme
+** All-the-icons
 #+begin_src emacs-lisp
 (use-package all-the-icons)
-
+#+end_src
+** startup screen
+#+begin_src emacs-lisp
 ;; start screen
 (use-package dashboard
   :config
@@ -225,7 +228,9 @@
   (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
   (setq dashboard-footer-messages '("Configured by Jackson"))
   (dashboard-setup-startup-hook))
-
+#+end_src
+** Theme/modeline
+#+begin_src emacs-lisp
 (use-package doom-modeline
   :after all-the-icons
   :hook
