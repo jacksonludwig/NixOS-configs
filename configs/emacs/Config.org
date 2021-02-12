@@ -65,6 +65,8 @@
 (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode t)
 
+(show-paren-mode t)
+
 (add-hook 'prog-mode-hook 'electric-pair-local-mode) ; electric pair only in prog modes
 #+end_src
 * Font setup
@@ -369,13 +371,15 @@
 #+begin_src emacs-lisp
 (use-package web-mode
   :mode
-  (("\\.js\\'" . web-mode)
+  (
+   ("\\.js\\'" . web-mode)
    ("\\.jsx\\'" . web-mode)
    ("\\.ts\\'" . web-mode)
    ("\\.tsx\\'" . web-mode)
    ("\\.html\\'" . web-mode)
    ("\\.vue\\'" . web-mode)
-   ("\\.json\\'" . web-mode))
+   ("\\.json\\'" . web-mode)
+   )
   :commands web-mode
   :config
   (setq web-mode-content-types-alist
