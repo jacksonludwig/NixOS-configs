@@ -64,8 +64,8 @@
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 123)
-(defvar jackson/main-font "Jetbrains Mono")
+(defvar jackson/default-font-size 130)
+(defvar jackson/main-font "Source Code Pro")
 
 (set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
 
@@ -235,7 +235,7 @@
 (use-package doom-themes
   :after doom-modeline
   :init
-  (load-theme 'doom-one-light t)
+  (load-theme 'doom-tomorrow-night t)
   :config
   (custom-set-faces
    '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
@@ -259,14 +259,7 @@
         company-minimum-prefix-length 1
         company-dabbrev-downcase nil)
   :general
-  ("C-M-[" 'company-complete)
-  )
-
-(use-package company-box
-  :hook (company-mode . company-box-mode)
-  :diminish
-  :config
-  (setq company-box-doc-enable nil)
+  ("C-M-SPC" 'company-complete)
   )
 #+end_src
 ** Flycheck
