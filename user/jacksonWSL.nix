@@ -29,6 +29,7 @@
     nodePackages.npm
 
     firefox
+    google-chrome
     htop
     xclip
     ispell
