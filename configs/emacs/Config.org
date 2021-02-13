@@ -47,6 +47,9 @@
 
 (menu-bar-mode -1)          ; Disable the menu bar
 (setq visible-bell t)       ; Visual bell
+
+(setq initial-scratch-message ";; Emacs\n\n") ;; scratch text
+(setq inhibit-startup-screen t) ;; Just show scratch
 #+end_src
 ** Built-in setting changes
 #+begin_src emacs-lisp
@@ -71,8 +74,8 @@
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 123)
-(defvar jackson/main-font "Jetbrains Mono")
+(defvar jackson/default-font-size 130)
+(defvar jackson/main-font "Source Code Pro")
 
 (set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
 
@@ -212,24 +215,9 @@
 #+end_src
 * Visual and theme
 ** All-the-icons
+This is required by doom-modeline and occasionally other packages optionally.
 #+begin_src emacs-lisp
 (use-package all-the-icons)
-#+end_src
-** startup screen
-#+begin_src emacs-lisp
-;; start screen
-(use-package dashboard
-  :config
-  (setq dashboard-startup-banner (concat user-emacs-directory "splash.png")
-        dashboard-banner-logo-title "Emacs")
-  (setq dashboard-items '(
-                          (recents  . 5)
-                          (projects . 5)
-                          (agenda . 5)
-                          ))
-  (setq dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name)
-  (setq dashboard-footer-messages '("Configured by Jackson"))
-  (dashboard-setup-startup-hook))
 #+end_src
 ** Theme/modeline
 #+begin_src emacs-lisp
