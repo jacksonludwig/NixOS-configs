@@ -381,6 +381,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   :config
   (setq web-mode-content-types-alist
         '(("jsx" . "\\.js[x]?\\'")))
+  (setq web-mode-auto-close-style 2)
   :custom
   (web-mode-markup-indent-offset 2)
   (web-mode-css-indent-offset 2)
