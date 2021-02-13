@@ -414,6 +414,20 @@ This is required by doom-modeline and occasionally other packages optionally.
   (define-key org-mode-map "\C-e" 'org-end-of-line)
   )
 #+end_src
+**** Org appear
+#+begin_src emacs-lisp
+(use-package org-appear
+  :straight '(org-appear :type git :host github :repo "awth13/org-appear")
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-hide-emphasis-markers t
+        org-appear-autoemphasis t
+        org-appear-autosubmarkers t
+        org-appear-autolinks t)
+  ;; for proper first-time setup, `org-appear--set-fragments'
+  ;; needs to be run after other hooks have acted.
+  (run-at-time nil nil #'org-appear--set-fragments))
+#+end_src
 **** Babel settings
 #+begin_src emacs-lisp
 ;; BABEL LANGUAGES
