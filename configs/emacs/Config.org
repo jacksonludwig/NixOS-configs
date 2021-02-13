@@ -53,22 +53,22 @@
 #+end_src
 ** Built-in setting changes
 #+begin_src emacs-lisp
-(column-number-mode)
-;; (global-display-line-numbers-mode t) ; line numbers
+(column-number-mode) ;; show line nums in modeline
+;; (global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
 
-(setq-default tab-width 2)  ; Tab length
-(setq-default indent-tabs-mode nil) ; Spaces, not tabs
+(setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
+(setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
 
 (setq-default truncate-lines t) ; Don't wrap by default
 
-(setq help-window-select t) ; Auto switch to help buffers
+(setq help-window-select t) ; Auto switch to help buffers (usually just reading and quitting right away)
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
 (setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode t)
 
-(show-paren-mode t)
+(show-paren-mode t) ;; show matching parens
 
 (add-hook 'prog-mode-hook 'electric-pair-local-mode) ; electric pair only in prog modes
 #+end_src
@@ -76,6 +76,7 @@
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 130)
 (defvar jackson/main-font "Source Code Pro")
+(defvar jackson/variable-font "Overpass")
 
 (set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
 
@@ -83,7 +84,7 @@
 (set-face-attribute 'fixed-pitch nil :font jackson/main-font)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Overpass")
+(set-face-attribute 'variable-pitch nil :font jackson/variable-font)
 #+end_src
 * Core packages and keybinds
 ** Diminish
@@ -236,6 +237,8 @@ This is required by doom-modeline and occasionally other packages optionally.
   :init
   (load-theme 'doom-tomorrow-night t)
   :config
+  (doom-themes-visual-bell-config)
+  (doom-themes-org-config)
   (custom-set-faces
    '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
    '(org-block-begin-line ((t (:background nil)))) ;; symmetry
