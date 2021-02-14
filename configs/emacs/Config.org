@@ -267,7 +267,7 @@ This is required by doom-modeline and occasionally other packages optionally.
         company-minimum-prefix-length 1
         company-dabbrev-downcase nil)
   :general
-  ("C-M-SPC" 'company-complete)
+  ("M-n" 'company-complete)
   )
 #+end_src
 ** Flycheck
