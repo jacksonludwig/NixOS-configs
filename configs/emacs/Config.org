@@ -364,6 +364,15 @@ This is required by doom-modeline and occasionally other packages optionally.
                (setq indent-tabs-mode nil)))
   )
 #+end_src
+*** MIPS
+This is mostly just for source blocks. This mode needs more work to be used instead of MARS.
+#+begin_src emacs-lisp
+(use-package mips-mode
+  :hook
+  (mips-mode . (lambda ()
+                 (flycheck-mode -1)))
+  :mode "\\.mips$")
+#+end_src
 *** Web
 #+begin_src emacs-lisp
 (use-package web-mode
