@@ -74,7 +74,7 @@
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 125)
+(defvar jackson/default-font-size 130)
 (defvar jackson/main-font "Iosevka")
 (defvar jackson/variable-font "Alegreya")
 
@@ -447,15 +447,6 @@ This is required by doom-modeline and occasionally other packages optionally.
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
-#+end_src
-**** Mixed-pitch
-#+begin_src emacs-lisp
-(use-package mixed-pitch
-  :hook
-  ;; If you want it in all text modes:
-  (text-mode . mixed-pitch-mode)
-  :config
-  (setq mixed-pitch-variable-pitch-cursor 'box))
 #+end_src
 * Other package configuration
 ** Email
