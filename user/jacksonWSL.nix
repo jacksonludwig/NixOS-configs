@@ -39,11 +39,11 @@
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka-bin
-    roboto-mono
     fira-code
     jetbrains-mono
     source-code-pro
     overpass
+    alegreya
 
     neofetch
   ];

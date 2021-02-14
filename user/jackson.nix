@@ -28,6 +28,7 @@
     nodePackages.npm
 
     firefox
+    google-chrome
     discord
     htop
     scrot
@@ -42,10 +43,10 @@
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka-bin
     fira-code
-    roboto-mono
     source-code-pro
     jetbrains-mono
     overpass
+    alegreya
 
     neofetch
   ];
