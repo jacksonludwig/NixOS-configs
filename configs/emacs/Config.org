@@ -123,13 +123,17 @@
 #+end_src
 ** Counsel/Ivy
 #+begin_src emacs-lisp
+(use-package prescient)
+
 (use-package counsel
+  :after prescient
   :diminish counsel-mode
   :config
   (counsel-mode 1))
 
 (use-package ivy
   :diminish
+  :after counsel
   :bind (("C-s" . swiper)
          :map ivy-minibuffer-map
          ("TAB" . ivy-alt-done)
@@ -152,15 +156,16 @@
     "tt"  '(counsel-load-theme :which-key "choose theme")
     ))
 
-(use-package ivy-prescient
-  :after counsel
-  :config
-  (ivy-prescient-mode 1)
-  (prescient-persist-mode))
-
 (use-package ivy-rich
+  :after ivy
   :init
   (ivy-rich-mode 1))
+
+(use-package ivy-prescient
+  :after ivy-rich
+  :config
+  (ivy-prescient-mode 1)
+  (prescient-persist-mode 1))
 #+end_src
 ** Vterm
 #+begin_src emacs-lisp
@@ -249,7 +254,6 @@ This is required by doom-modeline and occasionally other packages optionally.
   (custom-set-faces
    '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
    '(org-block-begin-line ((t (:background nil)))) ;; symmetry
-   '(doom-modeline-bar ((t (:background nil)))) ;; hide bar
    ))
 #+end_src
 * Language and related support
@@ -301,6 +305,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   (python-mode . lsp)
   (go-mode . lsp)
   (web-mode . lsp)
+  (css-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
@@ -384,7 +389,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
    ("\\.tsx\\'" . web-mode)
    ("\\.html\\'" . web-mode)
    ("\\.vue\\'" . web-mode)
-   ("\\.json\\'" . web-mode)
+;;   ("\\.json\\'" . web-mode)
    )
   :commands web-mode
   :config
