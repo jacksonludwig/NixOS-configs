@@ -78,7 +78,7 @@
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 130)
 (defvar jackson/main-font "Iosevka")
-(defvar jackson/variable-font "Alegreya")
+(defvar jackson/variable-font "Overpass")
 
 (set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
 
@@ -99,30 +99,31 @@
 #+end_src
 ** Evil
 #+begin_src emacs-lisp
-;;(use-package evil
-;;  :init
-;;  (setq evil-undo-system 'undo-fu)
-;;  (setq evil-want-integration t)
-;;  (setq evil-want-keybinding nil)
-;;  (setq evil-want-C-u-scroll t)
-;;  (setq evil-want-C-i-jump nil)
-;;  (setq evil-mode-line-format nil)
-;;  :config
-;;  (evil-mode 1)
-;;  (evil-set-initial-state 'messages-buffer-mode 'normal)
-;;  )
-;;
-;;(use-package evil-collection
-;;  :after evil
-;;  :custom
-;;  (evil-collection-company-use-tng nil)
-;;  :init
-;;  (evil-collection-init 'vterm))
-;;
-;;(use-package evil-org
-;;  :after org
-;;  :hook (org-mode . evil-org-mode)
-;;  )
+(use-package evil
+  :init
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-mode-line-format nil)
+  (setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
+  :config
+  (evil-mode 1)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  )
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-company-use-tng nil)
+  :init
+  (evil-collection-init 'vterm))
+
+(use-package evil-org
+  :after org
+  :hook (org-mode . evil-org-mode)
+  )
 #+end_src
 ** General
 #+begin_src emacs-lisp
