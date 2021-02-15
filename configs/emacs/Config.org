@@ -54,7 +54,9 @@
 ** Built-in setting changes
 #+begin_src emacs-lisp
 (column-number-mode) ;; show line nums in modeline
-;; (global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
+
+;;(setq display-line-numbers-type 'relative)
+;;(global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
 
 (setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
 (setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
@@ -94,6 +96,33 @@
   (diminish 'eldoc-mode)
   (diminish 'global-whitespace-mode)
   (diminish 'visual-line-mode))
+#+end_src
+** Evil
+#+begin_src emacs-lisp
+;;(use-package evil
+;;  :init
+;;  (setq evil-undo-system 'undo-fu)
+;;  (setq evil-want-integration t)
+;;  (setq evil-want-keybinding nil)
+;;  (setq evil-want-C-u-scroll t)
+;;  (setq evil-want-C-i-jump nil)
+;;  (setq evil-mode-line-format nil)
+;;  :config
+;;  (evil-mode 1)
+;;  (evil-set-initial-state 'messages-buffer-mode 'normal)
+;;  )
+;;
+;;(use-package evil-collection
+;;  :after evil
+;;  :custom
+;;  (evil-collection-company-use-tng nil)
+;;  :init
+;;  (evil-collection-init 'vterm))
+;;
+;;(use-package evil-org
+;;  :after org
+;;  :hook (org-mode . evil-org-mode)
+;;  )
 #+end_src
 ** General
 #+begin_src emacs-lisp
@@ -232,14 +261,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   :hook
   (after-init . doom-modeline-mode)
   :config
-  (defun doom-modeline-conditional-buffer-encoding ()
-    "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
-    (setq-local doom-modeline-buffer-encoding
-                (unless (or (eq buffer-file-coding-system 'utf-8-unix)
-                            (eq buffer-file-coding-system 'utf-8)))))
-  (add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
-  
-  (setq doom-modeline-bar-width 1
+  (setq doom-modeline-bar-width 4
         doom-modeline-height 29
         doom-modeline-major-mode-icon nil)
   )
@@ -249,6 +271,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   :init
   (load-theme 'doom-tomorrow-night t)
   :config
+  (setq doom-modeline-modal-icon nil)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
   (custom-set-faces
@@ -263,12 +286,12 @@ This is required by doom-modeline and occasionally other packages optionally.
   :diminish company-mode
   :hook
   (after-init . global-company-mode)
+  (org-mode . (lambda () (setq-local company-idle-delay nil))) ;; manual completion in org buffers
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
   :config
-  (setq company-idle-delay nil
-        company-minimum-prefix-length 1
+  (setq company-minimum-prefix-length 1
         company-dabbrev-downcase nil)
   :general
   ("M-n" 'company-complete)
@@ -304,8 +327,8 @@ This is required by doom-modeline and occasionally other packages optionally.
   :hook
   (python-mode . lsp)
   (go-mode . lsp)
-  (web-mode . lsp)
   (css-mode . lsp)
+  (web-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
@@ -381,28 +404,26 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 *** Web
 #+begin_src emacs-lisp
 (use-package web-mode
+  :ensure t
   :mode
-  (
-   ("\\.js\\'" . web-mode)
-   ("\\.jsx\\'" . web-mode)
-   ("\\.ts\\'" . web-mode)
-   ("\\.tsx\\'" . web-mode)
-   ("\\.html\\'" . web-mode)
-   ("\\.vue\\'" . web-mode)
-;;   ("\\.json\\'" . web-mode)
-   )
-  :commands web-mode
+  ("\\.ejs\\'"
+   "\\.hbs\\'"
+   "\\.html\\'"
+   "\\.[jt]sx?\\'")
   :config
-  (setq web-mode-content-types-alist
-        '(("jsx" . "\\.js[x]?\\'")))
-  (setq web-mode-auto-close-style 2)
-  :custom
-  (web-mode-markup-indent-offset 2)
-  (web-mode-css-indent-offset 2)
-  (web-mode-code-indent-offset 2)
-  (web-mode-style-padding 2)
-  (web-mode-script-padding 2)
+  (setq web-mode-content-types-alist '(("jsx" . "\\.[jt]sx?\\'")))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-script-padding 2)
+  (setq web-mode-block-padding 2)
+  (setq web-mode-style-padding 2)
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-closing t)
   )
+
+(setq js-indent-level 2)
+(setq css-indent-offset 2)
 #+end_src
 *** Org
 **** General Settings
@@ -416,7 +437,8 @@ This is mostly just for source blocks. This mode needs more work to be used inst
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
         org-ellipsis "⤵" ;; ellipsis
-        org-special-ctrl-a/e t)
+        org-special-ctrl-a/e t
+        )
   :hook
   (org-mode . visual-line-mode)
   :config
