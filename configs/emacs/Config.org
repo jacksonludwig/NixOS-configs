@@ -420,9 +420,9 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   (setq web-mode-style-padding 2)
   (setq web-mode-enable-auto-closing t)
   
-  (setq web-mode-enable-auto-quoting nil)
+  (setq web-mode-enable-auto-quoting nil) ;; sometimes we don't want quotes
   (setq web-mode-enable-auto-pairing nil) ;; electric takes care of this
-  (setq web-mode-auto-close-style 2)
+  (setq web-mode-auto-close-style 2) ;; auto close on <
   )
 
 (setq js-indent-level 2)
@@ -463,7 +463,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   (setq org-hide-emphasis-markers t
         org-appear-autoemphasis t
         org-appear-autosubmarkers t
-        org-appear-autolinks t)
+        org-appear-autolinks nil)
   ;; for proper first-time setup, `org-appear--set-fragments'
   ;; needs to be run after other hooks have acted.
   (run-at-time nil nil #'org-appear--set-fragments))
