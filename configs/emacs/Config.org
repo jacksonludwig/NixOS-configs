@@ -55,7 +55,7 @@
 #+begin_src emacs-lisp
 (column-number-mode) ;; show line nums in modeline
 
-;;(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'relative)
 ;;(global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
 
 (setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
@@ -122,6 +122,7 @@
 
 (use-package evil-org
   :after org
+  :diminish evil-org-mode
   :hook (org-mode . evil-org-mode)
   )
 #+end_src
@@ -257,18 +258,18 @@ This is required by doom-modeline and occasionally other packages optionally.
 #+end_src
 ** Theme/modeline
 #+begin_src emacs-lisp
-(use-package doom-modeline
-  :after all-the-icons
-  :hook
-  (after-init . doom-modeline-mode)
-  :config
-  (setq doom-modeline-bar-width 4
-        doom-modeline-height 29
-        doom-modeline-major-mode-icon nil)
-  )
+;;(use-package doom-modeline
+;;  :after all-the-icons
+;;  :hook
+;;  (after-init . doom-modeline-mode)
+;;  :config
+;;  (setq doom-modeline-bar-width 4
+;;        doom-modeline-height 29
+;;        doom-modeline-major-mode-icon nil)
+;;  )
 
 (use-package doom-themes
-  :after doom-modeline
+  ;;:after doom-modeline
   :init
   (load-theme 'doom-tomorrow-night t)
   :config
@@ -296,6 +297,16 @@ This is required by doom-modeline and occasionally other packages optionally.
         company-dabbrev-downcase nil)
   :general
   ("M-n" 'company-complete)
+  )
+
+(use-package company-posframe
+  :after company
+  :diminish company-posframe-mode
+  :config
+  (setq company-posframe-quickhelp-delay nil
+        company-posframe-show-indicator nil
+        company-posframe-show-metadata nil)
+  (company-posframe-mode 1)
   )
 #+end_src
 ** Flycheck
