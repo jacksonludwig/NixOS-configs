@@ -418,8 +418,11 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   (setq web-mode-script-padding 2)
   (setq web-mode-block-padding 2)
   (setq web-mode-style-padding 2)
-  (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-auto-closing t)
+  
+  (setq web-mode-enable-auto-quoting nil)
+  (setq web-mode-enable-auto-pairing nil) ;; electric takes care of this
+  (setq web-mode-auto-close-style 2)
   )
 
 (setq js-indent-level 2)
