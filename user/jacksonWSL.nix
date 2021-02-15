@@ -36,6 +36,7 @@
     texlive.combined.scheme-medium
     isync
     mu
+    nodePackages.prettier
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka-bin

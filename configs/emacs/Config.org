@@ -428,6 +428,9 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 
 (setq js-indent-level 2)
 (setq css-indent-offset 2)
+
+(use-package prettier-js
+  :after web-mode)
 #+end_src
 *** Org
 **** General Settings

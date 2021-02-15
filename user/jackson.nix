@@ -26,6 +26,7 @@
     gopls
     nodePackages.pyright
     nodePackages.npm
+    nodePackages.prettier
 
     firefox
     google-chrome
