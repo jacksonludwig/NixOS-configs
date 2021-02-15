@@ -405,7 +405,6 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 *** Web
 #+begin_src emacs-lisp
 (use-package web-mode
-  :ensure t
   :mode
   ("\\.ejs\\'"
    "\\.hbs\\'"
