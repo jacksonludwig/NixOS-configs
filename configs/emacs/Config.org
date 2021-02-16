@@ -98,7 +98,8 @@
   (diminish 'visual-line-mode))
 #+end_src
 ** Evil
-#+begin_src emacs-lisp
+This can be activated to use hybrid vim and emacs bindings.
+#+begin_src emacs-lisp :tangle no
 (use-package evil
   :init
   (setq evil-undo-system 'undo-fu)
@@ -479,8 +480,9 @@ This is mostly just for source blocks. This mode needs more work to be used inst
         org-appear-autosubmarkers t
         org-appear-autolinks nil)
   ;; for proper first-time setup, `org-appear--set-fragments'
-  ;; needs to be run after other hooks have acted.
-  (run-at-time nil nil #'org-appear--set-fragments))
+  ;; may need to be run after other hooks have acted.
+  (run-at-time nil nil #'org-appear--set-fragments)
+  )
 #+end_src
 **** Babel settings
 #+begin_src emacs-lisp
