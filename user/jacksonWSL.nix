@@ -60,7 +60,6 @@
     package = pkgs.neovim-nightly;
     withNodeJs = true;
   };
-  xdg.configFile."nvim/init.lua".source = ../configs/nvim_lua/init.lua;
 
   programs.emacs = {
     enable = true;

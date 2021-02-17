@@ -58,13 +58,6 @@
     userName = "Jackson Ludwig";
   };
 
-  programs.neovim = {
-    enable = true;
-    package = pkgs.neovim-nightly;
-    withNodeJs = true;
-  };
-  xdg.configFile."nvim/init.lua".source = ../configs/nvim_lua/init.lua;
-
   programs.alacritty = {
     enable = true;
     settings = {
