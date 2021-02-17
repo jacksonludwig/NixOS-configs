@@ -11,5 +11,7 @@ end
 
 vim.cmd [[packadd packer.nvim]]
 
--- Load components
-require('lua/jackson/plugins')
+-- Install plugins
+require('packer').startup(function()
+	use {'wbthomason/packer.nvim', opt = true}
+end)
