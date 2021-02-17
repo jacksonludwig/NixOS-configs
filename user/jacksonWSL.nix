@@ -59,6 +59,7 @@
     enable = true;
     package = pkgs.neovim-nightly;
     withNodeJs = true;
+    extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
 
   programs.emacs = {
