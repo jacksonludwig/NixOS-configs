@@ -47,7 +47,7 @@
     source-code-pro
     jetbrains-mono
     overpass
-    alegreya
+    source-sans-pro
 
     neofetch
   ];
@@ -62,7 +62,6 @@
     enable = true;
     package = pkgs.neovim-nightly;
     withNodeJs = true;
-    extraConfig = builtins.readFile ../configs/nvim/init.vim;
   };
 
   programs.alacritty = {

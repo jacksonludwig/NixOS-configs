@@ -77,16 +77,16 @@
 * Font setup
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 130)
-(defvar jackson/main-font "Iosevka")
-(defvar jackson/variable-font "Overpass")
+(defvar jackson/main-font "Source Code Pro")
+(defvar jackson/variable-font "Source Sans Pro")
 
-(set-face-attribute 'default nil :font jackson/main-font :height jackson/default-font-size)
+(set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font jackson/main-font)
+(set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font jackson/variable-font)
+(set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
 #+end_src
 * Core packages and keybinds
 ** Diminish
@@ -99,7 +99,7 @@
 #+end_src
 ** Evil
 This can be activated to use hybrid vim and emacs bindings.
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package evil
   :init
   (setq evil-undo-system 'undo-fu)
@@ -274,7 +274,6 @@ This is required by doom-modeline and occasionally other packages optionally.
   :init
   (load-theme 'doom-tomorrow-night t)
   :config
-  (setq doom-modeline-modal-icon nil)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
   (custom-set-faces
@@ -288,7 +287,8 @@ This is required by doom-modeline and occasionally other packages optionally.
 (use-package company
   :diminish company-mode
   :hook
-  (after-init . global-company-mode)
+  (prog-mode . company-mode)
+  (org-mode . company-mode)
   (org-mode . (lambda () (setq-local company-idle-delay nil))) ;; manual completion in org buffers
   :bind (:map company-active-map
               ("C-n" . company-select-next)
@@ -454,7 +454,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
         org-src-tab-acts-natively t ;; Better tabs in source blocks
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
-        org-ellipsis "⤵" ;; ellipsis
+        org-ellipsis " [...]"
         org-special-ctrl-a/e t
         )
   :hook
@@ -470,7 +470,8 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   )
 #+end_src
 **** Org appear
-#+begin_src emacs-lisp
+This dynamically hides org markers, but I'm not currently using it.
+#+begin_src emacs-lisp :tangle no
 (use-package org-appear
   :straight '(org-appear :type git :host github :repo "awth13/org-appear")
   :hook (org-mode . org-appear-mode)

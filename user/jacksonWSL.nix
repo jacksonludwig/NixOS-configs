@@ -43,8 +43,8 @@
     fira-code
     jetbrains-mono
     source-code-pro
+    source-sans-pro
     overpass
-    alegreya
 
     neofetch
   ];
@@ -59,7 +59,6 @@
     enable = true;
     package = pkgs.neovim-nightly;
     withNodeJs = true;
-    extraConfig = builtins.readFile ../configs/nvim/init.vim;
   };
 
   programs.emacs = {
