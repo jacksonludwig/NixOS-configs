@@ -342,6 +342,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   (go-mode . lsp)
   (css-mode . lsp)
   (web-mode . lsp)
+  (js-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
@@ -418,10 +419,11 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 #+begin_src emacs-lisp
 (use-package web-mode
   :mode
-  ("\\.ejs\\'"
-   "\\.hbs\\'"
+  (
    "\\.html\\'"
-   "\\.[jt]sx?\\'")
+;; "\\.[jt]sx?\\'"
+;; "\\.css\\'"   
+   )
   :config
   (setq web-mode-content-types-alist '(("jsx" . "\\.[jt]sx?\\'")))
   (setq web-mode-markup-indent-offset 2)
