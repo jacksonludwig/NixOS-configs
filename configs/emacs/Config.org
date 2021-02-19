@@ -59,6 +59,8 @@
 ;;(global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
 
 (setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
+(setq-default c-basic-offset 2)
+
 (setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
 
 (setq-default truncate-lines t) ; Don't wrap by default
@@ -76,8 +78,8 @@
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 130)
-(defvar jackson/main-font "Source Code Pro")
+(defvar jackson/default-font-size 122)
+(defvar jackson/main-font "Jetbrains Mono")
 (defvar jackson/variable-font "Source Sans Pro")
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
@@ -413,7 +415,9 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 (use-package mips-mode
   :hook
   (mips-mode . (lambda ()
-                 (flycheck-mode -1)))
+                 (flycheck-mode -1)
+                 (setq-local indent-tabs-mode t)
+                 (setq-local tab-width 8)))
   :mode "\\.mips$")
 #+end_src
 *** Web
