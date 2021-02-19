@@ -279,6 +279,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   (custom-set-faces
    '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
    '(org-block-begin-line ((t (:background nil)))) ;; symmetry
+   '(org-ellipsis ((t (:underline nil))))
    ))
 #+end_src
 * Language and related support
