@@ -60,8 +60,8 @@
 
 (setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
 (setq-default c-basic-offset 2)
-
 (setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
+(setq backward-delete-char-untabify-method 'hungry) ;; if there is a tab we want to delete, delete entire thing at once
 
 (setq-default truncate-lines t) ; Don't wrap by default
 
@@ -172,14 +172,10 @@ This can be activated to use hybrid vim and emacs bindings.
          :map ivy-minibuffer-map
          ("TAB" . ivy-alt-done)
          ("C-l" . ivy-alt-done)
-         ("C-j" . ivy-next-line)
-         ("C-k" . ivy-previous-line)
          :map ivy-switch-buffer-map
-         ("C-k" . ivy-previous-line)
          ("C-l" . ivy-done)
          ("C-d" . ivy-switch-buffer-kill)
          :map ivy-reverse-i-search-map
-         ("C-k" . ivy-previous-line)
          ("C-d" . ivy-reverse-i-search-kill))
   :config
   (ivy-mode 1)
@@ -261,16 +257,6 @@ This is required by doom-modeline and occasionally other packages optionally.
 #+end_src
 ** Theme/modeline
 #+begin_src emacs-lisp
-;;(use-package doom-modeline
-;;  :after all-the-icons
-;;  :hook
-;;  (after-init . doom-modeline-mode)
-;;  :config
-;;  (setq doom-modeline-bar-width 4
-;;        doom-modeline-height 29
-;;        doom-modeline-major-mode-icon nil)
-;;  )
-
 (use-package doom-themes
   ;;:after doom-modeline
   :init
@@ -330,7 +316,7 @@ This is required by doom-modeline and occasionally other packages optionally.
 (use-package yasnippet
   :diminish yas-minor-mode
   :hook
-  (prog-mode . yas-minor-mode)
+  (prog-mode . yas-minor-mode) ;; don't need them in org
   )
 
 (use-package yasnippet-snippets)
@@ -389,7 +375,7 @@ This is required by doom-modeline and occasionally other packages optionally.
   (general-define-key
    :predicate '(lsp-mode)
    :keymaps 'lsp-mode-map
-   "M-?" 'lsp-ui-peek-find-references
+   "M-?" 'lsp-ui-peek-find-references ;; overwrite defaults with UI versions
    "M-." 'lsp-ui-peek-find-definitions
    ))
 #+end_src
@@ -406,7 +392,7 @@ This is required by doom-modeline and occasionally other packages optionally.
 (use-package go-mode
   :hook
   (go-mode . (lambda ()
-               (setq indent-tabs-mode nil)))
+               (setq-local indent-tabs-mode nil)))
   )
 #+end_src
 *** MIPS
@@ -417,6 +403,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   (mips-mode . (lambda ()
                  (flycheck-mode -1)
                  (setq-local indent-tabs-mode t)
+                 (setq-local c-basic-offset 8)
                  (setq-local tab-width 8)))
   :mode "\\.mips$")
 #+end_src
@@ -430,7 +417,6 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 ;; "\\.css\\'"   
    )
   :config
-  (setq web-mode-content-types-alist '(("jsx" . "\\.[jt]sx?\\'")))
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
@@ -441,7 +427,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   
   (setq web-mode-enable-auto-quoting nil) ;; sometimes we don't want quotes
   (setq web-mode-enable-auto-pairing nil) ;; electric takes care of this
-  (setq web-mode-auto-close-style 2) ;; auto close on <
+  (setq web-mode-auto-close-style 2) ;; auto close on "<"
   )
 
 (setq js-indent-level 2)
