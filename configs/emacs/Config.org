@@ -2,6 +2,8 @@
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 #+startup: fold
 
+* Note on use
+I tend to use babel to easily enable/disable sections of these config. I add ~:tangle no~ to code blocks to do so. This is not clear on github's view, though.
 * Core settings and variables
 #+begin_src emacs-lisp
 (setq user-full-name "Jackson Ludwig"
@@ -69,7 +71,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
-(setq whitespace-style '(trailing tabs tab-mark)) ; show whitespace
+(setq whitespace-style '(face trailing tabs tab-mark)) ; show whitespace
 (global-whitespace-mode t)
 
 (show-paren-mode t) ;; show matching parens
@@ -79,8 +81,8 @@
 * Font setup
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 122)
-(defvar jackson/main-font "Jetbrains Mono")
-(defvar jackson/variable-font "Source Sans Pro")
+(defvar jackson/main-font "DejaVu Sans Mono")
+(defvar jackson/variable-font "DejaVu Sans")
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 
@@ -256,9 +258,9 @@ This is required by doom-modeline and occasionally other packages optionally.
 (use-package all-the-icons)
 #+end_src
 ** Theme/modeline
-#+begin_src emacs-lisp
+Doom-themes does a lot of tweaking to theming. It shouldn't be used unless you're always using themes from the package.
+#+begin_src emacs-lisp :tangle no
 (use-package doom-themes
-  ;;:after doom-modeline
   :init
   (load-theme 'doom-tomorrow-night t)
   :config
@@ -327,7 +329,6 @@ This is required by doom-modeline and occasionally other packages optionally.
   :commands (lsp lsp-deferred)
 
   :hook
-  (python-mode . lsp)
   (go-mode . lsp)
   (css-mode . lsp)
   (web-mode . lsp)
@@ -389,11 +390,7 @@ This is required by doom-modeline and occasionally other packages optionally.
 #+end_src
 *** Go
 #+begin_src emacs-lisp
-(use-package go-mode
-  :hook
-  (go-mode . (lambda ()
-               (setq-local indent-tabs-mode nil)))
-  )
+(use-package go-mode)
 #+end_src
 *** MIPS
 This is mostly just for source blocks. This mode needs more work to be used instead of MARS.
@@ -408,6 +405,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   :mode "\\.mips$")
 #+end_src
 *** Web
+This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
 #+begin_src emacs-lisp
 (use-package web-mode
   :mode
@@ -442,18 +440,17 @@ This is mostly just for source blocks. This mode needs more work to be used inst
 (use-package org
   :init
   (setq org-adapt-indentation nil
-        org-startup-indented t
+        ;; org-startup-indented t
+        ;; org-ellipsis " [...]"
         org-indent-indentation-per-level 1        
         org-src-tab-acts-natively t ;; Better tabs in source blocks
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
-        org-ellipsis " [...]"
         org-special-ctrl-a/e t
         )
   :hook
   (org-mode . visual-line-mode)
   :config
-  (require 'org-tempo) ;; needed for structure templates
   (setq org-directory "~/git_repos/emacs-org-mode"
         org-agenda-files '("~/git_repos/emacs-org-mode/School.org"))
   ;; Following two lines are a workaround so that special a/e works
@@ -463,7 +460,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   )
 #+end_src
 **** Org appear
-This dynamically hides org markers, but I'm not currently using it.
+This dynamically hides org markers, but I'm not currently using it as it has some issues.
 #+begin_src emacs-lisp :tangle no
 (use-package org-appear
   :straight '(org-appear :type git :host github :repo "awth13/org-appear")
