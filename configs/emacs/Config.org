@@ -80,8 +80,8 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 * Font setup
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 122)
-(defvar jackson/main-font "DejaVu Sans Mono")
-(defvar jackson/variable-font "DejaVu Sans")
+(defvar jackson/main-font nil)
+(defvar jackson/variable-font nil)
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 
@@ -338,7 +338,7 @@ Doom themes.
 
   :hook
   (go-mode . lsp)
-  (css-mode . lsp)
+;;  (css-mode . lsp)
   (web-mode . lsp)
   (js-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
