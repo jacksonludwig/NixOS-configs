@@ -72,7 +72,6 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
 (setq whitespace-style '(face trailing tabs tab-mark)) ; show whitespace
-(global-whitespace-mode t)
 
 (show-paren-mode t) ;; show matching parens
 
@@ -258,7 +257,16 @@ This is required by doom-modeline and occasionally other packages optionally.
 (use-package all-the-icons)
 #+end_src
 ** Theme/modeline
-Doom-themes does a lot of tweaking to theming. It shouldn't be used unless you're always using themes from the package.
+Modus themes.
+#+begin_src emacs-lisp
+(use-package modus-themes
+  :init
+  ;; Load the theme files before enabling a theme
+  (modus-themes-load-themes)
+  )
+#+end_src
+
+Doom themes.
 #+begin_src emacs-lisp :tangle no
 (use-package doom-themes
   :init
