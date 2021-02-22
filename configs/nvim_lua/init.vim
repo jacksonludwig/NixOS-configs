@@ -53,8 +53,8 @@ vim.cmd('set background=light')
 vim.cmd('colorscheme PaperColor')
 
 -------------------- autocmd -------------------------------
-vim.cmd("autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab")
-vim.cmd("autocmd Filetype vim setlocal ts=4 sw=4 sts=0 expandtab")
+vim.cmd("autocmd Filetype javascript setlocal ts=2 sw=2 sts=0")
+vim.cmd("autocmd Filetype vim setlocal ts=4 sw=4 sts=0")
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
