@@ -19,13 +19,14 @@ require('packer').startup(function ()
     use {'wbthomason/packer.nvim', opt = true}
     use {'LnL7/vim-nix'}
     use {'tpope/vim-commentary'}
-    use {'dracula/vim'}
+    use {'NLKNguyen/papercolor-theme'}
     use {'harenome/vim-mipssyntax'}
 
     use {'neovim/nvim-lspconfig'}
     use {'hrsh7th/nvim-compe'}
     use {'hrsh7th/vim-vsnip'}
     use {'hrsh7th/vim-vsnip-integ'}
+    use {'kitagry/vs-snippets'}
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
     use {
@@ -37,6 +38,7 @@ end)
 -------------------- VARIABLES -------------------------------
 vim.cmd('set undodir=$HOME/.config/nvim/undodir')
 vim.cmd('set undofile')
+vim.cmd('set hidden')
 
 vim.o.mouse = 'a'
 vim.wo.number = true
@@ -47,7 +49,8 @@ vim.api.nvim_set_option("termguicolors", true)
 vim.o.completeopt = "menuone,noselect"
 
 -------------------- THEME -------------------------------
-vim.cmd('colorscheme dracula') -- Use dracula colorscheme
+vim.cmd('set background=light')
+vim.cmd('colorscheme PaperColor')
 
 -------------------- autocmd -------------------------------
 vim.cmd("autocmd Filetype javascript setlocal ts=2 sw=2 sts=0 expandtab")
@@ -99,7 +102,18 @@ end
 -- and map buffer local keybindings when the language server attaches
 local servers = { "pyright", "tsserver" }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+  nvim_lsp[lsp].setup { 
+     on_attach = on_attach,
+     capabilities = {
+         textDocument = {
+             completion = {
+                 completionItem = {
+                     snippetSupport = true
+                 }
+             }
+         }
+     }
+  }
 end
 
 -------------------- TREESITTER -------------------------------
@@ -117,12 +131,12 @@ require'compe'.setup {
   debug = false;
   min_length = 1;
   preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
+  -- throttle_time = 80;
+  -- source_timeout = 200;
+  -- incomplete_delay = 400;
+  -- max_abbr_width = 100;
+  -- max_kind_width = 100;
+  -- max_menu_width = 100;
   documentation = true;
 
   source = {
