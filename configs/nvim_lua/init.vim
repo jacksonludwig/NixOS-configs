@@ -49,7 +49,7 @@ vim.api.nvim_set_option("termguicolors", true)
 vim.o.completeopt = "menuone,noselect"
 
 -------------------- THEME -------------------------------
-vim.cmd('set background=light')
+--vim.cmd('set background=light')
 vim.cmd('colorscheme PaperColor')
 
 -------------------- autocmd -------------------------------
@@ -61,6 +61,61 @@ vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.buil
 vim.api.nvim_set_keymap('n', '<space>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>sg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
+
+-------------------- NVIM_COMPLETION -------------------------------
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = false;
+    vsnip = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    snippets_nvim = false;
+    treesitter = false;
+  };
+}
+vim.cmd("inoremap <silent><expr> <C-Space> compe#complete()")
+vim.cmd("inoremap <silent><expr> <CR>      compe#confirm('<CR>')")
+vim.cmd("inoremap <silent><expr> <C-e>     compe#close('<C-e>')")
+vim.cmd("inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })")
+vim.cmd("inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })")
+
+-------------------- VIM_VSNIP -------------------------------
+vim.cmd("imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'")
+vim.cmd("smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'")
+
+-- Expand or jump
+vim.cmd("imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'")
+vim.cmd("smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'")
+
+-- Jump forward or backward
+vim.cmd("imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'")
+vim.cmd("smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'")
+vim.cmd("imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
+vim.cmd("smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
+
+-- Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+-- See https://github.com/hrsh7th/vim-vsnip/pull/50
+vim.cmd("nmap        s   <Plug>(vsnip-select-text)")
+vim.cmd("xmap        s   <Plug>(vsnip-select-text)")
+vim.cmd("nmap        S   <Plug>(vsnip-cut-text)")
+vim.cmd("xmap        S   <Plug>(vsnip-cut-text)")
 
 -------------------- LSP -------------------------------
 local nvim_lsp = require('lspconfig')
@@ -91,9 +146,9 @@ local on_attach = function(client, bufnr)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+    buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
 end
@@ -123,60 +178,5 @@ require'nvim-treesitter.configs'.setup {
     enable = true;
   }
 }
-
--------------------- NVIM_COMPLETION -------------------------------
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  -- throttle_time = 80;
-  -- source_timeout = 200;
-  -- incomplete_delay = 400;
-  -- max_abbr_width = 100;
-  -- max_kind_width = 100;
-  -- max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    vsnip = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = true;
-    snippets_nvim = true;
-    treesitter = false;
-  };
-}
-vim.cmd("inoremap <silent><expr> <C-Space> compe#complete()")
-vim.cmd("inoremap <silent><expr> <CR>      compe#confirm('<CR>')")
-vim.cmd("inoremap <silent><expr> <C-e>     compe#close('<C-e>')")
-vim.cmd("inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })")
-vim.cmd("inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })")
-
--------------------- VIM_VSNIP -------------------------------
-vim.cmd("imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'")
-vim.cmd("smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'")
-
--- Expand or jump
-vim.cmd("imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'")
-vim.cmd("smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'")
-
--- Jump forward or backward
-vim.cmd("imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'")
-vim.cmd("smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'")
-vim.cmd("imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
-vim.cmd("smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
-
--- Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
--- See https://github.com/hrsh7th/vim-vsnip/pull/50
-vim.cmd("nmap        s   <Plug>(vsnip-select-text)")
-vim.cmd("xmap        s   <Plug>(vsnip-select-text)")
-vim.cmd("nmap        S   <Plug>(vsnip-cut-text)")
-vim.cmd("xmap        S   <Plug>(vsnip-cut-text)")
 
 EOF
