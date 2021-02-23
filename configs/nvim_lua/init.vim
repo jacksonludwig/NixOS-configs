@@ -85,7 +85,7 @@ require'compe'.setup {
     nvim_lsp = true;
     nvim_lua = true;
     spell = true;
-    tags = true;
+    tags = false;
     snippets_nvim = false;
     treesitter = false;
   };
