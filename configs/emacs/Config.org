@@ -267,7 +267,7 @@ Modus themes.
 #+end_src
 
 Doom themes.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package doom-themes
   :init
   (load-theme 'doom-tomorrow-night t)
@@ -504,7 +504,8 @@ This dynamically hides org markers, but I'm not currently using it as it has som
 #+end_src
 * Other package configuration
 ** Email
-#+begin_src emacs-lisp
+Not sure if this is worth it or not still.
+#+begin_src emacs-lisp :tangle no
 (use-package f) ;; used in workaround to find mu4e
 (use-package mu4e
   :ensure nil
