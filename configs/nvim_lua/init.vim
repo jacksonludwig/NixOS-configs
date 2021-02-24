@@ -37,15 +37,15 @@ end)
 
 -------------------- VARIABLES -------------------------------
 vim.cmd('set undodir=$HOME/.config/nvim/undodir')
-vim.cmd('set undofile')
-vim.cmd('set hidden')
+vim.api.nvim_set_option("undofile", true) 
+vim.api.nvim_set_option("hidden", true) 
+vim.api.nvim_set_option("termguicolors", true) 
 
 vim.o.mouse = 'a'
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.bo.expandtab = true
 vim.g.syntax = true
-vim.api.nvim_set_option("termguicolors", true) 
 vim.o.completeopt = "menuone,noselect"
 
 -------------------- THEME -------------------------------
@@ -91,7 +91,7 @@ require'compe'.setup {
     treesitter = false;
   };
 }
-vim.cmd("inoremap <silent><expr> <C-Space> compe#complete()")
+vim.cmd("inoremap <silent><expr> <C-space> compe#complete()")
 vim.cmd("inoremap <silent><expr> <CR>      compe#confirm('<CR>')")
 vim.cmd("inoremap <silent><expr> <C-e>     compe#close('<C-e>')")
 vim.cmd("inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })")

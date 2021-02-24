@@ -79,7 +79,7 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 #+end_src
 * Font setup
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 122)
+(defvar jackson/default-font-size 125)
 (defvar jackson/main-font nil)
 (defvar jackson/variable-font nil)
 
@@ -267,7 +267,7 @@ Modus themes.
 #+end_src
 
 Doom themes.
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package doom-themes
   :init
   (load-theme 'doom-tomorrow-night t)
@@ -325,6 +325,8 @@ Doom themes.
 #+begin_src emacs-lisp
 (use-package yasnippet
   :diminish yas-minor-mode
+  :init
+  (setq yas-snippet-revival nil)
   :hook
   (prog-mode . yas-minor-mode) ;; don't need them in org
   )
@@ -338,8 +340,6 @@ Doom themes.
 
   :hook
   (go-mode . lsp)
-;;  (css-mode . lsp)
-;;  (web-mode . lsp)
   (js-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
