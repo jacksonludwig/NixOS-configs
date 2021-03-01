@@ -1,6 +1,6 @@
-let g:vimsyn_embed = 'l'
-
 lua << EOF
+
+vim.g.vimsyn_embed = 'l'
 
 ------------------ PACKER INSTALL --------------------------
 local execute = vim.api.nvim_command
@@ -17,44 +17,47 @@ end
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
     use {'wbthomason/packer.nvim', opt = true}
-    use {'LnL7/vim-nix'}
     use {'tpope/vim-commentary'}
     use {'NLKNguyen/papercolor-theme'}
-    use {'harenome/vim-mipssyntax'}
 
-    use {'neovim/nvim-lspconfig'}
-    use {'hrsh7th/nvim-compe'}
-    use {'hrsh7th/vim-vsnip'}
-    use {'hrsh7th/vim-vsnip-integ'}
-    use {'kitagry/vs-snippets'}
-    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use {'LnL7/vim-nix'}
+    use {'harenome/vim-mipssyntax'}
+		use {'maxmellon/vim-jsx-pretty'}
 
     use {
       'nvim-telescope/telescope.nvim',
       requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
     }
+
+    use {'neovim/nvim-lspconfig'}
+    use {'hrsh7th/nvim-compe'}
+    use {'hrsh7th/vim-vsnip'}
+    use {'kitagry/vs-snippets'}
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 end)
 
 -------------------- VARIABLES -------------------------------
 vim.cmd('set undodir=$HOME/.config/nvim/undodir')
-vim.api.nvim_set_option("undofile", true) 
-vim.api.nvim_set_option("hidden", true) 
-vim.api.nvim_set_option("termguicolors", true) 
+vim.cmd('set undofile')
+vim.cmd('set hidden')
+vim.cmd('set termguicolors')
+vim.cmd('set list')
 
 vim.o.mouse = 'a'
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.bo.expandtab = true
 vim.g.syntax = true
 vim.o.completeopt = "menuone,noselect"
 
 -------------------- THEME -------------------------------
---vim.cmd('set background=light')
 vim.cmd('colorscheme PaperColor')
 
 -------------------- autocmd -------------------------------
-vim.cmd("autocmd Filetype javascript setlocal ts=2 sw=2 sts=0")
-vim.cmd("autocmd Filetype vim setlocal ts=4 sw=4 sts=0")
+vim.cmd('autocmd Filetype lua setlocal ts=2 sts=2 sw=2')
+vim.cmd('autocmd Filetype vim setlocal ts=2 sts=2 sw=2')
+vim.cmd('autocmd Filetype javascript setlocal ts=2 sts=2 sw=2')
+vim.cmd('autocmd Filetype css setlocal ts=2 sts=2 sw=2')
+vim.cmd('autocmd Filetype html setlocal ts=2 sts=2 sw=2')
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
@@ -76,7 +79,7 @@ require'compe'.setup {
   max_abbr_width = 100;
   max_kind_width = 100;
   max_menu_width = 100;
-  documentation = true;
+  documentation = false;
 
   source = {
     path = true;
@@ -91,32 +94,36 @@ require'compe'.setup {
     treesitter = false;
   };
 }
-vim.cmd("inoremap <silent><expr> <C-space> compe#complete()")
-vim.cmd("inoremap <silent><expr> <CR>      compe#confirm('<CR>')")
-vim.cmd("inoremap <silent><expr> <C-e>     compe#close('<C-e>')")
-vim.cmd("inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })")
-vim.cmd("inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })")
+vim.cmd([[
+	inoremap <silent><expr> <C-space> compe#complete()
+	inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+	inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+	inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+	inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+]])
 
 -------------------- VIM_VSNIP -------------------------------
-vim.cmd("imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'")
-vim.cmd("smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'")
+vim.cmd([[
+	imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
+	smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
 
--- Expand or jump
-vim.cmd("imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'")
-vim.cmd("smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'")
+	" Expand or jump
+	imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+	smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
 
--- Jump forward or backward
-vim.cmd("imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'")
-vim.cmd("smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'")
-vim.cmd("imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
-vim.cmd("smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
+	" Jump forward or backward
+	imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+	smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+	imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+	smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
--- Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
--- See https://github.com/hrsh7th/vim-vsnip/pull/50
-vim.cmd("nmap        s   <Plug>(vsnip-select-text)")
-vim.cmd("xmap        s   <Plug>(vsnip-select-text)")
-vim.cmd("nmap        S   <Plug>(vsnip-cut-text)")
-vim.cmd("xmap        S   <Plug>(vsnip-cut-text)")
+	" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+	" See https://github.com/hrsh7th/vim-vsnip/pull/50
+	nmap        s   <Plug>(vsnip-select-text)
+	xmap        s   <Plug>(vsnip-select-text)
+	nmap        S   <Plug>(vsnip-cut-text)
+	xmap        S   <Plug>(vsnip-cut-text)
+]])
 
 -------------------- LSP -------------------------------
 local nvim_lsp = require('lspconfig')
@@ -139,13 +146,16 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
   buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  --buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>sw', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-  buf_set_keymap('n', '<space>sd', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  --buf_set_keymap('n', '<space>sw', "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
+  buf_set_keymap('n', '<space>sw', ":Telescope lsp_workspace_symbols query=", opts)
+  --buf_set_keymap('n', '<space>sd', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
+  buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
@@ -158,19 +168,13 @@ end
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local servers = { "pyright", "tsserver" }
+local servers = { "pyright", "tsserver", "gopls" }
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { 
+  nvim_lsp[lsp].setup {
+		 capabilities = capabilities,
      on_attach = on_attach,
-     capabilities = {
-         textDocument = {
-             completion = {
-                 completionItem = {
-                     snippetSupport = true
-                 }
-             }
-         }
-     }
   }
 end
 
@@ -178,8 +182,12 @@ end
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = true;
+    enable = false;
+  },
+  indent = {
+		enable = false;
   }
 }
 
 EOF
+
