@@ -64,6 +64,8 @@ vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin")
 vim.api.nvim_set_keymap('n', '<space>sg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<space>ff', '<cmd>lua require("telescope.builtin").file_browser()<cr>', { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
+
 -------------------- NVIM_COMPLETION -------------------------------
 require'compe'.setup {
 	enabled = true;
