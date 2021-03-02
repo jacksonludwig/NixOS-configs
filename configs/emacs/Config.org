@@ -101,7 +101,6 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
   (diminish 'visual-line-mode))
 #+end_src
 ** Evil
-This can be activated to use hybrid vim and emacs bindings.
 #+begin_src emacs-lisp
 (use-package evil
   :init
@@ -111,7 +110,7 @@ This can be activated to use hybrid vim and emacs bindings.
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   (setq evil-mode-line-format nil)
-  (setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
+  ;;(setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
   :config
   (evil-mode 1)
   (evil-set-initial-state 'messages-buffer-mode 'normal)
@@ -136,7 +135,8 @@ This can be activated to use hybrid vim and emacs bindings.
   :config
   (global-unset-key (kbd "M-m"))
   (general-create-definer jackson/leader-binds
-    :prefix "M-m")
+    :keymaps 'normal
+    :prefix "SPC")
 
   (jackson/leader-binds
     "t"   '(:ignore t :which-key "toggles")
@@ -294,7 +294,8 @@ Doom themes.
               ("C-p" . company-select-previous))
   :config
   (setq company-minimum-prefix-length 1
-        company-dabbrev-downcase nil)
+        company-dabbrev-downcase nil
+        company-idle-delay 0.0)
   :general
   ("M-n" 'company-complete)
   )
@@ -380,12 +381,12 @@ Doom themes.
   (setq lsp-ui-doc-position 'at-point
         lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil)
-  :general
+  (general-def 'normal
+    "K" 'lsp-describe-thing-at-point)
   (general-define-key
    :predicate '(lsp-mode)
    :keymaps 'lsp-mode-map
-   "M-?" 'lsp-ui-peek-find-references ;; overwrite defaults with UI versions
-   "M-." 'lsp-ui-peek-find-definitions
+   "gr" 'lsp-ui-peek-find-references ;; overwrite defaults with UI versions
    ))
 #+end_src
 ** Major mode config
