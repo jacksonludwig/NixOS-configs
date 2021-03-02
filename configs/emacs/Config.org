@@ -62,7 +62,7 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 
 (setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
 (setq-default c-basic-offset 2)
-(setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
+;; (setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
 (setq backward-delete-char-untabify-method 'hungry) ;; if there is a tab we want to delete, delete entire thing at once
 
 (setq-default truncate-lines t) ; Don't wrap by default
@@ -342,6 +342,7 @@ Doom themes.
   :hook
   (go-mode . lsp)
   (rjsx-mode . lsp)
+  (css-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
@@ -421,7 +422,7 @@ This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
   (
    "\\.html\\'"
   ;; "\\.[jt]sx?\\'"
-   "\\.css\\'"   
+  ;; "\\.css\\'"   
    )
   :config
   (setq web-mode-markup-indent-offset 2)
