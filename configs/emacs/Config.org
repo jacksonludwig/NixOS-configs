@@ -102,7 +102,7 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 #+end_src
 ** Evil
 This can be activated to use hybrid vim and emacs bindings.
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package evil
   :init
   (setq evil-undo-system 'undo-fu)
@@ -340,7 +340,7 @@ Doom themes.
 
   :hook
   (go-mode . lsp)
-  (js-mode . lsp)
+  (rjsx-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
@@ -419,7 +419,7 @@ This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
   :mode
   (
    "\\.html\\'"
-;; "\\.[jt]sx?\\'"
+  ;; "\\.[jt]sx?\\'"
    "\\.css\\'"   
    )
   :config
@@ -441,6 +441,15 @@ This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
 
 (use-package prettier-js
   :after web-mode)
+#+end_src
+*** RJSX
+#+begin_src emacs-lisp
+(use-package rjsx-mode
+  :mode
+  ("\\.[jt]sx?\\'")
+  :hook
+  (rjsx-mode . (lambda ()
+                 (js2-mode-hide-warnings-and-errors))))
 #+end_src
 *** Org
 **** General Settings

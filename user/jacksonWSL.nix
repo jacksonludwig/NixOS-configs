@@ -20,6 +20,7 @@
     ripgrep
 
     gcc10
+    cmake
 
     python3
     go
