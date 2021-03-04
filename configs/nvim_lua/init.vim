@@ -40,6 +40,7 @@ vim.cmd('set undofile')
 vim.cmd('set hidden')
 vim.cmd('set termguicolors')
 vim.cmd('set list')
+vim.cmd('set signcolumn=yes')
 
 vim.o.mouse = 'a'
 vim.wo.number = true
@@ -144,7 +145,7 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 	--buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-	buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+	buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 	buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 	buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
@@ -161,6 +162,14 @@ local on_attach = function(client, bufnr)
 	end
 
 end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    signs = true,
+    update_in_insert = false,
+  }
+)
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
@@ -185,3 +194,4 @@ require'nvim-treesitter.configs'.setup {
 	}
 }
 EOF
+

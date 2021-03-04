@@ -232,6 +232,11 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
   (global-unset-key (kbd "C-/"))
   (global-set-key (kbd "C-/") 'undo-fu-only-undo)
   )
+
+(use-package undo-fu-session
+	:after undo-fu
+	:config
+	(global-undo-fu-session-mode 1))
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp
@@ -383,12 +388,8 @@ Doom themes.
         lsp-ui-doc-enable nil
         lsp-ui-sideline-enable nil)
   (general-def 'normal
-    "K" 'lsp-describe-thing-at-point)
-  (general-define-key
-   :predicate '(lsp-mode)
-   :keymaps 'lsp-mode-map
-   "gr" 'lsp-ui-peek-find-references ;; overwrite defaults with UI versions
-   ))
+    "K" 'lsp-describe-thing-at-point
+    "gr" 'lsp-ui-peek-find-references)) ;; overwrite defaults with UI versions
 #+end_src
 ** Major mode config
 *** Python
@@ -471,7 +472,7 @@ This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
   (org-mode . visual-line-mode)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
-        org-agenda-files '("~/git_repos/emacs-org-mode/School.org"))
+        org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org"))
   ;; Following two lines are a workaround so that special a/e works
   ;; in visual line mode.
   (define-key org-mode-map "\C-a" 'org-beginning-of-line)
