@@ -5,6 +5,7 @@
 * Note on use
 I tend to use babel to easily enable/disable sections of these config. I add ~:tangle no~ to code blocks to do so. This is not clear on github's view, though.
 * Core settings and variables
+Basic settings
 #+begin_src emacs-lisp
 (setq user-full-name "Jackson Ludwig"
       user-mail-address "jacksonludwig0@gmail.com")
@@ -85,6 +86,35 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 
 ;; Set the variable pitch face
 (set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
+#+end_src
+
+These functions scale the emacs's global font sizes instead of just buffer.
+#+begin_src emacs-lisp
+(defvar original-font-size jackson/default-font-size)
+
+(defun adjust-font-size (delta)
+  (let* ((old-size (face-attribute 'default :height))
+         (new-size (max (max delta (- delta)) (min 200 (+ delta old-size)))))
+    (setq original-font-size (or original-font-size old-size))
+    (set-face-attribute 'default nil :height new-size)
+    (message "Font size set to %d (was %d)" (face-attribute 'default :height) old-size)))
+
+(defun zoom-in ()
+  (interactive)
+  (adjust-font-size +10))
+
+(defun zoom-out ()
+  (interactive)
+  (adjust-font-size -10))
+
+(defun zoom-reset ()
+  (interactive)
+  (when original-font-size
+    (set-face-attribute 'default nil :height original-font-size)))
+
+(global-set-key (kbd "C-M-=") 'zoom-in)
+(global-set-key (kbd "C-M--") 'zoom-out)
+(global-set-key (kbd "C-M-0") 'zoom-reset)
 #+end_src
 * Core packages and keybinds
 ** Diminish
@@ -287,9 +317,9 @@ Doom themes.
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous))
   :config
-  (setq company-minimum-prefix-length 1
+  (setq company-minimum-prefix-length 2
         company-dabbrev-downcase nil
-        company-idle-delay 0.0)
+        company-idle-delay 0.4)
   :general
   ("M-n" 'company-complete))
 
@@ -317,15 +347,24 @@ Doom themes.
 #+end_src
 ** Yasnippet
 #+begin_src emacs-lisp
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :init
-  (setq yas-snippet-revival nil)
-  :hook
-  (prog-mode . yas-minor-mode) ;; don't need them in org
-  )
+  (defun company-yasnippet-or-completion ()
+    (interactive)
+    (let ((yas-fallback-behavior nil))
+      (unless (yas-expand)
+	(call-interactively #'company-complete-common))))
 
-(use-package yasnippet-snippets)
+  (use-package yasnippet
+    :diminish yas-minor-mode
+    :init
+    (setq yas-snippet-revival nil)
+    :hook
+    (prog-mode . yas-minor-mode) ;; don't need them in org
+    (company-mode . (lambda() 
+		      (substitute-key-definition 'company-complete-common
+						 'company-yasnippet-or-completion
+						 company-active-map))))
+
+  (use-package yasnippet-snippets)
 #+end_src
 ** LSP Mode and LSP UI
 #+begin_src emacs-lisp
@@ -419,7 +458,6 @@ This is mostly just for source blocks. This mode needs more work to be used inst
   :init
   (setq org-adapt-indentation nil
         ;; org-startup-indented t
-        ;; org-ellipsis " [...]"
         org-indent-indentation-per-level 1        
         org-src-tab-acts-natively t ;; Better tabs in source blocks
         org-src-preserve-indentation t ;; Don't auto tab in source block
