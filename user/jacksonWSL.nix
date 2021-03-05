@@ -68,6 +68,7 @@
 
   programs.emacs = {
     enable = true;
+    package = pkgs.emacsPgtkGcc;
     extraPackages = epkgs: with epkgs; [
         vterm
     ];

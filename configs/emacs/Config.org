@@ -57,13 +57,8 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 #+begin_src emacs-lisp
 (column-number-mode) ;; show line nums in modeline
 
-(setq display-line-numbers-type 'relative)
+;;(setq display-line-numbers-type 'relative)
 ;;(global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
-
-(setq-default tab-width 2)  ; Tab length (can be overwritten by some major modes)
-(setq-default c-basic-offset 2)
-;; (setq-default indent-tabs-mode nil) ; Spaces, not tabs. Ever (by default)
-(setq backward-delete-char-untabify-method 'hungry) ;; if there is a tab we want to delete, delete entire thing at once
 
 (setq-default truncate-lines t) ; Don't wrap by default
 
@@ -71,7 +66,7 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 
 (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 
-(setq whitespace-style '(face trailing tabs tab-mark)) ; show whitespace
+;;(setq whitespace-style '(face trailing tabs tab-mark)) ; show whitespace
 
 (show-paren-mode t) ;; show matching parens
 
@@ -96,12 +91,11 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 #+begin_src emacs-lisp
 (use-package diminish
   :config
-  (diminish 'eldoc-mode)
   (diminish 'global-whitespace-mode)
   (diminish 'visual-line-mode))
 #+end_src
 ** Evil
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package evil
   :init
   (setq evil-undo-system 'undo-fu)
@@ -133,10 +127,8 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
 #+begin_src emacs-lisp
 (use-package general
   :config
-  (global-unset-key (kbd "M-m"))
   (general-create-definer jackson/leader-binds
-    :keymaps 'normal
-    :prefix "SPC")
+    :prefix "C-c")
 
   (jackson/leader-binds
     "t"   '(:ignore t :which-key "toggles")
@@ -145,9 +137,6 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
     "qq"  '(kill-emacs :which-key "kill emacs")
     "o"   '(:ignore t :which-key "open")
     )
-
-  ;; Custom overwrites, globals, etc
-  (global-set-key (kbd "C-S-a") 'back-to-indentation) ;; go to beginning of text
   )
 #+end_src
 ** Which-key
@@ -246,7 +235,7 @@ I tend to use babel to easily enable/disable sections of these config. I add ~:t
   :config
   (projectile-mode)
   :bind-keymap
-  ("M-m p" . projectile-command-map)
+  ("C-c p" . projectile-command-map)
   :init
   ;; NOTE: Set this to the folder where you keep your Git repos!
   (when (file-directory-p "~/git_repos/")
@@ -272,7 +261,7 @@ Modus themes.
 #+end_src
 
 Doom themes.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package doom-themes
   :init
   (load-theme 'doom-tomorrow-night t)
@@ -302,18 +291,17 @@ Doom themes.
         company-dabbrev-downcase nil
         company-idle-delay 0.0)
   :general
-  ("M-n" 'company-complete)
-  )
+  ("M-n" 'company-complete))
 
-(use-package company-posframe
-  :after company
-  :diminish company-posframe-mode
-  :config
-  (setq company-posframe-quickhelp-delay nil
-        company-posframe-show-indicator nil
-        company-posframe-show-metadata nil)
-  (company-posframe-mode 1)
-  )
+;; (use-package company-posframe
+;;   :after company
+;;   :diminish company-posframe-mode
+;;   :config
+;;   (setq company-posframe-quickhelp-delay nil
+;;         company-posframe-show-indicator nil
+;;         company-posframe-show-metadata nil)
+;;   (company-posframe-mode 1)
+;;   )
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
@@ -348,10 +336,11 @@ Doom themes.
   (go-mode . lsp)
   (rjsx-mode . lsp)
   (css-mode . lsp)
+  (html-mode . lsp)
   (help-mode . visual-line-mode) ;; visual line mode for docs
 
   :init
-  (setq lsp-keymap-prefix "M-m l")
+  (setq lsp-keymap-prefix "C-c l")
 
   :config
   (setq gc-cons-threshold 100000000)
@@ -360,7 +349,6 @@ Doom themes.
   (setq lsp-completion-provider :capf) ;; All you need
   (setq create-lockfiles nil) ;; disable lockfiles because they annoy some LSP
 
-  ;; (setq lsp-enable-snippet nil) ;; disable lsp snippet
   (setq lsp-headerline-breadcrumb-enable nil) ;; disable breadcrumb
   (setq lsp-enable-symbol-highlighting nil) ;; disable symbol highlight
   (setq lsp-enable-links nil) ;; disable links
@@ -386,10 +374,7 @@ Doom themes.
   :config
   (setq lsp-ui-doc-position 'at-point
         lsp-ui-doc-enable nil
-        lsp-ui-sideline-enable nil)
-  (general-def 'normal
-    "K" 'lsp-describe-thing-at-point
-    "gr" 'lsp-ui-peek-find-references)) ;; overwrite defaults with UI versions
+        lsp-ui-sideline-enable nil))
 #+end_src
 ** Major mode config
 *** Python
@@ -415,36 +400,6 @@ This is mostly just for source blocks. This mode needs more work to be used inst
                  (setq-local tab-width 8)))
   :mode "\\.mips$")
 #+end_src
-*** Web
-This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
-#+begin_src emacs-lisp
-(use-package web-mode
-  :mode
-  (
-   "\\.html\\'"
-  ;; "\\.[jt]sx?\\'"
-  ;; "\\.css\\'"   
-   )
-  :config
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-script-padding 2)
-  (setq web-mode-block-padding 2)
-  (setq web-mode-style-padding 2)
-  (setq web-mode-enable-auto-closing t)
-  
-  (setq web-mode-enable-auto-quoting nil) ;; sometimes we don't want quotes
-  (setq web-mode-enable-auto-pairing nil) ;; electric takes care of this
-  (setq web-mode-auto-close-style 2) ;; auto close on "<"
-  )
-
-(setq js-indent-level 2)
-(setq css-indent-offset 2)
-
-(use-package prettier-js
-  :after web-mode)
-#+end_src
 *** RJSX
 #+begin_src emacs-lisp
 (use-package rjsx-mode
@@ -452,7 +407,10 @@ This can work for JS, CSS, HTML, and more but I'm only using it for HTML.
   ("\\.[jt]sx?\\'")
   :hook
   (rjsx-mode . (lambda ()
-                 (js2-mode-hide-warnings-and-errors))))
+                 (js2-mode-hide-warnings-and-errors)
+		 (setq-local tab-width 2)))
+  :config
+  (setq js-indent-level 2))
 #+end_src
 *** Org
 **** General Settings
@@ -490,9 +448,6 @@ This dynamically hides org markers, but I'm not currently using it as it has som
         org-appear-autoemphasis t
         org-appear-autosubmarkers t
         org-appear-autolinks nil)
-  ;; for proper first-time setup, `org-appear--set-fragments'
-  ;; may need to be run after other hooks have acted.
-  (run-at-time nil nil #'org-appear--set-fragments)
   )
 #+end_src
 **** Babel settings
