@@ -124,35 +124,6 @@ These functions scale the emacs's global font sizes instead of just buffer.
   (diminish 'global-whitespace-mode)
   (diminish 'visual-line-mode))
 #+end_src
-** Evil
-#+begin_src emacs-lisp :tangle no
-(use-package evil
-  :init
-  (setq evil-undo-system 'undo-fu)
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  (setq evil-mode-line-format nil)
-  ;;(setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
-  :config
-  (evil-mode 1)
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  )
-
-(use-package evil-collection
-  :after evil
-  :custom
-  (evil-collection-company-use-tng nil)
-  :init
-  (evil-collection-init 'vterm))
-
-(use-package evil-org
-  :after org
-  :diminish evil-org-mode
-  :hook (org-mode . evil-org-mode)
-  )
-#+end_src
 ** General
 #+begin_src emacs-lisp
 (use-package general
@@ -322,16 +293,6 @@ Doom themes.
         company-idle-delay 0.4)
   :general
   ("M-n" 'company-complete))
-
-;; (use-package company-posframe
-;;   :after company
-;;   :diminish company-posframe-mode
-;;   :config
-;;   (setq company-posframe-quickhelp-delay nil
-;;         company-posframe-show-indicator nil
-;;         company-posframe-show-metadata nil)
-;;   (company-posframe-mode 1)
-;;   )
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
@@ -427,18 +388,6 @@ Doom themes.
 #+begin_src emacs-lisp
 (use-package go-mode)
 #+end_src
-*** MIPS
-This is mostly just for source blocks. This mode needs more work to be used instead of MARS.
-#+begin_src emacs-lisp
-(use-package mips-mode
-  :hook
-  (mips-mode . (lambda ()
-                 (flycheck-mode -1)
-                 (setq-local indent-tabs-mode t)
-                 (setq-local c-basic-offset 8)
-                 (setq-local tab-width 8)))
-  :mode "\\.mips$")
-#+end_src
 *** RJSX
 #+begin_src emacs-lisp
 (use-package rjsx-mode
@@ -463,6 +412,7 @@ This is mostly just for source blocks. This mode needs more work to be used inst
         org-src-preserve-indentation t ;; Don't auto tab in source block
         org-catch-invisible-edits 'smart ;; Possibly better editing with folds
         org-special-ctrl-a/e t
+	org-table-copy-increment nil ;; don't increment table on S-RET
         )
   :hook
   (org-mode . visual-line-mode)

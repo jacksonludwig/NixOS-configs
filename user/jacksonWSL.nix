@@ -37,7 +37,7 @@
     htop
     xclip
     ispell
-    texlive.combined.scheme-medium
+    texlive.combined.scheme-full
     isync
     mu
     nodePackages.prettier

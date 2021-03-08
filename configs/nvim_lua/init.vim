@@ -20,7 +20,7 @@ require('packer').startup(function ()
 	use {'NLKNguyen/papercolor-theme'}
 
 	use {'LnL7/vim-nix'}
-	use {'harenome/vim-mipssyntax'}
+	use {'benknoble/vim-mips'}
 	use {'maxmellon/vim-jsx-pretty'}
 
 	use {
@@ -58,6 +58,7 @@ vim.cmd('autocmd Filetype javascript setlocal ts=2 sts=2 sw=2')
 vim.cmd('autocmd Filetype css setlocal ts=2 sts=2 sw=2')
 vim.cmd('autocmd Filetype html setlocal ts=2 sts=2 sw=2')
 vim.cmd('autocmd Filetype json setlocal ts=2 sts=2 sw=2')
+vim.cmd('autocmd Filetype asm setlocal ts=2 sts=2 sw=2 filetype=mips')
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
