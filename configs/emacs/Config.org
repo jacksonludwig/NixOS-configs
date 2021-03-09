@@ -24,6 +24,7 @@ Basic settings
 ;; Bootstrap straight
 ;; -- Variables
 (setq straight-use-package-by-default t)
+(setq package-native-compile t) ;; not needed or just straight
 
 ;; -- Bootstrap `straight.el'
 (defvar bootstrap-version)
@@ -58,7 +59,7 @@ Basic settings
 #+begin_src emacs-lisp
 (column-number-mode) ;; show line nums in modeline
 
-;;(setq display-line-numbers-type 'relative)
+(setq display-line-numbers-type 'relative)
 ;;(global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
 
 (setq-default truncate-lines t) ; Don't wrap by default
@@ -123,6 +124,35 @@ These functions scale the emacs's global font sizes instead of just buffer.
   :config
   (diminish 'global-whitespace-mode)
   (diminish 'visual-line-mode))
+#+end_src
+** Evil
+#+begin_src emacs-lisp
+(use-package evil
+  :init
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-mode-line-format nil)
+  ;;(setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
+  :config
+  (evil-mode 1)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  )
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-company-use-tng nil)
+  :init
+  (evil-collection-init 'vterm))
+
+(use-package evil-org
+  :after org
+  :diminish evil-org-mode
+  :hook (org-mode . evil-org-mode)
+  )
 #+end_src
 ** General
 #+begin_src emacs-lisp
@@ -406,7 +436,6 @@ Doom themes.
 (use-package org
   :init
   (setq org-adapt-indentation nil
-        ;; org-startup-indented t
         org-indent-indentation-per-level 1        
         org-src-tab-acts-natively t ;; Better tabs in source blocks
         org-src-preserve-indentation t ;; Don't auto tab in source block
@@ -423,19 +452,6 @@ Doom themes.
   ;; in visual line mode.
   (define-key org-mode-map "\C-a" 'org-beginning-of-line)
   (define-key org-mode-map "\C-e" 'org-end-of-line)
-  )
-#+end_src
-**** Org appear
-This dynamically hides org markers, but I'm not currently using it as it has some issues.
-#+begin_src emacs-lisp :tangle no
-(use-package org-appear
-  :straight '(org-appear :type git :host github :repo "awth13/org-appear")
-  :hook (org-mode . org-appear-mode)
-  :config
-  (setq org-hide-emphasis-markers t
-        org-appear-autoemphasis t
-        org-appear-autosubmarkers t
-        org-appear-autolinks nil)
   )
 #+end_src
 **** Babel settings
@@ -458,56 +474,3 @@ This dynamically hides org markers, but I'm not currently using it as it has som
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
 #+end_src
 * Other package configuration
-** Email
-Not sure if this is worth it or not still.
-#+begin_src emacs-lisp :tangle no
-(use-package f) ;; used in workaround to find mu4e
-(use-package mu4e
-  :ensure nil
-  :init
-  ;; This is a workaround so that mu4e is always found in nix's store
-  (let ((mu4epath
-         (concat
-          (f-dirname
-           (file-truename
-            (executable-find "mu")))
-          "/../share/emacs/site-lisp/mu4e")))
-    (when (and
-           (string-prefix-p "/nix/store/" mu4epath)
-           (file-directory-p mu4epath))
-      (add-to-list 'load-path mu4epath)))
-
-  :hook
-  (mu4e-compose-mode . (lambda ()
-                         (use-hard-newlines -1)))
-
-  :config
-  ;; This is set to 't' to avoid mail syncing issues when using mbsync
-  (setq mu4e-change-filenames-when-moving t)
-
-  ;; Refresh mail using isync every 10 minutes
-  (setq mu4e-update-interval (* 10 60))
-  (setq mu4e-get-mail-command "mbsync -a")
-  (setq mu4e-maildir "~/Mail")
-
-  (setq mu4e-drafts-folder "/[Gmail]/Drafts")
-  (setq mu4e-sent-folder   "/[Gmail]/Sent Mail")
-  (setq mu4e-refile-folder "/[Gmail]/All Mail")
-  (setq mu4e-trash-folder  "/[Gmail]/Trash")
-
-  (setq mu4e-maildir-shortcuts
-        '((:maildir "/Inbox"             :key ?i)
-          (:maildir "/[Gmail]/Sent Mail" :key ?s)
-          (:maildir "/[Gmail]/Trash"     :key ?t)
-          (:maildir "/[Gmail]/Drafts"    :key ?d)
-          (:maildir "/[Gmail]/All Mail"  :key ?a)))
-
-  (setq mu4e-compose-format-flowed t)
-  (setq mu4e-headers-sort-direction "ascending")
-
-  ;; how to send the mail
-  (setq smtpmail-smtp-server       "smtp.gmail.com"
-        smtpmail-smtp-service      465
-        smtpmail-stream-type       'ssl
-        message-send-mail-function 'smtpmail-send-it))
-#+end_src
