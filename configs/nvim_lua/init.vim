@@ -32,6 +32,7 @@ require('packer').startup(function ()
 	use {'hrsh7th/nvim-compe'}
 	use {'hrsh7th/vim-vsnip'}
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+	use {'windwp/nvim-ts-autotag'}
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -193,6 +194,9 @@ require'nvim-treesitter.configs'.setup {
 	},
 	indent = {
 		enable = false;
+	},
+	autotag = {
+		enable = true;
 	}
 }
 EOF

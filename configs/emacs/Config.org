@@ -125,35 +125,6 @@ These functions scale the emacs's global font sizes instead of just buffer.
   (diminish 'global-whitespace-mode)
   (diminish 'visual-line-mode))
 #+end_src
-** Evil
-#+begin_src emacs-lisp
-(use-package evil
-  :init
-  (setq evil-undo-system 'undo-fu)
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  (setq evil-mode-line-format nil)
-  ;;(setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
-  :config
-  (evil-mode 1)
-  (evil-set-initial-state 'messages-buffer-mode 'normal)
-  )
-
-(use-package evil-collection
-  :after evil
-  :custom
-  (evil-collection-company-use-tng nil)
-  :init
-  (evil-collection-init 'vterm))
-
-(use-package evil-org
-  :after org
-  :diminish evil-org-mode
-  :hook (org-mode . evil-org-mode)
-  )
-#+end_src
 ** General
 #+begin_src emacs-lisp
 (use-package general
@@ -168,6 +139,46 @@ These functions scale the emacs's global font sizes instead of just buffer.
     "qq"  '(kill-emacs :which-key "kill emacs")
     "o"   '(:ignore t :which-key "open")
     )
+  )
+#+end_src
+** Evil
+#+begin_src emacs-lisp
+(use-package evil
+  :init
+  (setq evil-undo-system 'undo-fu)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-mode-line-format nil)
+  ;;(setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
+  :config
+  (general-evil-setup)
+  (evil-mode 1)
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+  )
+
+(use-package evil-commentary
+  :after evil
+  :diminish evil-commentary-mode
+  :config
+  (evil-commentary-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-company-use-tng nil)
+  :init
+  (evil-collection-init '(vterm dired xref)))
+
+(use-package evil-org
+  :after org
+  :diminish evil-org-mode
+  :hook (org-mode . evil-org-mode)
   )
 #+end_src
 ** Which-key
@@ -215,6 +226,7 @@ These functions scale the emacs's global font sizes instead of just buffer.
 (use-package ivy-prescient
   :after ivy-rich
   :config
+  (setq ivy-prescient-history-length 200)
   (ivy-prescient-mode 1)
   (prescient-persist-mode 1))
 #+end_src
@@ -404,7 +416,13 @@ Doom themes.
   :config
   (setq lsp-ui-doc-position 'at-point
         lsp-ui-doc-enable nil
-        lsp-ui-sideline-enable nil))
+        lsp-ui-sideline-enable nil)
+  :general
+  (general-nmap
+   :predicate 'lsp-ui-mode
+   "gr" 'lsp-ui-peek-find-references
+   "gd" 'lsp-ui-peek-find-definitions
+   "K" 'lsp-describe-thing-at-point))
 #+end_src
 ** Major mode config
 *** Python

@@ -6,6 +6,9 @@
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     }))
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
   ];
 
   # packages to install
@@ -16,6 +19,7 @@
     ripgrep
 
     gcc10
+    cmake
 
     python3
     go
@@ -26,7 +30,6 @@
     gopls
     nodePackages.pyright
     nodePackages.npm
-    nodePackages.prettier
 
     firefox
     google-chrome
@@ -37,15 +40,15 @@
     ispell
     arandr
     zoom-us
-    texlive.combined.scheme-medium
-	isync
-	mu
+    texlive.combined.scheme-full
+    isync
+    mu
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka-bin
     fira-code
-    source-code-pro
     jetbrains-mono
+    source-code-pro
     source-sans-pro
     roboto-mono
 
@@ -80,6 +83,13 @@
     shellAliases = {
       c = "cd ~/.config/nixpkgs";
     };
+  };
+
+  programs.neovim = {
+    enable = true;
+    package = pkgs.neovim-nightly;
+    withNodeJs = true;
+    extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
 
   programs.emacs = {
