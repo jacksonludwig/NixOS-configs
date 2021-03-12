@@ -61,6 +61,7 @@ Basic settings
 
 (setq display-line-numbers-type 'relative)
 ;;(global-display-line-numbers-mode t) ; line numbers (maybe not needed without evil?)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (setq-default truncate-lines t) ; Don't wrap by default
 
@@ -77,7 +78,7 @@ Basic settings
 * Font setup
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 125)
-(defvar jackson/main-font nil)
+(defvar jackson/main-font "JetBrains Mono NL")
 (defvar jackson/variable-font nil)
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
@@ -295,7 +296,7 @@ This is required by doom-modeline and occasionally other packages optionally.
 #+end_src
 ** Theme/modeline
 Modus themes.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package modus-themes
   :init
   ;; Load the theme files before enabling a theme
@@ -304,10 +305,10 @@ Modus themes.
 #+end_src
 
 Doom themes.
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package doom-themes
   :init
-  (load-theme 'doom-tomorrow-night t)
+  (load-theme 'doom-vibrant t)
   :config
   (doom-themes-visual-bell-config)
   (doom-themes-org-config)
@@ -468,8 +469,8 @@ Doom themes.
         org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org"))
   ;; Following two lines are a workaround so that special a/e works
   ;; in visual line mode.
-  (define-key org-mode-map "\C-a" 'org-beginning-of-line)
-  (define-key org-mode-map "\C-e" 'org-end-of-line)
+  ;; (define-key org-mode-map "\C-a" 'org-beginning-of-line)
+  ;; (define-key org-mode-map "\C-e" 'org-end-of-line)
   )
 #+end_src
 **** Babel settings

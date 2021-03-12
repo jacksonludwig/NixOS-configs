@@ -1,16 +1,17 @@
 { config, pkgs, ... }:
 
+# let
+#   pkgsUnstable = import <nixpkgs-unstable> {};
+# in
 {
-  # enable neovim-nightly overlay
   nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
     }))
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+    }))
   ];
-  
 
   # packages to install
   home.packages = with pkgs; [
@@ -69,6 +70,7 @@
   programs.emacs = {
     enable = true;
     # package = pkgs.emacsPgtkGcc;
+    # package = pkgs.emacsGcc;
     extraPackages = epkgs: with epkgs; [
         vterm
     ];
