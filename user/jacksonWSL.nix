@@ -28,6 +28,7 @@
     jdk11
     nodejs
     nodePackages.typescript
+    nodePackages.prettier
 
     gopls
     nodePackages.pyright

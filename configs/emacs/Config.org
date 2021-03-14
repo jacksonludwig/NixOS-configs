@@ -152,6 +152,8 @@ These functions scale the emacs's global font sizes instead of just buffer.
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump nil)
   (setq evil-mode-line-format nil)
+  (setq evil-vsplit-window-right t
+	evil-split-window-below t)
   ;;(setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
   :config
   (general-evil-setup)

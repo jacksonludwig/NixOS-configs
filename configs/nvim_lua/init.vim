@@ -22,6 +22,7 @@ require('packer').startup(function ()
 	use {'LnL7/vim-nix'}
 	use {'benknoble/vim-mips'}
 	use {'maxmellon/vim-jsx-pretty'}
+	use {'mhartington/formatter.nvim'}
 
 	use {
 		'nvim-telescope/telescope.nvim',
@@ -31,6 +32,7 @@ require('packer').startup(function ()
 	use {'neovim/nvim-lspconfig'}
 	use {'hrsh7th/nvim-compe'}
 	use {'hrsh7th/vim-vsnip'}
+	use {'dsznajder/vscode-es7-javascript-react-snippets'}
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 	use {'windwp/nvim-ts-autotag'}
 end)
@@ -53,13 +55,15 @@ vim.o.completeopt = "menuone,noselect"
 vim.cmd('colorscheme PaperColor')
 
 -------------------- autocmd -------------------------------
-vim.cmd('autocmd Filetype lua setlocal ts=2 sts=2 sw=2')
-vim.cmd('autocmd Filetype vim setlocal ts=2 sts=2 sw=2')
-vim.cmd('autocmd Filetype javascript setlocal ts=2 sts=2 sw=2')
-vim.cmd('autocmd Filetype css setlocal ts=2 sts=2 sw=2')
-vim.cmd('autocmd Filetype html setlocal ts=2 sts=2 sw=2')
-vim.cmd('autocmd Filetype json setlocal ts=2 sts=2 sw=2')
-vim.cmd('autocmd Filetype asm setlocal ts=2 sts=2 sw=2 filetype=mips')
+vim.api.nvim_exec([[
+	autocmd Filetype lua setlocal ts=2 sts=2 sw=2
+	autocmd Filetype vim setlocal ts=2 sts=2 sw=2
+	autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+	autocmd Filetype css setlocal ts=2 sts=2 sw=2
+	autocmd Filetype html setlocal ts=2 sts=2 sw=2
+	autocmd Filetype json setlocal ts=2 sts=2 sw=2
+	autocmd Filetype asm setlocal ts=2 sts=2 sw=2 filetype=mips
+]], true)
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
@@ -98,16 +102,16 @@ require'compe'.setup {
 		treesitter = false;
 	};
 }
-vim.cmd([[
+vim.api.nvim_exec([[
 	inoremap <silent><expr> <C-space> compe#complete()
 	inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 	inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 	inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 	inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-]])
+]], true)
 
 -------------------- VIM_VSNIP -------------------------------
-vim.cmd([[
+vim.api.nvim_exec([[
 	imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
 	smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
 
@@ -123,7 +127,7 @@ vim.cmd([[
 	xmap        s   <Plug>(vsnip-select-text)
 	nmap        S   <Plug>(vsnip-cut-text)
 	xmap        S   <Plug>(vsnip-cut-text)
-]])
+]], true)
 
 -------------------- LSP -------------------------------
 local nvim_lsp = require('lspconfig')
@@ -190,14 +194,37 @@ end
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = "maintained",
 	highlight = {
-		enable = true;
+		enable = false;
 	},
 	indent = {
 		enable = false;
 	},
 	autotag = {
-		enable = true;
+		enable = false;
 	}
 }
-EOF
 
+-------------------- FORMATTER -------------------------------
+require('formatter').setup({
+  logging = false,
+  filetype = {
+    javascript = {
+        -- prettier
+       function()
+          return {
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
+            stdin = true
+          }
+        end
+    },
+  }
+})
+-- stuff to format on save
+vim.api.nvim_exec([[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost *.js FormatWrite
+augroup END
+]], true)
+EOF
