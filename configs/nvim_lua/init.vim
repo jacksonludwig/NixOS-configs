@@ -200,7 +200,7 @@ require'nvim-treesitter.configs'.setup {
 		enable = false;
 	},
 	autotag = {
-		enable = false;
+		enable = true;
 	}
 }
 

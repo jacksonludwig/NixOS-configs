@@ -1,18 +1,20 @@
 { config, pkgs, ... }:
 
-# let
-#   pkgsUnstable = import <nixpkgs-unstable> {};
-# in
-{
-  nixpkgs.overlays = [
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }))
-    (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-    }))
-  ];
+let
 
+  unstable = import (fetchTarball
+    "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
+      overlays = [
+        (import (builtins.fetchTarball {
+          url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+        }))
+        (import (builtins.fetchTarball {
+          url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+        }))
+      ];
+    };
+
+in {
   # packages to install
   home.packages = with pkgs; [
     bat
@@ -42,7 +44,6 @@
     texlive.combined.scheme-full
     isync
     mu
-    nodePackages.prettier
 
     (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka-bin
@@ -63,21 +64,24 @@
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    package = unstable.neovim-nightly;
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
 
   programs.emacs = {
     enable = true;
-    # package = pkgs.emacsPgtkGcc;
-    # package = pkgs.emacsGcc;
+    package = unstable.emacsPgtkGcc;
+    # package = unstable.emacsGcc;
     extraPackages = epkgs: with epkgs; [
         vterm
     ];
   };
+  home.file.".doom.d/init.el".source = ../configs/doom/init.el;
+  home.file.".doom.d/config.el".source = ../configs/doom/config.el;
+  home.file.".doom.d/packages.el".source = ../configs/doom/packages.el;
   # home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
-  home.file.".emacs.d/splash.png".source = ../configs/emacs/splash.png;
+  # home.file.".emacs.d/splash.png".source = ../configs/emacs/splash.png;
 
   # Font config
   home.file.".Xresources".source = ../configs/wsl_font_conf/.Xresources;
