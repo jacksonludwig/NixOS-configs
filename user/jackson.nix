@@ -93,7 +93,7 @@ in {
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    package = unstable.neovim-nightly;
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
