@@ -3,7 +3,8 @@
 let
 
   unstable = import (fetchTarball
-    "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
+    # "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
+    "https://github.com/NixOS/nixpkgs/archive/1f77a4c8c74bbe896053994836790aa9bf6dc5ba.tar.gz") {
       overlays = [
         (import (builtins.fetchTarball {
           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
