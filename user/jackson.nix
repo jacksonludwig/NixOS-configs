@@ -36,6 +36,7 @@ in {
     nodePackages.pyright
     nodePackages.npm
     nodePackages.typescript-language-server
+    texlab
 
     firefox
     google-chrome
@@ -100,7 +101,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    package = unstable.emacsPgtkGcc;
+    # package = unstable.emacsPgtkGcc;
     # package = unstable.emacsGcc;
     extraPackages = epkgs: with epkgs; [
         vterm

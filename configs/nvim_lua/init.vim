@@ -33,6 +33,8 @@ require('packer').startup(function ()
 	use {'hrsh7th/nvim-compe'}
 	use {'hrsh7th/vim-vsnip'}
 	use {'dsznajder/vscode-es7-javascript-react-snippets'}
+	use {'James-Yu/LaTeX-Workshop'}
+
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 	use {'windwp/nvim-ts-autotag'}
 end)
@@ -180,7 +182,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 -- Use a loop to conveniently both setup defined servers 
 -- and map buffer local keybindings when the language server attaches
-local servers = { "pyright", "tsserver", "gopls" }
+local servers = { "pyright", "tsserver", "gopls", "texlab" }
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 for _, lsp in ipairs(servers) do

@@ -69,3 +69,10 @@
 ; Manual completion
 ; C-SPC to trigger completion
 (setq company-idle-delay nil)
+
+; Allow nested snippets
+(setq yas-triggers-in-field t)
+
+; Allow latex snips in org mode
+(after! yasnippet
+  (add-hook 'yas-minor-mode-hook #'(lambda () (yas-activate-extra-mode 'latex-mode))))
