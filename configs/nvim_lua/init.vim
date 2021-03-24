@@ -138,6 +138,7 @@ vim.cmd('set termguicolors')
 vim.cmd('set signcolumn=yes')
 vim.cmd('set splitright')
 vim.cmd('set splitbelow')
+vim.cmd('set nowrap')
 
 vim.o.mouse = 'a'
 vim.wo.number = true
