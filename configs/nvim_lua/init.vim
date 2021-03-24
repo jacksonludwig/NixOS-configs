@@ -18,6 +18,7 @@ require('packer').startup(function ()
 	use {'wbthomason/packer.nvim', opt = true}
 	use {'tpope/vim-commentary'}
 	use {'NLKNguyen/papercolor-theme'}
+	use {'mhartington/oceanic-next'}
 
 	use {'LnL7/vim-nix'}
 	use {'benknoble/vim-mips'}
@@ -33,7 +34,6 @@ require('packer').startup(function ()
 	use {'hrsh7th/nvim-compe'}
 	use {'hrsh7th/vim-vsnip'}
 	use {'dsznajder/vscode-es7-javascript-react-snippets'}
-	use {'James-Yu/LaTeX-Workshop'}
 
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 	use {'windwp/nvim-ts-autotag'}
@@ -56,7 +56,10 @@ vim.o.completeopt = "menuone,noselect"
 vim.g.tex_flavor = "latex"
 
 -------------------- THEME -------------------------------
-vim.cmd('colorscheme PaperColor')
+-- vim.cmd('colorscheme PaperColor')
+vim.g.oceanic_next_terminal_bold = 1
+vim.g.oceanic_next_terminal_italic = 1
+vim.cmd('colorscheme OceanicNext')
 
 -------------------- autocmd -------------------------------
 vim.api.nvim_exec([[
@@ -161,7 +164,7 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 	buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 	--buf_set_keymap('n', '<space>sw', "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
-	buf_set_keymap('n', '<space>sw', ":Telescope lsp_workspace_symbols query=", opts)
+	buf_set_keymap('n', '<space>sw', "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols({query = vim.fn.input('Query > ') })<CR>", opts)
 	--buf_set_keymap('n', '<space>sd', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
 	buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
 
@@ -197,11 +200,12 @@ end
 -------------------- TREESITTER -------------------------------
 require'nvim-treesitter.configs'.setup {
 	ensure_installed = "maintained",
+	ignore_install = { "erlang", "ocamllex", "devicetree", "supercollider", "ledger", "gdscript", "nix" },
 	highlight = {
 		enable = true;
 	},
 	indent = {
-		enable = false;
+		enable = true;
 	},
 	autotag = {
 		enable = true;
