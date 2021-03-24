@@ -73,6 +73,9 @@
 ; Allow nested snippets
 (setq yas-triggers-in-field t)
 
+; Don't let snippet bug out undo
+(setq yas-snippet-revival nil)
+
 ; Allow latex snips in org mode
 (after! yasnippet
-  (add-hook 'yas-minor-mode-hook #'(lambda () (yas-activate-extra-mode 'latex-mode))))
+  (add-hook 'org-mode-hook #'(lambda () (yas-activate-extra-mode 'latex-mode))))
