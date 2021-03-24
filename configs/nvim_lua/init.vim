@@ -53,6 +53,8 @@ vim.wo.relativenumber = true
 vim.g.syntax = true
 vim.o.completeopt = "menuone,noselect"
 
+vim.g.tex_flavor = "latex"
+
 -------------------- THEME -------------------------------
 vim.cmd('colorscheme PaperColor')
 

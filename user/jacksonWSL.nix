@@ -76,6 +76,7 @@ in {
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
+  home.file.".vsnip/tex.json".source = ../configs/nvim_lua/vsnips/tex.json;
 
   programs.emacs = {
     enable = true;
