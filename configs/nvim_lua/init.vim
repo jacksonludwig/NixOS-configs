@@ -46,8 +46,9 @@ vim.cmd('set undodir=$HOME/.config/nvim/undodir')
 vim.cmd('set undofile')
 vim.cmd('set hidden')
 vim.cmd('set termguicolors')
---vim.cmd('set list')
 vim.cmd('set signcolumn=yes')
+vim.cmd('set splitright')
+vim.cmd('set splitbelow')
 
 vim.o.mouse = 'a'
 vim.wo.number = true
@@ -150,7 +151,8 @@ local on_attach = function(client, bufnr)
 	-- Mappings.
 	local opts = { noremap=true, silent=true }
 	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	--buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	buf_set_keymap('n', 'gd', '<Cmd>Telescope lsp_definitions<CR>', opts)
 	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 	buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
