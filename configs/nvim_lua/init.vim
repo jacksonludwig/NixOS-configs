@@ -17,28 +17,117 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
 	use {'wbthomason/packer.nvim', opt = true}
 	use {'tpope/vim-commentary'}
-	use {'NLKNguyen/papercolor-theme'}
-	use {'mhartington/oceanic-next'}
+
+	use {
+	  'mhartington/oceanic-next', 
+	  config = function() 
+			vim.g.oceanic_next_terminal_bold = 1
+			vim.g.oceanic_next_terminal_italic = 1
+		end
+	}
 
 	use {'LnL7/vim-nix'}
 	use {'benknoble/vim-mips'}
 	use {'maxmellon/vim-jsx-pretty'}
-	use {'mhartington/formatter.nvim'}
 
 	use {
 		'nvim-telescope/telescope.nvim',
-		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+		requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+		config = function() 
+				vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
+				vim.api.nvim_set_keymap('n', '<space>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true, silent = true })
+				vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
+				vim.api.nvim_set_keymap('n', '<space>sg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
+				vim.api.nvim_set_keymap('n', '<space>ff', '<cmd>lua require("telescope.builtin").file_browser()<cr>', { noremap = true, silent = true })
+		end
+	}
+
+	use {
+		'mhartington/formatter.nvim',
+		config = function()
+			require('formatter').setup({
+				logging = false,
+				filetype = {
+					javascript = {
+					   -- prettier
+						 function()
+								return {
+									exe = "prettier",
+									args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
+									stdin = true
+								}
+						end
+					},
+				}
+			})
+			-- stuff to format on save
+			vim.api.nvim_exec([[
+			augroup FormatAutogroup
+				autocmd!
+				autocmd BufWritePost *.js FormatWrite
+			augroup END
+			]], true)
+		end
+	}
+
+	use {
+		'lewis6991/gitsigns.nvim',
+		requires = {
+			'nvim-lua/plenary.nvim'
+		},
+		config = function() require('gitsigns').setup() end
 	}
 
 	use {'neovim/nvim-lspconfig'}
 	use {'hrsh7th/nvim-compe'}
-	use {'hrsh7th/vim-vsnip'}
+
+	use {
+		'hrsh7th/vim-vsnip', 
+		config = function() 
+			vim.api.nvim_exec([[
+			imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
+			smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
+
+			imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+			smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
+
+			imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+			smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+			imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+			smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+
+			nmap        s   <Plug>(vsnip-select-text)
+			xmap        s   <Plug>(vsnip-select-text)
+			nmap        S   <Plug>(vsnip-cut-text)
+			xmap        S   <Plug>(vsnip-cut-text)
+			]], true)
+		end
+	}
+
 	use {'dsznajder/vscode-es7-javascript-react-snippets'}
 
 	use {'airblade/vim-rooter'}
 
-	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-	use {'windwp/nvim-ts-autotag'}
+	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', 
+	  requires = {
+			'windwp/nvim-ts-autotag'
+		},
+		config = function ()
+			require'nvim-treesitter.configs'.setup {
+				ensure_installed = "maintained",
+				ignore_install = { "erlang", "ocamllex", "devicetree", "supercollider", "ledger", "gdscript", "nix" },
+				highlight = {
+					enable = true;
+				},
+				indent = {
+					enable = true;
+				},
+				autotag = {
+					enable = true;
+				}
+			}
+		end
+	}
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -55,13 +144,9 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 vim.g.syntax = true
 vim.o.completeopt = "menuone,noselect"
-
 vim.g.tex_flavor = "latex"
 
 -------------------- THEME -------------------------------
--- vim.cmd('colorscheme PaperColor')
-vim.g.oceanic_next_terminal_bold = 1
-vim.g.oceanic_next_terminal_italic = 1
 vim.cmd('colorscheme OceanicNext')
 
 -------------------- autocmd -------------------------------
@@ -76,12 +161,6 @@ vim.api.nvim_exec([[
 ]], true)
 
 -------------------- MAPPINGS -------------------------------
-vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<space>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<space>sg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<space>ff', '<cmd>lua require("telescope.builtin").file_browser()<cr>', { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
 
 -------------------- NVIM_COMPLETION -------------------------------
@@ -118,25 +197,6 @@ vim.api.nvim_exec([[
 	inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 	inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 	inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-]], true)
-
--------------------- VIM_VSNIP -------------------------------
-vim.api.nvim_exec([[
-	imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
-	smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
-
-	imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-	smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-
-	imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-	smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-	imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-	smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
-	nmap        s   <Plug>(vsnip-select-text)
-	xmap        s   <Plug>(vsnip-select-text)
-	nmap        S   <Plug>(vsnip-cut-text)
-	xmap        S   <Plug>(vsnip-cut-text)
 ]], true)
 
 -------------------- LSP -------------------------------
@@ -200,43 +260,4 @@ for _, lsp in ipairs(servers) do
 		on_attach = on_attach,
 	}
 end
-
--------------------- TREESITTER -------------------------------
-require'nvim-treesitter.configs'.setup {
-	ensure_installed = "maintained",
-	ignore_install = { "erlang", "ocamllex", "devicetree", "supercollider", "ledger", "gdscript", "nix" },
-	highlight = {
-		enable = true;
-	},
-	indent = {
-		enable = true;
-	},
-	autotag = {
-		enable = true;
-	}
-}
-
--------------------- FORMATTER -------------------------------
-require('formatter').setup({
-  logging = false,
-  filetype = {
-    javascript = {
-        -- prettier
-       function()
-          return {
-            exe = "prettier",
-            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
-            stdin = true
-          }
-        end
-    },
-  }
-})
--- stuff to format on save
-vim.api.nvim_exec([[
-augroup FormatAutogroup
-  autocmd!
-  autocmd BufWritePost *.js FormatWrite
-augroup END
-]], true)
 EOF
