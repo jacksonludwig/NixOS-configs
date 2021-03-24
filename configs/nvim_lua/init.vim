@@ -35,6 +35,8 @@ require('packer').startup(function ()
 	use {'hrsh7th/vim-vsnip'}
 	use {'dsznajder/vscode-es7-javascript-react-snippets'}
 
+	use {'airblade/vim-rooter'}
+
 	use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 	use {'windwp/nvim-ts-autotag'}
 end)
