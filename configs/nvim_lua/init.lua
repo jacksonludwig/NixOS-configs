@@ -112,7 +112,6 @@ require('packer').startup(function ()
     config = function ()
       require'nvim-treesitter.configs'.setup {
         ensure_installed = "maintained",
-        ignore_install = { "erlang", "ocamllex", "devicetree", "supercollider", "ledger", "gdscript", "nix" },
         highlight = {
           enable = true;
         },

@@ -44,6 +44,7 @@ in {
     nodePackages.npm
     nodePackages.typescript-language-server
     texlab
+    tree-sitter
 
     firefox
     google-chrome
