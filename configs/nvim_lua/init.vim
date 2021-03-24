@@ -26,9 +26,7 @@ require('packer').startup(function ()
 		end
 	}
 
-	use {'LnL7/vim-nix'}
-	use {'benknoble/vim-mips'}
-	use {'maxmellon/vim-jsx-pretty'}
+	use {'LnL7/vim-nix', 'benknoble/vim-mips', 'maxmellon/vim-jsx-pretty'}
 
 	use {
 		'nvim-telescope/telescope.nvim',
@@ -83,6 +81,9 @@ require('packer').startup(function ()
 
 	use {
 		'hrsh7th/vim-vsnip', 
+		requires = {
+			'dsznajder/vscode-es7-javascript-react-snippets'
+		},
 		config = function() 
 			vim.api.nvim_exec([[
 			imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
@@ -103,8 +104,6 @@ require('packer').startup(function ()
 			]], true)
 		end
 	}
-
-	use {'dsznajder/vscode-es7-javascript-react-snippets'}
 
 	use {'airblade/vim-rooter'}
 
@@ -211,7 +210,6 @@ local on_attach = function(client, bufnr)
 	-- Mappings.
 	local opts = { noremap=true, silent=true }
 	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-	--buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
 	buf_set_keymap('n', 'gd', '<Cmd>Telescope lsp_definitions<CR>', opts)
 	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
@@ -221,15 +219,12 @@ local on_attach = function(client, bufnr)
 	buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 	buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
 	buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-	--buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 	buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
 	buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
 	buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
 	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 	buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-	--buf_set_keymap('n', '<space>sw', "<cmd>lua vim.lsp.buf.workspace_symbol()<CR>", opts)
 	buf_set_keymap('n', '<space>sw', "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols({query = vim.fn.input('Query > ') })<CR>", opts)
-	--buf_set_keymap('n', '<space>sd', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
 	buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
 
 	-- Set some keybinds conditional on server capabilities
