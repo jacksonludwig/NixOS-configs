@@ -20,6 +20,12 @@ require('packer').startup(function ()
     config = function() 
       vim.g.oceanic_next_terminal_bold = 1
       vim.g.oceanic_next_terminal_italic = 1
+      vim.api.nvim_exec([[
+      hi Statusline guifg=#343d46 guibg=#62b3b2
+      hi StatuslineAccent guifg=#c594c5 guibg=#343d46
+      hi StatuslineError guifg=#ff5370 guibg=#343d46
+      hi StatuslineWarning guifg=#f78c6c guibg=#343d46
+      ]], true)
     end
   }
 
@@ -254,3 +260,6 @@ for _, lsp in ipairs(servers) do
     on_attach = on_attach,
   }
 end
+
+------------------------ STATUSLINE -------------------------------
+require('jackson.statusline').setup()
