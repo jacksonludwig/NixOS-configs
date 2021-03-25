@@ -13,7 +13,7 @@ end
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
   use {'wbthomason/packer.nvim', opt = true}
-  use {'tpope/vim-commentary'}
+  use {'tpope/vim-commentary', 'tpope/vim-surround'}
 
   use {
     'mhartington/oceanic-next', 
