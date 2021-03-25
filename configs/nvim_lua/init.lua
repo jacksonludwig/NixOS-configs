@@ -21,7 +21,7 @@ require('packer').startup(function ()
       vim.g.oceanic_next_terminal_bold = 1
       vim.g.oceanic_next_terminal_italic = 1
       vim.api.nvim_exec([[
-      hi Statusline guifg=#343d46 guibg=#62b3b2
+      hi Statusline guifg=#343d46 guibg=#ffffff
       hi StatuslineAccent guifg=#65737e guibg=#343d46
       hi StatuslineError guifg=#ff5370 guibg=#343d46
       hi StatuslineWarning guifg=#f78c6c guibg=#343d46
@@ -114,19 +114,23 @@ require('packer').startup(function ()
   use {
     'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
     requires = {
-      'windwp/nvim-ts-autotag'
+      'windwp/nvim-ts-autotag',
+      'JoosepAlviste/nvim-ts-context-commentstring'
     },
     config = function ()
       require'nvim-treesitter.configs'.setup {
         ensure_installed = "maintained",
         highlight = {
-          enable = true;
+          enable = true
         },
         indent = {
-          enable = true;
+          enable = true
         },
         autotag = {
-          enable = true;
+          enable = true
+        },
+        context_commentstring = {
+          enable = true
         }
       }
     end
@@ -142,6 +146,7 @@ vim.cmd('set signcolumn=yes')
 vim.cmd('set splitright')
 vim.cmd('set splitbelow')
 vim.cmd('set nowrap')
+vim.cmd('set updatetime=100')
 
 vim.o.mouse = 'a'
 vim.wo.number = true

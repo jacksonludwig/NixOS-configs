@@ -39,9 +39,7 @@ function _G.statusline(winnr)
 
   -- File name
   local filename = '%{expand("%:p:h:t")}/%{expand("%:p:t")}'
-  table.insert(segments, color(is_active, 'StatuslineAccent', is_active and '»' or '«'))
   table.insert(segments, '%<' .. filename)
-  table.insert(segments, color(is_active, 'StatuslineAccent', is_active and '«' or '»'))
 
   -- File modified
   if vim.fn.getbufvar(bufnum, '&modified') == 1 then
