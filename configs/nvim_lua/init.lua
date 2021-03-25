@@ -22,9 +22,10 @@ require('packer').startup(function ()
       vim.g.oceanic_next_terminal_italic = 1
       vim.api.nvim_exec([[
       hi Statusline guifg=#343d46 guibg=#62b3b2
-      hi StatuslineAccent guifg=#c594c5 guibg=#343d46
+      hi StatuslineAccent guifg=#65737e guibg=#343d46
       hi StatuslineError guifg=#ff5370 guibg=#343d46
       hi StatuslineWarning guifg=#f78c6c guibg=#343d46
+      hi StatuslineBoolean guifg=#f99157 guibg=#343d46
       ]], true)
     end
   }
