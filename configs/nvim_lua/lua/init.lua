@@ -103,9 +103,118 @@ require('packer').startup(function ()
     end
   }
 
-  use {'neovim/nvim-lspconfig'}
-  use {'hrsh7th/nvim-compe'}
+  -- Nvim completion
+  -- Relies on:
+  -- 
+  use {
+    'hrsh7th/nvim-compe',
+    config = function()
+      require'compe'.setup {
+        enabled = true;
+        autocomplete = true;
+        debug = false;
+        min_length = 1;
+        preselect = 'enable';
+        throttle_time = 80;
+        source_timeout = 200;
+        incomplete_delay = 400;
+        max_abbr_width = 100;
+        max_kind_width = 100;
+        max_menu_width = 100;
+        documentation = false;
 
+        source = {
+          path = true;
+          buffer = true;
+          calc = false;
+          vsnip = true;
+          nvim_lsp = true;
+          nvim_lua = true;
+          spell = true;
+          tags = false;
+          snippets_nvim = false;
+          treesitter = false;
+        };
+      }
+      vim.api.nvim_exec([[
+        inoremap <silent><expr> <C-space> compe#complete()
+        inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+        inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+        inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+        inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+      ]], true)
+    end
+  }
+
+  -- Nvim LSPconfig
+  -- Relies on:
+  -- `nvim-telescope`
+  use {
+    'neovim/nvim-lspconfig',
+    config = function()
+    local nvim_lsp = require('lspconfig')
+    local on_attach = function(client, bufnr)
+      print("LSP started: " .. client.name)
+      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+      buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+      -- Mappings.
+      local opts = { noremap=true, silent=true }
+      buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+      buf_set_keymap('n', 'gd', '<Cmd>Telescope lsp_definitions<CR>', opts)
+      buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+      buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+      buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+      buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+      buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+      buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+      buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+      buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+      buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
+      buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+      buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+      buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+      buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+      buf_set_keymap('n', '<space>sw', "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols({query = vim.fn.input('Query > ') })<CR>", opts)
+      buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
+      buf_set_keymap('n', '<space>ca', '<cmd>Telescope lsp_code_actions<CR>', opts)
+
+      -- Set some keybinds conditional on server capabilities
+      if client.resolved_capabilities.document_formatting then
+        buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+      elseif client.resolved_capabilities.document_range_formatting then
+        buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+      end
+
+    end
+
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+        signs = true,
+        update_in_insert = false,
+      }
+    )
+
+    -- Use a loop to conveniently both setup defined servers 
+    -- and map buffer local keybindings when the language server attaches
+    local servers = { "pyright", "tsserver", "gopls", "texlab" }
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    for _, lsp in ipairs(servers) do
+      nvim_lsp[lsp].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+      }
+    end
+	end
+  }
+
+  -- Vim Vsnip
+  -- Relies on:
+  -- 
   use {
     'hrsh7th/vim-vsnip', 
     requires = {
@@ -194,98 +303,3 @@ vim.api.nvim_exec([[
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
-
--------------------- NVIM_COMPLETION -------------------------------
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = false;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = false;
-    vsnip = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = false;
-    snippets_nvim = false;
-    treesitter = false;
-  };
-}
-vim.api.nvim_exec([[
-  inoremap <silent><expr> <C-space> compe#complete()
-  inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-  inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-  inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-  inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-]], true)
-
--------------------- LSP -------------------------------
-local nvim_lsp = require('lspconfig')
-local on_attach = function(client, bufnr)
-  print("LSP started: " .. client.name)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>Telescope lsp_definitions<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-  buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>sw', "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols({query = vim.fn.input('Query > ') })<CR>", opts)
-  buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>Telescope lsp_code_actions<CR>', opts)
-
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  end
-
-end
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false,
-  }
-)
-
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
-local servers = { "pyright", "tsserver", "gopls", "texlab" }
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-end
