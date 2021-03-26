@@ -78,9 +78,10 @@ in {
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
   home.file.".vsnip/tex.json".source = ../configs/nvim_lua/vsnips/tex.json;
-  home.file.".config/nvim/lua/jackson/init.lua".source = ../configs/nvim_lua/init.lua;
-  home.file.".config/nvim/lua/jackson/utils.lua".source = ../configs/nvim_lua/utils.lua;
-  home.file.".config/nvim/lua/jackson/statusline.lua".source = ../configs/nvim_lua/statusline.lua;
+  home.file.".config/nvim/lua" = {
+    source = ../configs/nvim_lua/lua;
+    recursive = true;
+  };
 
   programs.emacs = {
     enable = true;

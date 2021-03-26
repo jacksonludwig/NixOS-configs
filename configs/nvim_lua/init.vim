@@ -1,1 +1,1 @@
-lua require('jackson.init')
+lua require('init')
