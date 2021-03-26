@@ -92,12 +92,14 @@ require('packer').startup(function ()
               "diagnostics",
               sources = {"nvim_lsp"},
               -- symbols = {error = " ", warn = " ", info = " "}
-              symbols = {error = "E ", warn = "W ", info = "I "}
+              symbols = {error = "•", warn = "•", info = "•"}
             }
           }
         },
         options = {
-          theme = oceanic_next
+          theme = oceanic_next,
+          section_separators = '',
+          component_separators = '',
         }
       }) 
     end
