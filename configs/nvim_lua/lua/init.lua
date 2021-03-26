@@ -13,7 +13,7 @@ end
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
   use {'wbthomason/packer.nvim', opt = true}
-  use {'tpope/vim-commentary', 'tpope/vim-surround'}
+  use {'tpope/vim-commentary'}
 
   use {
     'mhartington/oceanic-next', 
@@ -144,6 +144,7 @@ require('packer').startup(function ()
           duplicate_visible = {guibg = "#16242E", gui = ""}
         }
       }
+      vim.api.nvim_set_keymap('n', 'gb', '<cmd>BufferLinePick<CR>', { noremap = false, silent = true })
     end
   }
 
