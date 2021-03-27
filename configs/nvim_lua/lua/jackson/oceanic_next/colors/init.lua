@@ -18,8 +18,6 @@ local M = {
   white  = "#ffffff"
 }
 
-vim.cmd("colorscheme OceanicNext")
-
 function M.setItalics()
   vim.cmd("hi Comment gui=italic")
   vim.cmd("hi Keyword gui=italic")
