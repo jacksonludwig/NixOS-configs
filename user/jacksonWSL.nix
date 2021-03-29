@@ -12,7 +12,8 @@ let
     };
 
     unstablePinned = import (fetchTarball
-      "https://github.com/NixOS/nixpkgs/archive/1f77a4c8c74bbe896053994836790aa9bf6dc5ba.tar.gz") {
+      # "https://github.com/NixOS/nixpkgs/archive/1f77a4c8c74bbe896053994836790aa9bf6dc5ba.tar.gz") {
+      "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
       overlays = [
         (import (builtins.fetchTarball {
           # url = https://github.com/mjlbach/emacs-overlay/archive/master.tar.gz;
