@@ -5,8 +5,6 @@
 * Core settings
 Basic settings
 #+begin_src emacs-lisp
-  ;;; -*- lexical-binding: t -*-
-
     (setq user-full-name "Jackson Ludwig"
 	  user-mail-address "jacksonludwig0@gmail.com")
 
