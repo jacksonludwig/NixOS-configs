@@ -5,20 +5,24 @@
 * Core settings
 Basic settings
 #+begin_src emacs-lisp
-  (setq user-full-name "Jackson Ludwig"
-	user-mail-address "jacksonludwig0@gmail.com")
+  ;;; -*- lexical-binding: t -*-
 
-  (setq backup-directory-alist
-	`((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-	`((".*" ,temporary-file-directory t)))
+    (setq user-full-name "Jackson Ludwig"
+	  user-mail-address "jacksonludwig0@gmail.com")
 
-  ;; SAVE CUSTOM VARS TO SEPARATE FILE
-  (setq custom-file (concat user-emacs-directory "custom.el"))
-  (load custom-file 'noerror)
+    ;; Send backup files to tmp
+    (setq backup-directory-alist
+	  `((".*" . ,temporary-file-directory)))
+    (setq auto-save-file-name-transforms
+	  `((".*" ,temporary-file-directory t)))
 
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+    ;; SAVE CUSTOM VARS TO SEPARATE FILE
+    (setq custom-file (concat user-emacs-directory "custom.el"))
+    (load custom-file 'noerror)
+
+    (setq gc-cons-threshold 100000000)
+    (setq read-process-output-max (* 1024 1024)) ;; 1mb
+    (setq create-lockfiles nil)
 #+end_src
 * Sane UI Defaults
   #+begin_src emacs-lisp
@@ -85,6 +89,7 @@ Basic settings
        :init
        (recentf-mode +1)
        (setq recentf-max-saved-items 200)
+       (setq consult-preview-key (kbd "M-p"))
        :general
        (jackson/leader
 	 "fr" 'consult-recent-file)
@@ -133,14 +138,24 @@ Basic settings
 ** Flycheck
    #+begin_src emacs-lisp
      (use-package flycheck
-       :init (global-flycheck-mode))
+       :init
+       (setq flycheck-check-syntax-automatically '(save mode-enabled))
+       (global-flycheck-mode))
    #+end_src
 * Language Packages
 ** Javascript/Typescript
    #+begin_src emacs-lisp
+     (defun setup-tide-mode ()
+       (interactive)
+       (tide-setup)
+       (eldoc-mode +1)
+       (tide-hl-identifier-mode +1))
+
      (use-package tide
        :after (company flycheck)
-       :hook (javascript-mode . tide-setup))
+       :hook
+       (js-mode . setup-tide-mode)
+       (typescript-mode . setup-tide-mode))
    #+end_src
 * Org settings
 ** General Org Config
