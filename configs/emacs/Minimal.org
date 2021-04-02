@@ -47,7 +47,9 @@ Basic settings
      (use-package general
        :init
        (general-create-definer jackson/leader
-	 :prefix "C-c"))
+	 :prefix "C-c")
+       (jackson/leader
+	 "qq" 'kill-emacs))
    #+end_src
 ** Restart emacs
 #+begin_src emacs-lisp
