@@ -197,8 +197,8 @@ require('packer').startup(function ()
 
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
-          virtual_text = false,
-          signs = true,
+          virtual_text = true,
+          signs = false,
           update_in_insert = false,
         }
       )
@@ -259,6 +259,12 @@ require('packer').startup(function ()
   }
 
   use {'airblade/vim-rooter'}
+  use {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end
+  }
 
   use {
     'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
@@ -291,7 +297,7 @@ vim.cmd('set undodir=$HOME/.config/nvim/undodir')
 vim.cmd('set undofile')
 vim.cmd('set hidden')
 vim.cmd('set termguicolors')
-vim.cmd('set signcolumn=yes')
+-- vim.cmd('set signcolumn=yes')
 vim.cmd('set splitright')
 vim.cmd('set splitbelow')
 vim.cmd('set nowrap')

@@ -1,0 +1,160 @@
+#+title: Init.el Generator
+#+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
+#+startup: fold
+
+* Core settings
+Basic settings
+#+begin_src emacs-lisp
+(setq user-full-name "Jackson Ludwig"
+      user-mail-address "jacksonludwig0@gmail.com")
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; SAVE CUSTOM VARS TO SEPARATE FILE
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file 'noerror)
+#+end_src
+* Sane UI Defaults
+  #+begin_src emacs-lisp
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (menu-bar-mode -1)
+    (setq visible-bell t)
+  #+end_src
+* Package bootstrap
+#+begin_src emacs-lisp
+  (setq straight-use-package-by-default t)
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+	(bootstrap-version 5))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	   'silent 'inhibit-cookies)
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
+  (straight-use-package 'use-package)
+#+end_src
+* Core Packages
+** General
+   #+begin_src emacs-lisp
+     (use-package general
+       :init
+       (general-create-definer jackson/leader
+	 :prefix "C-c"))
+   #+end_src
+** Restart emacs
+#+begin_src emacs-lisp
+  (use-package restart-emacs
+    :general
+    (jackson/leader
+      "qr" 'restart-emacs
+      "qR" 'restart-emacs))
+#+end_src
+** Which key
+   #+begin_src emacs-lisp
+     (use-package which-key
+       :init (which-key-mode +1))
+   #+end_src
+** Selectrum
+   #+begin_src emacs-lisp
+     (use-package selectrum
+       :init
+       (selectrum-mode +1))
+
+     (use-package selectrum-prescient
+       :after selectrum
+       :config
+       (selectrum-prescient-mode +1)
+       (prescient-persist-mode +1))
+   #+end_src
+** Consult
+   #+begin_src emacs-lisp
+     (use-package consult
+       :init
+       (recentf-mode +1)
+       (setq recentf-max-saved-items 200)
+       :general
+       (jackson/leader
+	 "fr" 'consult-recent-file)
+       ("C-s" 'consult-line))
+   #+end_src
+** Marginalia
+   #+begin_src emacs-lisp
+     (use-package marginalia
+       :init
+       (marginalia-mode)
+       (advice-add #'marginalia-cycle :after
+		   (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit 'keep-selected))))
+       (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+       :general
+       (:keymaps 'minibuffer-local-map
+		 "M-A" 'marginalia-cycle))
+   #+end_src
+** Embark
+   #+begin_src emacs-lisp
+     (use-package embark
+       :general
+       (jackson/leader
+	 "ea" 'embark-act
+	 "eb" 'embark-bindings)
+       :config
+       ;; Hide the mode line of the Embark live/completions buffers
+       (add-to-list 'display-buffer-alist
+		    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+		      nil
+		      (window-parameters (mode-line-format . none)))))
+
+     (use-package embark-consult
+       :after (embark consult)
+       :demand t ; only necessary if you have the hook below
+       ;; if you want to have consult previews as you move around an
+       ;; auto-updating embark collect buffer
+       :hook
+       (embark-collect-mode . embark-consult-preview-minor-mode))
+   #+end_src
+* Org settings
+** General Org Config
+#+begin_src emacs-lisp
+  (use-package org
+    :init
+    (setq org-catch-invisible-edits 'smart ;; Possibly better editing with folds
+	  org-special-ctrl-a/e t
+	  org-table-copy-increment nil ;; don't increment table on S-RET
+	  )
+    :hook
+    (org-mode . visual-line-mode)
+    :config
+    (setq org-directory "~/git_repos/emacs-org-mode"
+	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org"))
+    ;; Following two lines are a workaround so that special a/e works
+    ;; in visual line mode.
+    (define-key org-mode-map "\C-a" 'org-beginning-of-line)
+    (define-key org-mode-map "\C-e" 'org-end-of-line)
+    )
+#+end_src
+** Babel settings
+#+begin_src emacs-lisp
+;; BABEL LANGUAGES
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)))
+(push '("conf-unix" . conf-unix) org-src-lang-modes)
+
+;; Automatically tangle our Emacs.org config file when we save it
+(defun jackson/org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+                      (expand-file-name "~/.config/nixpkgs/configs/emacs/Minimal.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
+#+end_src
