@@ -29,6 +29,20 @@ Basic settings
     (menu-bar-mode -1)
     (setq visible-bell t)
   #+end_src
+* Font
+  #+begin_src emacs-lisp
+    (defvar jackson/default-font-size 110)
+    (defvar jackson/main-font nil)
+    (defvar jackson/variable-font nil)
+
+    (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
+
+    ;; Set the fixed pitch face
+    (set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
+
+    ;; Set the variable pitch face
+    (set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
+  #+end_src
 * Package bootstrap
 #+begin_src emacs-lisp
   (setq straight-use-package-by-default t)
@@ -54,7 +68,9 @@ Basic settings
        (general-create-definer jackson/leader
 	 :prefix "C-c")
        (jackson/leader
-	 "qq" 'kill-emacs))
+	 "qq" 'kill-emacs)
+       (general-define-key
+	"C-?" 'undo-redo))
    #+end_src
 ** Restart emacs
 #+begin_src emacs-lisp
