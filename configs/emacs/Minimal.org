@@ -29,6 +29,11 @@ Basic settings
     (menu-bar-mode -1)
     (setq visible-bell t)
   #+end_src
+* Default settings and modes
+  #+begin_src emacs-lisp
+    (electric-pair-mode +1)
+    (show-paren-mode +1)
+  #+end_src
 * Font
   #+begin_src emacs-lisp
     (defvar jackson/default-font-size 110)
@@ -156,9 +161,11 @@ Basic settings
        (setq flycheck-check-syntax-automatically '(save mode-enabled))
        (global-flycheck-mode))
    #+end_src
-* Language Packages
+* Language Packages and Configuration
 ** Javascript/Typescript
    #+begin_src emacs-lisp
+     (use-package json-mode)
+
      (defun setup-tide-mode ()
        (interactive)
        (tide-setup)
