@@ -154,6 +154,14 @@ Basic settings
        :init
        (global-company-mode +1))
    #+end_src
+** Yasnippet
+   #+begin_src emacs-lisp
+     (use-package yasnippet
+       :hook (prog-mode . yas-minor-mode))
+
+     (use-package yasnippet-snippets
+       :after yasnippet)
+   #+end_src
 ** Flycheck
    #+begin_src emacs-lisp
      (use-package flycheck
