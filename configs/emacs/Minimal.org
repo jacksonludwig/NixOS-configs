@@ -202,35 +202,34 @@ Basic settings
     :init
     (setq org-catch-invisible-edits 'smart ;; Possibly better editing with folds
 	  org-special-ctrl-a/e t
-	  org-table-copy-increment nil ;; don't increment table on S-RET
-	  )
-    :hook
-    (org-mode . visual-line-mode)
+	  org-table-copy-increment nil) ;; don't increment table on S-RET
+    ;;    :hook
+    ;;    (org-mode . visual-line-mode)
     :config
     (setq org-directory "~/git_repos/emacs-org-mode"
 	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org"))
     ;; Following two lines are a workaround so that special a/e works
     ;; in visual line mode.
-    (define-key org-mode-map "\C-a" 'org-beginning-of-line)
-    (define-key org-mode-map "\C-e" 'org-end-of-line)
+    ;;  (define-key org-mode-map "\C-a" 'org-beginning-of-line)
+    ;;  (define-key org-mode-map "\C-e" 'org-end-of-line))
     )
 #+end_src
 ** Babel settings
 #+begin_src emacs-lisp
-;; BABEL LANGUAGES
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (python . t)))
-(push '("conf-unix" . conf-unix) org-src-lang-modes)
+  ;; BABEL LANGUAGES
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t)))
+  (push '("conf-unix" . conf-unix) org-src-lang-modes)
 
-;; Automatically tangle our Emacs.org config file when we save it
-(defun jackson/org-babel-tangle-config ()
-  (when (string-equal (buffer-file-name)
-                      (expand-file-name "~/.config/nixpkgs/configs/emacs/Minimal.org"))
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle))))
+  ;; Automatically tangle our Emacs.org config file when we save it
+  (defun jackson/org-babel-tangle-config ()
+    (when (string-equal (buffer-file-name)
+			(expand-file-name "~/.config/nixpkgs/configs/emacs/Minimal.org"))
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+	(org-babel-tangle))))
 
-(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
 #+end_src
