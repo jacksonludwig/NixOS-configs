@@ -33,6 +33,7 @@ Basic settings
   #+begin_src emacs-lisp
     (electric-pair-mode +1)
     (show-paren-mode +1)
+    (setq js-indent-level 2)
   #+end_src
 * Font
   #+begin_src emacs-lisp
@@ -174,6 +175,13 @@ Basic settings
    #+begin_src emacs-lisp
      (use-package json-mode)
 
+     (use-package rjsx-mode
+       :mode
+       ("\\.[jt]sx?\\'")
+       :hook
+       (rjsx-mode . (lambda ()
+		      (js2-mode-hide-warnings-and-errors))))
+
      (defun setup-tide-mode ()
        (interactive)
        (tide-setup)
@@ -184,6 +192,7 @@ Basic settings
        :after (company flycheck)
        :hook
        (js-mode . setup-tide-mode)
+       (rjsx-mode . setup-tide-mode)
        (typescript-mode . setup-tide-mode))
    #+end_src
 * Org settings
