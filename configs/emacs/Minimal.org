@@ -87,7 +87,7 @@ Basic settings
       "qR" 'restart-emacs))
 #+end_src
 ** Evil mode
-   #+begin_src emacs-lisp
+   #+begin_src emacs-lisp :tangle no
      (use-package evil
        :init
        (setq evil-undo-system 'undo-redo)
@@ -134,7 +134,8 @@ Basic settings
        :general
        (jackson/leader
 	 "fr" 'consult-recent-file)
-       ("C-s" 'consult-line))
+       ("C-s" 'consult-line)
+       ("M-g M-g" 'consult-goto-line))
    #+end_src
 ** Marginalia
    #+begin_src emacs-lisp
