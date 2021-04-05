@@ -175,7 +175,11 @@ Basic settings
      (use-package company
        :init
        (setq company-minimum-prefix-length 2)
-       (global-company-mode +1))
+       (global-company-mode +1)
+       :general
+       (:keymaps 'company-active-map
+		 "C-n" 'company-select-next
+		 "C-p" 'company-select-previous))
    #+end_src
 ** Yasnippet
    #+begin_src emacs-lisp
