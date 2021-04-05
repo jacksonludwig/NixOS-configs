@@ -86,6 +86,27 @@ Basic settings
       "qr" 'restart-emacs
       "qR" 'restart-emacs))
 #+end_src
+** Evil mode
+   #+begin_src emacs-lisp
+     (use-package evil
+       :init
+       (setq evil-undo-system 'undo-redo)
+       (setq evil-want-integration t)
+       (setq evil-want-keybinding nil)
+       (setq evil-want-C-u-scroll t)
+       (setq evil-want-C-i-jump nil)
+       ;;(setq evil-mode-line-format nil)
+       (setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
+       :config
+       (general-evil-setup)
+       (evil-mode 1)
+       (evil-set-initial-state 'messages-buffer-mode 'normal))
+
+     (use-package evil-org
+       :after org
+       :diminish evil-org-mode
+       :hook (org-mode . evil-org-mode))
+   #+end_src
 ** Which key
    #+begin_src emacs-lisp
      (use-package which-key
@@ -153,6 +174,7 @@ Basic settings
    #+begin_src emacs-lisp
      (use-package company
        :init
+       (setq company-minimum-prefix-length 2)
        (global-company-mode +1))
    #+end_src
 ** Yasnippet
