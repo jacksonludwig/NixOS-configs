@@ -176,6 +176,7 @@ Basic settings
      (use-package company
        :init
        (setq company-minimum-prefix-length 2)
+       (setq company-dabbrev-downcase nil)
        (global-company-mode +1)
        :general
        (:keymaps 'company-active-map
