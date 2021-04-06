@@ -195,6 +195,7 @@ Basic settings
      (use-package flycheck
        :init
        (setq flycheck-check-syntax-automatically '(save mode-enabled))
+       (setq flycheck-global-modes '(not emacs-lisp-mode))
        (global-flycheck-mode))
    #+end_src
 * Language Packages and Configuration
@@ -229,7 +230,8 @@ Basic settings
     :init
     (setq org-catch-invisible-edits 'smart ;; Possibly better editing with folds
 	  org-special-ctrl-a/e t
-	  org-table-copy-increment nil) ;; don't increment table on S-RET
+	  org-table-copy-increment nil ;; don't increment table on S-RET
+	  org-adapt-indentation nil)
     ;;    :hook
     ;;    (org-mode . visual-line-mode)
     :config
