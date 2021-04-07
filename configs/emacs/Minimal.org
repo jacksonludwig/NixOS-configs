@@ -37,7 +37,7 @@ Basic settings
   #+end_src
 * Font
   #+begin_src emacs-lisp
-    (defvar jackson/default-font-size 110)
+    (defvar jackson/default-font-size 125)
     (defvar jackson/main-font nil)
     (defvar jackson/variable-font nil)
 
