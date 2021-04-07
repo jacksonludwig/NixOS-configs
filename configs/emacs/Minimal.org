@@ -205,7 +205,13 @@ Currently disabled
    #+begin_src emacs-lisp
      (use-package json-mode)
 
-     (defun setup-tide-mode ()
+     (defun setup-tide-mode-javascript ()
+       (interactive)
+       (tide-setup)
+       (eldoc-mode +1)
+       (tide-hl-identifier-mode +1))
+
+     (defun setup-tide-mode-typescript ()
        (interactive)
        (tide-setup)
        (eldoc-mode +1)
@@ -214,8 +220,8 @@ Currently disabled
      (use-package tide
        :after (company flycheck)
        :hook
-       (js-mode . setup-tide-mode)
-       (typescript-mode . setup-tide-mode))
+       (js-mode . setup-tide-mode-javascript)
+       (typescript-mode . setup-tide-mode-typescript))
    #+end_src
 * Org settings
 ** General Org Config
