@@ -43,6 +43,7 @@ in {
     nodePackages.pyright
     nodePackages.npm
     nodePackages.typescript-language-server
+    nodePackages.eslint
     texlab
     tree-sitter
 

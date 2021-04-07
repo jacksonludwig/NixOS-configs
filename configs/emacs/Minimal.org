@@ -201,28 +201,63 @@ Currently disabled
        (global-flycheck-mode))
    #+end_src
 * Language Packages and Configuration
+** LSP mode
+This can be used for TS/JS as well if needed
+#+begin_src emacs-lisp
+  (use-package all-the-icons)
+
+  (use-package lsp-mode
+    :init
+    (setq lsp-log-io nil
+	  lsp-keymap-prefix "C-c l"
+	  lsp-ui-sideline-enable nil)
+    :hook
+    (lsp-mode . lsp-enable-which-key-integration)
+    (js-mode . lsp-deferred)
+    (typescript-mode . lsp-deferred)
+    :commands (lsp lsp-deferred)
+    :general
+    (:keymaps 'lsp-mode-map
+	      "M-." 'lsp-find-definition
+	      "M-?" 'lsp-find-references))
+#+end_src
+** Markdown
+#+begin_src emacs-lisp
+  (use-package markdown-mode)
+#+end_src
 ** Javascript/Typescript
-   #+begin_src emacs-lisp
+Language basics.
+#+begin_src emacs-lisp
      (use-package json-mode)
+     (use-package typescript-mode)
+#+end_src
 
-     (defun setup-tide-mode-javascript ()
-       (interactive)
-       (tide-setup)
-       (eldoc-mode +1)
-       (tide-hl-identifier-mode +1))
+Tide setup. Use this or lsp mode.
+#+begin_src emacs-lisp :tangle no
+  (defun setup-tide-mode-javascript ()
+    (interactive)
+    (tide-setup)
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1))
 
-     (defun setup-tide-mode-typescript ()
-       (interactive)
-       (tide-setup)
-       (eldoc-mode +1)
-       (tide-hl-identifier-mode +1))
+  (defun setup-tide-mode-typescript ()
+    (interactive)
+    (tide-setup)
+    (eldoc-mode +1)
+    (tide-hl-identifier-mode +1))
 
-     (use-package tide
-       :after (company flycheck)
-       :hook
-       (js-mode . setup-tide-mode-javascript)
-       (typescript-mode . setup-tide-mode-typescript))
-   #+end_src
+  (use-package tide
+    :after (company flycheck)
+    :hook
+    (js-mode . setup-tide-mode-javascript)
+    (typescript-mode . setup-tide-mode-typescript))
+#+end_src
+** YAML
+#+begin_src emacs-lisp
+  (use-package yaml-mode
+    :init
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+#+end_src
 * Org settings
 ** General Org Config
 #+begin_src emacs-lisp

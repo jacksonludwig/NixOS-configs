@@ -39,6 +39,7 @@ in {
     nodejs
     nodePackages.typescript
     nodePackages.prettier
+    nodePackages.eslint
 
     gopls
     nodePackages.pyright
