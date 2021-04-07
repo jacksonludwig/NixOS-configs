@@ -87,6 +87,7 @@ Basic settings
       "qR" 'restart-emacs))
 #+end_src
 ** Evil mode
+Currently disabled
    #+begin_src emacs-lisp :tangle no
      (use-package evil
        :init
@@ -95,7 +96,6 @@ Basic settings
        (setq evil-want-keybinding nil)
        (setq evil-want-C-u-scroll t)
        (setq evil-want-C-i-jump nil)
-       ;;(setq evil-mode-line-format nil)
        (setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
        :config
        (general-evil-setup)
@@ -204,13 +204,6 @@ Basic settings
    #+begin_src emacs-lisp
      (use-package json-mode)
 
-     (use-package rjsx-mode
-       :mode
-       ("\\.[jt]sx?\\'")
-       :hook
-       (rjsx-mode . (lambda ()
-		      (js2-mode-hide-warnings-and-errors))))
-
      (defun setup-tide-mode ()
        (interactive)
        (tide-setup)
@@ -221,7 +214,6 @@ Basic settings
        :after (company flycheck)
        :hook
        (js-mode . setup-tide-mode)
-       (rjsx-mode . setup-tide-mode)
        (typescript-mode . setup-tide-mode))
    #+end_src
 * Org settings
@@ -233,16 +225,9 @@ Basic settings
 	  org-special-ctrl-a/e t
 	  org-table-copy-increment nil ;; don't increment table on S-RET
 	  org-adapt-indentation nil)
-    ;;    :hook
-    ;;    (org-mode . visual-line-mode)
     :config
     (setq org-directory "~/git_repos/emacs-org-mode"
-	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org"))
-    ;; Following two lines are a workaround so that special a/e works
-    ;; in visual line mode.
-    ;;  (define-key org-mode-map "\C-a" 'org-beginning-of-line)
-    ;;  (define-key org-mode-map "\C-e" 'org-end-of-line))
-    )
+	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org")))
 #+end_src
 ** Babel settings
 #+begin_src emacs-lisp
@@ -253,7 +238,7 @@ Basic settings
      (python . t)))
   (push '("conf-unix" . conf-unix) org-src-lang-modes)
 
-  ;; Automatically tangle our Emacs.org config file when we save it
+  ;; Automatically tangle config file when we save it
   (defun jackson/org-babel-tangle-config ()
     (when (string-equal (buffer-file-name)
 			(expand-file-name "~/.config/nixpkgs/configs/emacs/Minimal.org"))
