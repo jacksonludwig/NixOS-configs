@@ -38,7 +38,7 @@ Basic settings
 * Font
   #+begin_src emacs-lisp
     (defvar jackson/default-font-size 125)
-    (defvar jackson/main-font nil)
+    (defvar jackson/main-font "Jetbrains Mono")
     (defvar jackson/variable-font nil)
 
     (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
@@ -210,7 +210,8 @@ This can be used for TS/JS as well if needed
     :init
     (setq lsp-log-io nil
 	  lsp-keymap-prefix "C-c l"
-	  lsp-ui-sideline-enable nil)
+	  lsp-ui-sideline-enable nil
+	  lsp-headerline-breadcrumb-enable nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (js-mode . lsp-deferred)
@@ -221,6 +222,16 @@ This can be used for TS/JS as well if needed
 	      "M-." 'lsp-find-definition
 	      "M-?" 'lsp-find-references))
 #+end_src
+** Treesitter
+#+begin_src emacs-lisp
+  (use-package tree-sitter)
+  (use-package tree-sitter-langs
+    :after tree-sitter
+    :init
+    (global-tree-sitter-mode)
+    :config
+    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+#+end_src
 ** Markdown
 #+begin_src emacs-lisp
   (use-package markdown-mode)
@@ -228,35 +239,36 @@ This can be used for TS/JS as well if needed
 ** Javascript/Typescript
 Language basics.
 #+begin_src emacs-lisp
-     (use-package json-mode)
-     (use-package typescript-mode)
-#+end_src
+  (use-package json-mode)
+  (use-package typescript-mode)
 
-Tide setup. Use this or lsp mode.
-#+begin_src emacs-lisp :tangle no
-  (defun setup-tide-mode-javascript ()
-    (interactive)
-    (tide-setup)
-    (eldoc-mode +1)
-    (tide-hl-identifier-mode +1))
-
-  (defun setup-tide-mode-typescript ()
-    (interactive)
-    (tide-setup)
-    (eldoc-mode +1)
-    (tide-hl-identifier-mode +1))
-
-  (use-package tide
-    :after (company flycheck)
-    :hook
-    (js-mode . setup-tide-mode-javascript)
-    (typescript-mode . setup-tide-mode-typescript))
+  ;; Highlight gql queries in strings
+  (use-package graphql-mode)
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
   (use-package yaml-mode
     :init
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+#+end_src
+* Themes/visual
+#+begin_src emacs-lisp
+  (use-package doom-themes
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	  doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-one-light t)
+
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config)
+    (custom-set-faces
+     '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
+     '(org-block-begin-line ((t (:background nil)))) ;; symmetry
+     '(org-ellipsis ((t (:underline nil))))))
 #+end_src
 * Org settings
 ** General Org Config
