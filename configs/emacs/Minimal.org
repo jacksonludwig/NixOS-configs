@@ -34,12 +34,15 @@ Basic settings
     (electric-pair-mode +1)
     (show-paren-mode +1)
     (setq js-indent-level 2)
+    ;; Next two lines allow full access to bash shell and aliases
+    (setq shell-file-name "bash")
+    (setq shell-command-switch "-ic")
   #+end_src
 * Font
   #+begin_src emacs-lisp
     (defvar jackson/default-font-size 125)
     (defvar jackson/main-font "Jetbrains Mono")
-    (defvar jackson/variable-font nil)
+    (defvar jackson/variable-font "DejaVu Sans")
 
     (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 
@@ -67,6 +70,10 @@ Basic settings
   (straight-use-package 'use-package)
 #+end_src
 * Core Packages
+** Diminish
+#+begin_src emacs-lisp
+  (use-package diminish)
+#+end_src
 ** General
    #+begin_src emacs-lisp
      (use-package general
@@ -110,6 +117,7 @@ Currently disabled
 ** Which key
    #+begin_src emacs-lisp
      (use-package which-key
+       :diminish
        :init (which-key-mode +1))
    #+end_src
 ** Selectrum
@@ -174,12 +182,16 @@ Currently disabled
 ** Company
    #+begin_src emacs-lisp
      (use-package company
+       :diminish
        :init
        (setq company-minimum-prefix-length 2)
        (setq company-dabbrev-downcase nil)
+       (setq company-idle-delay nil)
        :hook
+       (text-mode . company-mode)
        (prog-mode . company-mode)
        :general
+       ("M-n" 'company-complete-common)
        (:keymaps 'company-active-map
 		 "C-n" 'company-select-next
 		 "C-p" 'company-select-previous))
@@ -193,12 +205,19 @@ Currently disabled
 	   (call-interactively #'company-complete-common))))
 
      (use-package yasnippet
+       :diminish (yas-minor-mode)
+       :init
+       (setq yas-triggers-in-field t)
        :hook
+       (org-mode . (lambda()
+		     (yas-minor-mode +1)
+		     (yas-activate-extra-mode 'latex-mode)))
        (prog-mode . yas-minor-mode)
-       (company-mode . (lambda() 
-			 (substitute-key-definition 'company-complete-common
-						    'company-yasnippet-or-completion
-						    company-active-map))))
+	;; (company-mode . (lambda() 
+	;; 		    (substitute-key-definition 'company-complete-common
+	;; 					       'company-yasnippet-or-completion
+	;; 					       company-active-map)))
+     )
 
      (use-package yasnippet-snippets
        :after yasnippet)
@@ -226,8 +245,12 @@ This can be used for TS/JS as well if needed
 	  lsp-enable-symbol-highlighting nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
-    (js-mode . lsp-deferred)
-    (typescript-mode . lsp-deferred)
+    (js-mode . (lambda ()
+		 (lsp-deferred)
+		 (setq-local lsp-diagnostics-provider :none)))
+    (typescript-mode . (lambda ()
+			 (lsp-deferred)
+			 (setq-local lsp-diagnostics-provider :none)))
     :commands (lsp lsp-deferred)
     :general
     (:keymaps 'lsp-mode-map
@@ -235,7 +258,8 @@ This can be used for TS/JS as well if needed
 	      "M-?" 'lsp-find-references))
 #+end_src
 ** Treesitter
-#+begin_src emacs-lisp
+Not used currently
+#+begin_src emacs-lisp :tangle no
   (use-package tree-sitter)
   (use-package tree-sitter-langs
     :after tree-sitter
@@ -261,7 +285,7 @@ Language basics.
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 * Themes/visual
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package doom-themes
     :config
     ;; Global settings (defaults)
