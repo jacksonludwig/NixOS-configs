@@ -232,7 +232,6 @@ Currently disabled
    #+end_src
 * Language Packages and Configuration
 ** LSP mode
-This can be used for TS/JS as well if needed
 #+begin_src emacs-lisp
   (use-package all-the-icons)
 
@@ -242,7 +241,9 @@ This can be used for TS/JS as well if needed
 	  lsp-keymap-prefix "C-c l"
 	  lsp-ui-sideline-enable nil
 	  lsp-headerline-breadcrumb-enable nil
-	  lsp-enable-symbol-highlighting nil)
+	  lsp-enable-symbol-highlighting nil
+	  lsp-enable-indentation nil
+	  lsp-enable-on-type-formatting nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (js-mode . (lambda ()
