@@ -34,9 +34,7 @@ Basic settings
     (electric-pair-mode +1)
     (show-paren-mode +1)
     (setq js-indent-level 2)
-    ;; Next two lines allow full access to bash shell and aliases
-    (setq shell-file-name "bash")
-    (setq shell-command-switch "-ic")
+    (setenv "BASH_ENV" "~/.bashrc")
   #+end_src
 * Font
   #+begin_src emacs-lisp

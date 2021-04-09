@@ -56,13 +56,12 @@ in {
     isync
     mu
 
-    (nerdfonts.override { fonts = [ "Inconsolata" ]; })
     iosevka-bin
-    fira-code
     jetbrains-mono
     source-code-pro
     source-sans-pro
     roboto-mono
+    dejavu_fonts
 
     neofetch
   ];
