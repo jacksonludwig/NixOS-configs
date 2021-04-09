@@ -186,8 +186,19 @@ Currently disabled
    #+end_src
 ** Yasnippet
    #+begin_src emacs-lisp
+     (defun company-yasnippet-or-completion ()
+       (interactive)
+       (let ((yas-fallback-behavior nil))
+	 (unless (yas-expand)
+	   (call-interactively #'company-complete-common))))
+
      (use-package yasnippet
-       :hook (prog-mode . yas-minor-mode))
+       :hook
+       (prog-mode . yas-minor-mode)
+       (company-mode . (lambda() 
+			 (substitute-key-definition 'company-complete-common
+						    'company-yasnippet-or-completion
+						    company-active-map))))
 
      (use-package yasnippet-snippets
        :after yasnippet)
@@ -211,7 +222,8 @@ This can be used for TS/JS as well if needed
     (setq lsp-log-io nil
 	  lsp-keymap-prefix "C-c l"
 	  lsp-ui-sideline-enable nil
-	  lsp-headerline-breadcrumb-enable nil)
+	  lsp-headerline-breadcrumb-enable nil
+	  lsp-enable-symbol-highlighting nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
     (js-mode . lsp-deferred)
@@ -241,9 +253,6 @@ Language basics.
 #+begin_src emacs-lisp
   (use-package json-mode)
   (use-package typescript-mode)
-
-  ;; Highlight gql queries in strings
-  (use-package graphql-mode)
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
@@ -258,7 +267,7 @@ Language basics.
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 	  doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-one-light t)
+    (load-theme 'doom-oceanic-next t)
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -269,6 +278,10 @@ Language basics.
      '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
      '(org-block-begin-line ((t (:background nil)))) ;; symmetry
      '(org-ellipsis ((t (:underline nil))))))
+#+end_src
+* Extra packages
+#+begin_src emacs-lisp
+  (use-package edit-indirect)
 #+end_src
 * Org settings
 ** General Org Config
