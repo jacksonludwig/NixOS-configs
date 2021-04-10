@@ -244,12 +244,14 @@ Currently disabled
 	  lsp-enable-on-type-formatting nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
-    (js-mode . (lambda ()
-		 (lsp-deferred)
-		 (setq-local lsp-diagnostics-provider :none)))
-    (typescript-mode . (lambda ()
-			 (lsp-deferred)
-			 (setq-local lsp-diagnostics-provider :none)))
+    (js-mode . lsp-deferred)
+    ;; (js-mode . (lambda ()
+    ;; 		       (lsp-deferred)
+    ;; 		       (setq-local lsp-diagnostics-provider :none)))
+    ;; (typescript-mode . (lambda ()
+    ;; 		       (lsp-deferred)
+    ;; 		       (setq-local lsp-diagnostics-provider :none)))
+    (typescript-mode . lsp-deferred)
     :commands (lsp lsp-deferred)
     :general
     (:keymaps 'lsp-mode-map
