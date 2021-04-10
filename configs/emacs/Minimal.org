@@ -301,6 +301,12 @@ Language basics.
     :init
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
+** MIPS
+#+begin_src emacs-lisp
+  (use-package mips-mode
+    :init
+    (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode)))
+#+end_src
 * Themes/visual
 #+begin_src emacs-lisp :tangle no
   (use-package doom-themes
