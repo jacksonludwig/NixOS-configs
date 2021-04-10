@@ -34,7 +34,7 @@ Basic settings
     (electric-pair-mode +1)
     (show-paren-mode +1)
     (setq js-indent-level 2)
-    (setenv "BASH_ENV" "~/.bashrc")
+    (setq shell-command-switch "-ic")
   #+end_src
 * Font
   #+begin_src emacs-lisp
