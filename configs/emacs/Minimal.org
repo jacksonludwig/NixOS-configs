@@ -37,7 +37,8 @@ Basic settings
     (setq shell-command-switch "-ic")
   #+end_src
 * Font
-  #+begin_src emacs-lisp
+This is the font setup I used to use.
+  #+begin_src emacs-lisp :tangle no
     (defvar jackson/default-font-size 125)
     (defvar jackson/main-font "Jetbrains Mono")
     (defvar jackson/variable-font "DejaVu Sans")
@@ -49,6 +50,26 @@ Basic settings
 
     ;; Set the variable pitch face
     (set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
+  #+end_src
+  This font setup is stolen from https://github.com/KaratasFurkan/.emacs.d#adjust-font-size and I think is better.
+  #+begin_src emacs-lisp
+    (defconst jackson/default-font-family "Jetbrains Mono")
+    ;; jackson/default-font-size is calculated on start according to the primary screen
+    ;; size. if screen-size is bigger than 16 inch: 9 else 11.
+    (defconst jackson/default-font-size
+      (let* ((command "xrandr | awk '/primary/{print sqrt( ($(NF-2)/10)^2 + ($NF/10)^2 )/2.54}'")
+	     (screen-size (string-to-number (shell-command-to-string command))))
+	(if (or (> screen-size 16) (= screen-size 0)) 125 135)))  ; screen-size=0 if command gives error
+    (defconst jackson/default-icon-size 15)
+
+    (defconst jackson/variable-pitch-font-family "DejaVu Sans")
+    (defconst jackson/variable-pitch-font-size jackson/default-font-size)  ; TODO: adjust this and use in org-mode
+
+    (custom-set-faces
+     `(default ((t (:family ,jackson/default-font-family :height ,jackson/default-font-size))))
+     `(variable-pitch ((t (:family ,jackson/variable-pitch-font-family :height ,jackson/variable-pitch-font-size))))
+     ;; Characters with fixed pitch face do not shown when height is 90.
+     `(fixed-pitch-serif ((t (:height 100)))))
   #+end_src
 * Package bootstrap
 #+begin_src emacs-lisp
