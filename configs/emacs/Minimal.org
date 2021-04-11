@@ -360,9 +360,9 @@ Below is functions which allow scaling up/down/reset font size globally.
     (jackson/adjust-font-size 0))
 
   (general-define-key
-   "C-M-=" 'jackson/increase-font-size
-   "C-M--" 'jackson/decrease-font-size
-   "C-M-0" 'jackson/reset-font-size)
+   "C--" 'jackson/decrease-font-size
+   "C-*" 'jackson/increase-font-size
+   "C-0" 'jackson/reset-font-size)
 #+end_src
 * Org settings
 ** General Org Config
