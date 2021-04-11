@@ -326,9 +326,43 @@ Language basics.
      '(org-block-begin-line ((t (:background nil)))) ;; symmetry
      '(org-ellipsis ((t (:underline nil))))))
 #+end_src
-* Extra packages
+* Extra packages/config
 #+begin_src emacs-lisp
   (use-package edit-indirect)
+#+end_src
+Below is functions which allow scaling up/down/reset font size globally.
+#+begin_src emacs-lisp
+  (defun jackson/adjust-font-size (height)
+    "Adjust font size by given height. If height is '0', reset font
+  size. This function also handles icons and modeline font sizes."
+    (interactive "nHeight ('0' to reset): ")
+    (let ((new-height (if (zerop height)
+			  jackson/default-font-size
+			(+ height (face-attribute 'default :height)))))
+      (set-face-attribute 'default nil :height new-height)
+      (set-face-attribute 'mode-line nil :height new-height)
+      (set-face-attribute 'mode-line-inactive nil :height new-height)
+      (message "Font size: %s" new-height)))
+
+  (defun jackson/increase-font-size ()
+    "Increase font size by 0.5 (5 in height)."
+    (interactive)
+    (jackson/adjust-font-size 5))
+
+  (defun jackson/decrease-font-size ()
+    "Decrease font size by 0.5 (5 in height)."
+    (interactive)
+    (jackson/adjust-font-size -5))
+
+  (defun jackson/reset-font-size ()
+    "Reset font size according to the `jackson/default-font-size'."
+    (interactive)
+    (jackson/adjust-font-size 0))
+
+  (general-define-key
+   "C-M-=" 'jackson/increase-font-size
+   "C-M--" 'jackson/decrease-font-size
+   "C-M-0" 'jackson/reset-font-size)
 #+end_src
 * Org settings
 ** General Org Config
