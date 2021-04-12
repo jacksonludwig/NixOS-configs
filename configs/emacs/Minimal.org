@@ -143,6 +143,7 @@ Currently disabled
    #+begin_src emacs-lisp
      (use-package selectrum
        :init
+       (setq selectrum-fix-vertical-window-height t) ;; workaround for incorret window height
        (selectrum-mode +1))
 
      (use-package selectrum-prescient
