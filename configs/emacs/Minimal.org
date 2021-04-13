@@ -328,7 +328,12 @@ Language basics.
 #+begin_src emacs-lisp
   (use-package mips-mode
     :init
-    (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode)))
+    (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
+    :hook
+    (mips-mode . (lambda()
+		   (setq-local mips-operands-column 8
+			       mips-operator-column 8
+			       mips-comments-column 30))))
 #+end_src
 * Themes/visual
 #+begin_src emacs-lisp :tangle no
