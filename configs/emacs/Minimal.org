@@ -233,6 +233,7 @@ Currently disabled
 		     (yas-minor-mode +1)
 		     (yas-activate-extra-mode 'latex-mode)))
        (prog-mode . yas-minor-mode)
+       (latex-mode . yas-minor-mode)
 	;; (company-mode . (lambda() 
 	;; 		    (substitute-key-definition 'company-complete-common
 	;; 					       'company-yasnippet-or-completion
@@ -247,7 +248,7 @@ Currently disabled
      (use-package flycheck
        :init
        (setq flycheck-check-syntax-automatically '(save mode-enabled))
-       (setq flycheck-global-modes '(not emacs-lisp-mode))
+       (setq flycheck-global-modes '(not emacs-lisp-mode latex-mode))
        (global-flycheck-mode))
    #+end_src
 * Language Packages and Configuration
