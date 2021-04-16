@@ -309,7 +309,6 @@ Language basics.
     (eldoc-mode +1))
 
   (use-package tide
-    :after (company flycheck)
     :hook
     (js-mode . (lambda()
 		 (setup-tide-mode)
@@ -334,6 +333,11 @@ Language basics.
 		   (setq-local mips-operands-column 8
 			       mips-operator-column 8
 			       mips-comments-column 30))))
+#+end_src
+** Nix
+#+begin_src emacs-lisp
+  (use-package nix-mode
+    :mode "\\.nix\\'")
 #+end_src
 * Themes/visual
 #+begin_src emacs-lisp :tangle no
