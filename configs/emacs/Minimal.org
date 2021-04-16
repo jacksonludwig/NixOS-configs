@@ -161,7 +161,8 @@ Currently disabled
        (setq consult-preview-key (kbd "M-p"))
        :general
        (jackson/leader
-	 "fr" 'consult-recent-file)
+	 "fr" 'consult-recent-file
+	 "gd" 'consult-grep)
        ("C-s" 'consult-line)
        ("M-g M-g" 'consult-goto-line))
    #+end_src
@@ -265,8 +266,8 @@ Currently disabled
 	  lsp-enable-symbol-highlighting nil
 	  lsp-enable-indentation nil
 	  lsp-enable-on-type-formatting nil)
-    ;; :hook
-    ;; (lsp-mode . lsp-enable-which-key-integration)
+     :hook
+     (lsp-mode . lsp-enable-which-key-integration)
     ;; (js-mode . lsp-deferred)
     ;; (js-mode . (lambda ()
     ;; 		       (lsp-deferred)
@@ -282,7 +283,6 @@ Currently disabled
 	      "M-?" 'lsp-find-references))
 #+end_src
 ** Treesitter
-Not used currently
 #+begin_src emacs-lisp :tangle no
   (use-package tree-sitter)
   (use-package tree-sitter-langs
