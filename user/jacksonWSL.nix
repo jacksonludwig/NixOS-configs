@@ -65,6 +65,7 @@ in {
     source-sans-pro
     roboto-mono
     dejavu_fonts
+    emacs-all-the-icons-fonts
 
     neofetch
   ];

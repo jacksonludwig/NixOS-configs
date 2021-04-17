@@ -5,22 +5,25 @@
 * Core settings
 Basic settings
 #+begin_src emacs-lisp
-    (setq user-full-name "Jackson Ludwig"
-	  user-mail-address "jacksonludwig0@gmail.com")
+  (setq user-full-name "Jackson Ludwig"
+	user-mail-address "jacksonludwig0@gmail.com")
 
-    ;; Send backup files to tmp
-    (setq backup-directory-alist
-	  `((".*" . ,temporary-file-directory)))
-    (setq auto-save-file-name-transforms
-	  `((".*" ,temporary-file-directory t)))
+  ;; Send backup files to tmp
+  (setq backup-directory-alist
+	`((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+	`((".*" ,temporary-file-directory t)))
 
-    ;; SAVE CUSTOM VARS TO SEPARATE FILE
-    (setq custom-file (concat user-emacs-directory "custom.el"))
-    (load custom-file 'noerror)
+  ;; SAVE CUSTOM VARS TO SEPARATE FILE
+  (setq custom-file (concat user-emacs-directory "custom.el"))
+  (load custom-file 'noerror)
 
-    (setq gc-cons-threshold 100000000)
-    (setq read-process-output-max (* 1024 1024)) ;; 1mb
-    (setq create-lockfiles nil)
+  (setq gc-cons-threshold 100000000)
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq create-lockfiles nil)
+
+  ;; Hide native comp warnings/errors. Risky?
+  (setq comp-async-report-warnings-errors nil)
 #+end_src
 * Sane UI Defaults
   #+begin_src emacs-lisp
