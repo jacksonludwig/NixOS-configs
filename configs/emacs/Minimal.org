@@ -269,16 +269,16 @@ Currently disabled
 	  lsp-enable-symbol-highlighting nil
 	  lsp-enable-indentation nil
 	  lsp-enable-on-type-formatting nil)
-     :hook
-     (lsp-mode . lsp-enable-which-key-integration)
-    ;; (js-mode . lsp-deferred)
+    :hook
+    (lsp-mode . lsp-enable-which-key-integration)
+    (js-mode . lsp-deferred)
     ;; (js-mode . (lambda ()
-    ;; 		       (lsp-deferred)
-    ;; 		       (setq-local lsp-diagnostics-provider :none)))
+    ;;    	     (lsp-deferred)
+    ;;    	     (setq-local lsp-diagnostics-provider :none)))
     ;; (typescript-mode . (lambda ()
     ;; 		       (lsp-deferred)
     ;; 		       (setq-local lsp-diagnostics-provider :none)))
-    ;; (typescript-mode . lsp-deferred)
+    (typescript-mode . lsp-deferred)
     :commands (lsp lsp-deferred)
     :general
     (:keymaps 'lsp-mode-map
@@ -300,25 +300,25 @@ Currently disabled
   (use-package markdown-mode)
 #+end_src
 ** Javascript/Typescript
-Language basics.
+Tide is maybe deprecated in favor for lsp mode?
 #+begin_src emacs-lisp
   (use-package json-mode)
   (use-package typescript-mode)
 
-  (defun setup-tide-mode ()
-    (interactive)
-    (tide-setup)
-    (flycheck-mode +1)
-    (eldoc-mode +1))
+  ;; (defun setup-tide-mode ()
+  ;;   (interactive)
+  ;;   (tide-setup)
+  ;;   (flycheck-mode +1)
+  ;;   (eldoc-mode +1))
 
-  (use-package tide
-    :hook
-    (js-mode . (lambda()
-		 (setup-tide-mode)
-		 (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
-    (typescript-mode . (lambda()
-			 (setup-tide-mode)
-			 (flycheck-add-next-checker 'typescript-tide '(warning . javascript-eslint) 'append))))
+  ;; (use-package tide
+  ;;   :hook
+  ;;   (js-mode . (lambda()
+  ;; 	       (setup-tide-mode)
+  ;; 	       (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
+  ;;   (typescript-mode . (lambda()
+  ;; 		       (setup-tide-mode)
+  ;; 		       (flycheck-add-next-checker 'typescript-tide '(warning . javascript-eslint) 'append))))
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
@@ -333,9 +333,10 @@ Language basics.
     (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
     :hook
     (mips-mode . (lambda()
-		   (setq-local mips-operands-column 8
+		   (setq-local mips-auto-indent t
+			       mips-operands-column 8
 			       mips-operator-column 8
-			       mips-comments-column 30))))
+			       mips-comments-column 40))))
 #+end_src
 ** Nix
 #+begin_src emacs-lisp
