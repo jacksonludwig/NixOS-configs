@@ -117,7 +117,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    package = unstable.emacsPgtkGcc;
+    package = unstable.emacsGcc;
     extraPackages = epkgs: with epkgs; [
         vterm
     ];
