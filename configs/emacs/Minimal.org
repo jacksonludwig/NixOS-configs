@@ -56,7 +56,8 @@ This is the font setup I used to use.
   #+end_src
   This font setup is stolen from https://github.com/KaratasFurkan/.emacs.d#adjust-font-size and I think is better.
   #+begin_src emacs-lisp
-    (defconst jackson/default-font-family "Jetbrains Mono")
+    ;; (defconst jackson/default-font-family "Jetbrains Mono")
+    (defconst jackson/default-font-family nil)
     ;; jackson/default-font-size is calculated on start according to the primary screen
     ;; size. if screen-size is bigger than 16 inch: 9 else 11.
     (defconst jackson/default-font-size
@@ -115,27 +116,6 @@ This is the font setup I used to use.
       "qr" 'restart-emacs
       "qR" 'restart-emacs))
 #+end_src
-** Evil mode
-Currently disabled
-   #+begin_src emacs-lisp :tangle no
-     (use-package evil
-       :init
-       (setq evil-undo-system 'undo-redo)
-       (setq evil-want-integration t)
-       (setq evil-want-keybinding nil)
-       (setq evil-want-C-u-scroll t)
-       (setq evil-want-C-i-jump nil)
-       (setq evil-disable-insert-state-bindings t) ;; use emacs binds instead of insert binds
-       :config
-       (general-evil-setup)
-       (evil-mode 1)
-       (evil-set-initial-state 'messages-buffer-mode 'normal))
-
-     (use-package evil-org
-       :after org
-       :diminish evil-org-mode
-       :hook (org-mode . evil-org-mode))
-   #+end_src
 ** Which key
    #+begin_src emacs-lisp
      (use-package which-key
@@ -286,6 +266,7 @@ Currently disabled
 	      "M-?" 'lsp-find-references))
 #+end_src
 ** Treesitter
+Currently disabled.
 #+begin_src emacs-lisp :tangle no
   (use-package tree-sitter)
   (use-package tree-sitter-langs
@@ -294,6 +275,10 @@ Currently disabled
     (global-tree-sitter-mode)
     :config
     (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+#+end_src
+** Formatting
+#+begin_src emacs-lisp
+  (use-package format-all)
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
@@ -344,6 +329,7 @@ Tide is maybe deprecated in favor for lsp mode?
     :mode "\\.nix\\'")
 #+end_src
 * Themes/visual
+Currently disabled.
 #+begin_src emacs-lisp :tangle no
   (use-package doom-themes
     :config
