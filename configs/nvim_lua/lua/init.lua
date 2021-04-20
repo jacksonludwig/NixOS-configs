@@ -187,6 +187,7 @@ vim.cmd('set splitright')
 vim.cmd('set splitbelow')
 vim.cmd('set nowrap')
 vim.cmd('set updatetime=100')
+vim.cmd('set signcolumn=yes')
 
 vim.o.mouse = 'a'
 vim.wo.number = true
@@ -275,7 +276,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- buf_set_keymap('n', '<space>sw', "<cmd>lua require'telescope.builtin'.lsp_workspace_symbols({query = vim.fn.input('Query > ') })<CR>", opts)
   buf_set_keymap('n', '<space>sw', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
   buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>Telescope lsp_code_actions<CR>', opts)

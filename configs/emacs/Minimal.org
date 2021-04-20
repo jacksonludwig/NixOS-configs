@@ -319,8 +319,7 @@ Tide is maybe deprecated in favor for lsp mode?
     (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
     :hook
     (mips-mode . (lambda()
-		   (setq-local mips-auto-indent t
-			       mips-operands-column 8
+		   (setq-local mips-operands-column 8
 			       mips-operator-column 8
 			       mips-comments-column 40))))
 #+end_src
