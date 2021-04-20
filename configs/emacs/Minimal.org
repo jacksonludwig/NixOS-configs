@@ -251,10 +251,10 @@ This is the font setup I used to use.
 	  lsp-enable-on-type-formatting nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
-    (js-mode . lsp-deferred)
-    ;; (js-mode . (lambda ()
-    ;;    	     (lsp-deferred)
-    ;;    	     (setq-local lsp-diagnostics-provider :none)))
+    ;; (js-mode . lsp-deferred)
+    (js-mode . (lambda ()
+       	     (lsp-deferred)
+       	     (setq-local lsp-diagnostics-provider :none)))
     ;; (typescript-mode . (lambda ()
     ;; 		       (lsp-deferred)
     ;; 		       (setq-local lsp-diagnostics-provider :none)))
@@ -264,6 +264,7 @@ This is the font setup I used to use.
     (:keymaps 'lsp-mode-map
 	      "M-." 'lsp-find-definition
 	      "M-?" 'lsp-find-references))
+
 #+end_src
 ** Treesitter
 Currently disabled.
