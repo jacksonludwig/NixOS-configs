@@ -267,15 +267,10 @@ This is the font setup I used to use.
 
 #+end_src
 ** Treesitter
-Currently disabled.
-#+begin_src emacs-lisp :tangle no
+Use ~treesitter-hl-mode~ to enable TS highlighting.
+#+begin_src emacs-lisp
   (use-package tree-sitter)
-  (use-package tree-sitter-langs
-    :after tree-sitter
-    :init
-    (global-tree-sitter-mode)
-    :config
-    (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+  (use-package tree-sitter-langs)
 #+end_src
 ** Formatting
 #+begin_src emacs-lisp
@@ -327,6 +322,12 @@ Tide is maybe deprecated in favor for lsp mode?
 #+begin_src emacs-lisp
   (use-package nix-mode
     :mode "\\.nix\\'")
+#+end_src
+** C#
+#+begin_src emacs-lisp
+  (use-package csharp-mode
+    :hook csharp-mode . (lambda ()
+			  (setq-local indent-tabs-mode nil)))
 #+end_src
 * Themes/visual
 Currently disabled.
