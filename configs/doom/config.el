@@ -12,7 +12,7 @@
       evil-vsplit-window-right t)
 
 ;; Remove Line Highlight
-;; (remove-hook! doom-first-buffer #'global-hl-line-mode)
+(remove-hook! doom-first-buffer #'global-hl-line-mode)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
@@ -64,11 +64,15 @@
 ;; they are implemented.
 
 ; Don't use LSP formatters on save
-(setq +format-with-lsp nil)
+(setq +format-with-lsp nil
+      lsp-ui-sideline-enable nil
+      lsp-enable-symbol-highlighting nil)
 
 ; Manual completion
 ; C-SPC to trigger completion
 (setq company-idle-delay nil)
+(after! company
+  (map! "M-n" #'company-complete))
 
 ; Allow nested snippets
 (setq yas-triggers-in-field t)

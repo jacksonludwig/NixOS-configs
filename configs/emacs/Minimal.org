@@ -56,8 +56,8 @@ This is the font setup I used to use.
   #+end_src
   This font setup is stolen from https://github.com/KaratasFurkan/.emacs.d#adjust-font-size and I think is better.
   #+begin_src emacs-lisp
-    ;; (defconst jackson/default-font-family "Jetbrains Mono")
-    (defconst jackson/default-font-family nil)
+    (defconst jackson/default-font-family "Jetbrains Mono")
+    ;; (defconst jackson/default-font-family nil)
     ;; jackson/default-font-size is calculated on start according to the primary screen
     ;; size. if screen-size is bigger than 16 inch: 9 else 11.
     (defconst jackson/default-font-size
@@ -251,10 +251,10 @@ This is the font setup I used to use.
 	  lsp-enable-on-type-formatting nil)
     :hook
     (lsp-mode . lsp-enable-which-key-integration)
-    ;; (js-mode . lsp-deferred)
-    (js-mode . (lambda ()
-       	     (lsp-deferred)
-       	     (setq-local lsp-diagnostics-provider :none)))
+    (js-mode . lsp-deferred)
+    ;; (js-mode . (lambda ()
+    ;;   	     (lsp-deferred)
+    ;;   	     (setq-local lsp-diagnostics-provider :none)))
     ;; (typescript-mode . (lambda ()
     ;; 		       (lsp-deferred)
     ;; 		       (setq-local lsp-diagnostics-provider :none)))
@@ -330,8 +330,8 @@ Tide is maybe deprecated in favor for lsp mode?
 			  (setq-local indent-tabs-mode nil)))
 #+end_src
 * Themes/visual
-Currently disabled.
-#+begin_src emacs-lisp :tangle no
+Disable if using default theme.
+#+begin_src emacs-lisp
   (use-package doom-themes
     :config
     ;; Global settings (defaults)
