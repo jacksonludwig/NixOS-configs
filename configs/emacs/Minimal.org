@@ -331,7 +331,7 @@ Tide is maybe deprecated in favor for lsp mode?
 #+end_src
 * Themes/visual
 Disable if using default theme.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (use-package doom-themes
     :config
     ;; Global settings (defaults)
