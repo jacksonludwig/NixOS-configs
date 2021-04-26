@@ -73,7 +73,7 @@ This is the font setup I used to use.
      `(default ((t (:family ,jackson/default-font-family :height ,jackson/default-font-size))))
      `(variable-pitch ((t (:family ,jackson/variable-pitch-font-family :height ,jackson/variable-pitch-font-size))))
      ;; Characters with fixed pitch face do not shown when height is 90.
-     `(fixed-pitch-serif ((t (:height 100)))))
+     `(fixed-pitch-serif ((t (:height 125)))))
   #+end_src
 * Package bootstrap
 #+begin_src emacs-lisp
@@ -260,6 +260,8 @@ This is the font setup I used to use.
     ;; 		       (setq-local lsp-diagnostics-provider :none)))
     (typescript-mode . lsp-deferred)
     :commands (lsp lsp-deferred)
+    :config
+    (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '((company-capf :with company-dabbrev)))))
     :general
     (:keymaps 'lsp-mode-map
 	      "M-." 'lsp-find-definition
