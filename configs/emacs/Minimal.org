@@ -217,12 +217,7 @@ This is the font setup I used to use.
 		     (yas-minor-mode +1)
 		     (yas-activate-extra-mode 'latex-mode)))
        (prog-mode . yas-minor-mode)
-       (latex-mode . yas-minor-mode)
-	;; (company-mode . (lambda() 
-	;; 		    (substitute-key-definition 'company-complete-common
-	;; 					       'company-yasnippet-or-completion
-	;; 					       company-active-map)))
-     )
+       (latex-mode . yas-minor-mode))
 
      (use-package yasnippet-snippets
        :after yasnippet)
@@ -260,8 +255,6 @@ This is the font setup I used to use.
     ;; 		       (setq-local lsp-diagnostics-provider :none)))
     (typescript-mode . lsp-deferred)
     :commands (lsp lsp-deferred)
-    :config
-    (add-hook 'lsp-managed-mode-hook (lambda () (setq-local company-backends '((company-capf :with company-dabbrev)))))
     :general
     (:keymaps 'lsp-mode-map
 	      "M-." 'lsp-find-definition
@@ -339,7 +332,7 @@ Disable if using default theme.
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
 	  doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-oceanic-next t)
+    (load-theme 'doom-flatwhite t)
 
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
@@ -397,10 +390,12 @@ Below is functions which allow scaling up/down/reset font size globally.
     (setq org-catch-invisible-edits 'smart ;; Possibly better editing with folds
 	  org-special-ctrl-a/e t
 	  org-table-copy-increment nil ;; don't increment table on S-RET
-	  org-adapt-indentation nil)
+	  org-adapt-indentation nil
+	  org-src-preserve-indentation t)
     :config
     (setq org-directory "~/git_repos/emacs-org-mode"
-	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org")))
+	  org-default-notes-file (concat org-directory "/.notes.org")
+	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org" "~/git_repos/emacs-org-mode/.notes.org")))
 #+end_src
 ** Babel settings
 #+begin_src emacs-lisp
