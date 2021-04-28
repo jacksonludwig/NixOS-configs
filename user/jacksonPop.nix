@@ -92,7 +92,7 @@ in {
     enable = true;
     package = unstable.emacsGcc;
     extraPackages = epkgs: with epkgs; [
-        vterm
+      vterm
     ];
   };
   home.file.".doom.d/init.el".source = ../configs/doom/init.el;

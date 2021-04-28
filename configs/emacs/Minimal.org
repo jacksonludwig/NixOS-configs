@@ -40,8 +40,8 @@ Basic settings
 (setq shell-command-switch "-ic")
 #+end_src
 * Font
-This is the font setup I used to use.
-#+begin_src emacs-lisp :tangle no
+This is the simplest font setup.
+#+begin_src emacs-lisp
 (defvar jackson/default-font-size 125)
 (defvar jackson/main-font "Jetbrains Mono")
 (defvar jackson/variable-font "DejaVu Sans")
@@ -55,25 +55,21 @@ This is the font setup I used to use.
 (set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
 #+end_src
 This font setup is stolen from https://github.com/KaratasFurkan/.emacs.d#adjust-font-size and I think is better.
-#+begin_src emacs-lisp
-(defconst jackson/default-font-family "Jetbrains Mono")
-;; (defconst jackson/default-font-family nil)
+This currently doesn't set the fixed face.
+#+begin_src emacs-lisp :tangle no
 ;; jackson/default-font-size is calculated on start according to the primary screen
 ;; size. if screen-size is bigger than 16 inch: 9 else 11.
 (defconst jackson/default-font-size
   (let* ((command "xrandr | awk '/primary/{print sqrt( ($(NF-2)/10)^2 + ($NF/10)^2 )/2.54}'")
 	 (screen-size (string-to-number (shell-command-to-string command))))
     (if (or (> screen-size 16) (= screen-size 0)) 125 135)))  ; screen-size=0 if command gives error
-(defconst jackson/default-icon-size 15)
 
+;; (defconst jackson/default-font-family nil)
+(defconst jackson/default-font-family "Jetbrains Mono")
 (defconst jackson/variable-pitch-font-family "DejaVu Sans")
-(defconst jackson/variable-pitch-font-size jackson/default-font-size)  ; TODO: adjust this and use in org-mode
 
-(custom-set-faces
- `(default ((t (:family ,jackson/default-font-family :height ,jackson/default-font-size))))
- `(variable-pitch ((t (:family ,jackson/variable-pitch-font-family :height ,jackson/variable-pitch-font-size))))
- ;; Characters with fixed pitch face do not shown when height is 90.
- `(fixed-pitch-serif ((t (:height 125)))))
+(set-face-attribute 'default nil :family jackson/default-font-family :height jackson/default-font-size)
+(set-face-attribute 'variable-pitch nil :family jackson/variable-pitch-font-family :height 1.0)
 #+end_src
 * Package bootstrap
 #+begin_src emacs-lisp
@@ -345,6 +341,7 @@ Disable if using default theme.
    '(org-ellipsis ((t (:underline nil))))))
 #+end_src
 * Extra packages/config
+** Misc config
 #+begin_src emacs-lisp
 (use-package edit-indirect)
 #+end_src
@@ -381,6 +378,12 @@ Below is functions which allow scaling up/down/reset font size globally.
  "C--" 'jackson/decrease-font-size
  "C-*" 'jackson/increase-font-size
  "C-0" 'jackson/reset-font-size)
+#+end_src
+These are for improved pdf when using DocView.
+#+begin_src emacs-lisp
+(setq revert-without-query '(".pdf"))
+(setq doc-view-resolution 120)
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 #+end_src
 * Org settings
 ** General Org Config
