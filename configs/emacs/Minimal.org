@@ -5,414 +5,414 @@
 * Core settings
 Basic settings
 #+begin_src emacs-lisp
-  (setq user-full-name "Jackson Ludwig"
-	user-mail-address "jacksonludwig0@gmail.com")
+(setq user-full-name "Jackson Ludwig"
+      user-mail-address "jacksonludwig0@gmail.com")
 
-  ;; Send backup files to tmp
-  (setq backup-directory-alist
-	`((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-	`((".*" ,temporary-file-directory t)))
+;; Send backup files to tmp
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
-  ;; SAVE CUSTOM VARS TO SEPARATE FILE
-  (setq custom-file (concat user-emacs-directory "custom.el"))
-  (load custom-file 'noerror)
+;; SAVE CUSTOM VARS TO SEPARATE FILE
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file 'noerror)
 
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024)) ;; 1mb
-  (setq create-lockfiles nil)
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq create-lockfiles nil)
 
-  ;; Hide native comp warnings/errors. Risky?
-  (setq comp-async-report-warnings-errors nil)
+;; Hide native comp warnings/errors. Risky?
+(setq comp-async-report-warnings-errors nil)
 #+end_src
 * Sane UI Defaults
-  #+begin_src emacs-lisp
-    (scroll-bar-mode -1)
-    (tool-bar-mode -1)
-    (menu-bar-mode -1)
-    (setq visible-bell t)
-  #+end_src
+#+begin_src emacs-lisp
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(setq visible-bell t)
+#+end_src
 * Default settings and modes
-  #+begin_src emacs-lisp
-    (electric-pair-mode +1)
-    (show-paren-mode +1)
-    (setq js-indent-level 2)
-    (setq shell-command-switch "-ic")
-  #+end_src
+#+begin_src emacs-lisp
+(electric-pair-mode +1)
+(show-paren-mode +1)
+(setq js-indent-level 2)
+(setq shell-command-switch "-ic")
+#+end_src
 * Font
 This is the font setup I used to use.
-  #+begin_src emacs-lisp :tangle no
-    (defvar jackson/default-font-size 125)
-    (defvar jackson/main-font "Jetbrains Mono")
-    (defvar jackson/variable-font "DejaVu Sans")
+#+begin_src emacs-lisp :tangle no
+(defvar jackson/default-font-size 125)
+(defvar jackson/main-font "Jetbrains Mono")
+(defvar jackson/variable-font "DejaVu Sans")
 
-    (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
+(set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 
-    ;; Set the fixed pitch face
-    (set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
 
-    ;; Set the variable pitch face
-    (set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
-  #+end_src
-  This font setup is stolen from https://github.com/KaratasFurkan/.emacs.d#adjust-font-size and I think is better.
-  #+begin_src emacs-lisp
-    (defconst jackson/default-font-family "Jetbrains Mono")
-    ;; (defconst jackson/default-font-family nil)
-    ;; jackson/default-font-size is calculated on start according to the primary screen
-    ;; size. if screen-size is bigger than 16 inch: 9 else 11.
-    (defconst jackson/default-font-size
-      (let* ((command "xrandr | awk '/primary/{print sqrt( ($(NF-2)/10)^2 + ($NF/10)^2 )/2.54}'")
-	     (screen-size (string-to-number (shell-command-to-string command))))
-	(if (or (> screen-size 16) (= screen-size 0)) 125 135)))  ; screen-size=0 if command gives error
-    (defconst jackson/default-icon-size 15)
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
+#+end_src
+This font setup is stolen from https://github.com/KaratasFurkan/.emacs.d#adjust-font-size and I think is better.
+#+begin_src emacs-lisp
+(defconst jackson/default-font-family "Jetbrains Mono")
+;; (defconst jackson/default-font-family nil)
+;; jackson/default-font-size is calculated on start according to the primary screen
+;; size. if screen-size is bigger than 16 inch: 9 else 11.
+(defconst jackson/default-font-size
+  (let* ((command "xrandr | awk '/primary/{print sqrt( ($(NF-2)/10)^2 + ($NF/10)^2 )/2.54}'")
+	 (screen-size (string-to-number (shell-command-to-string command))))
+    (if (or (> screen-size 16) (= screen-size 0)) 125 135)))  ; screen-size=0 if command gives error
+(defconst jackson/default-icon-size 15)
 
-    (defconst jackson/variable-pitch-font-family "DejaVu Sans")
-    (defconst jackson/variable-pitch-font-size jackson/default-font-size)  ; TODO: adjust this and use in org-mode
+(defconst jackson/variable-pitch-font-family "DejaVu Sans")
+(defconst jackson/variable-pitch-font-size jackson/default-font-size)  ; TODO: adjust this and use in org-mode
 
-    (custom-set-faces
-     `(default ((t (:family ,jackson/default-font-family :height ,jackson/default-font-size))))
-     `(variable-pitch ((t (:family ,jackson/variable-pitch-font-family :height ,jackson/variable-pitch-font-size))))
-     ;; Characters with fixed pitch face do not shown when height is 90.
-     `(fixed-pitch-serif ((t (:height 125)))))
-  #+end_src
+(custom-set-faces
+ `(default ((t (:family ,jackson/default-font-family :height ,jackson/default-font-size))))
+ `(variable-pitch ((t (:family ,jackson/variable-pitch-font-family :height ,jackson/variable-pitch-font-size))))
+ ;; Characters with fixed pitch face do not shown when height is 90.
+ `(fixed-pitch-serif ((t (:height 125)))))
+#+end_src
 * Package bootstrap
 #+begin_src emacs-lisp
-  (setq straight-use-package-by-default t)
-  (defvar bootstrap-version)
-  (let ((bootstrap-file
-	 (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-	(bootstrap-version 5))
-    (unless (file-exists-p bootstrap-file)
-      (with-current-buffer
-	  (url-retrieve-synchronously
-	   "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-	   'silent 'inhibit-cookies)
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
-    (load bootstrap-file nil 'nomessage))
-  (straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(straight-use-package 'use-package)
 #+end_src
 * Core Packages
 ** Diminish
 #+begin_src emacs-lisp
-  (use-package diminish)
+(use-package diminish)
 #+end_src
 ** General
-   #+begin_src emacs-lisp
-     (use-package general
-       :init
-       (general-create-definer jackson/leader
-	 :prefix "C-c")
-       (jackson/leader
-	 "qq" 'kill-emacs)
-       (general-define-key
-	"C-?" 'undo-redo))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package general
+  :init
+  (general-create-definer jackson/leader
+    :prefix "C-c")
+  (jackson/leader
+    "qq" 'kill-emacs)
+  (general-define-key
+   "C-?" 'undo-redo))
+#+end_src
 ** Restart emacs
 #+begin_src emacs-lisp
-  (use-package restart-emacs
-    :general
-    (jackson/leader
-      "qr" 'restart-emacs
-      "qR" 'restart-emacs))
+(use-package restart-emacs
+  :general
+  (jackson/leader
+    "qr" 'restart-emacs
+    "qR" 'restart-emacs))
 #+end_src
 ** Which key
-   #+begin_src emacs-lisp
-     (use-package which-key
-       :diminish
-       :init (which-key-mode +1))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package which-key
+  :diminish
+  :init (which-key-mode +1))
+#+end_src
 ** Selectrum
-   #+begin_src emacs-lisp
-     (use-package selectrum
-       :init
-       (setq selectrum-fix-vertical-window-height t) ;; workaround for incorret window height
-       (selectrum-mode +1))
+#+begin_src emacs-lisp
+(use-package selectrum
+  :init
+  (setq selectrum-fix-vertical-window-height t) ;; workaround for incorret window height
+  (selectrum-mode +1))
 
-     (use-package selectrum-prescient
-       :after selectrum
-       :config
-       (selectrum-prescient-mode +1)
-       (prescient-persist-mode +1))
-   #+end_src
+(use-package selectrum-prescient
+  :after selectrum
+  :config
+  (selectrum-prescient-mode +1)
+  (prescient-persist-mode +1))
+#+end_src
 ** Consult
-   #+begin_src emacs-lisp
-     (use-package consult
-       :init
-       (recentf-mode +1)
-       (setq recentf-max-saved-items 200)
-       (setq consult-preview-key (kbd "M-p"))
-       :general
-       (jackson/leader
-	 "fr" 'consult-recent-file
-	 "gd" 'consult-grep)
-       ("C-s" 'consult-line)
-       ("M-g M-g" 'consult-goto-line))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package consult
+  :init
+  (recentf-mode +1)
+  (setq recentf-max-saved-items 200)
+  (setq consult-preview-key (kbd "M-p"))
+  :general
+  (jackson/leader
+    "fr" 'consult-recent-file
+    "gd" 'consult-grep)
+  ("C-s" 'consult-line)
+  ("M-g M-g" 'consult-goto-line))
+#+end_src
 ** Marginalia
-   #+begin_src emacs-lisp
-     (use-package marginalia
-       :init
-       (marginalia-mode)
-       (advice-add #'marginalia-cycle :after
-		   (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit 'keep-selected))))
-       (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
-       :general
-       (:keymaps 'minibuffer-local-map
-		 "M-A" 'marginalia-cycle))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package marginalia
+  :init
+  (marginalia-mode)
+  (advice-add #'marginalia-cycle :after
+	      (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit 'keep-selected))))
+  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :general
+  (:keymaps 'minibuffer-local-map
+	    "M-A" 'marginalia-cycle))
+#+end_src
 ** Embark
-   #+begin_src emacs-lisp
-     (use-package embark
-       :general
-       (jackson/leader
-	 "ea" 'embark-act
-	 "eb" 'embark-bindings)
-       :config
-       ;; Hide the mode line of the Embark live/completions buffers
-       (add-to-list 'display-buffer-alist
-		    '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-		      nil
-		      (window-parameters (mode-line-format . none)))))
+#+begin_src emacs-lisp
+(use-package embark
+  :general
+  (jackson/leader
+    "ea" 'embark-act
+    "eb" 'embark-bindings)
+  :config
+  ;; Hide the mode line of the Embark live/completions buffers
+  (add-to-list 'display-buffer-alist
+	       '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+		 nil
+		 (window-parameters (mode-line-format . none)))))
 
-     (use-package embark-consult
-       :after (embark consult)
-       :demand t ; only necessary if you have the hook below
-       ;; if you want to have consult previews as you move around an
-       ;; auto-updating embark collect buffer
-       :hook
-       (embark-collect-mode . embark-consult-preview-minor-mode))
-   #+end_src
+(use-package embark-consult
+  :after (embark consult)
+  :demand t ; only necessary if you have the hook below
+  ;; if you want to have consult previews as you move around an
+  ;; auto-updating embark collect buffer
+  :hook
+  (embark-collect-mode . embark-consult-preview-minor-mode))
+#+end_src
 ** Company
-   #+begin_src emacs-lisp
-     (use-package company
-       :diminish
-       :init
-       (setq company-minimum-prefix-length 2)
-       (setq company-dabbrev-downcase nil)
-       (setq company-idle-delay nil)
-       :hook
-       (text-mode . company-mode)
-       (prog-mode . company-mode)
-       :general
-       ("M-n" 'company-complete-common)
-       (:keymaps 'company-active-map
-		 "C-n" 'company-select-next
-		 "C-p" 'company-select-previous))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package company
+  :diminish
+  :init
+  (setq company-minimum-prefix-length 2)
+  (setq company-dabbrev-downcase nil)
+  (setq company-idle-delay nil)
+  :hook
+  (text-mode . company-mode)
+  (prog-mode . company-mode)
+  :general
+  ("M-n" 'company-complete-common)
+  (:keymaps 'company-active-map
+	    "C-n" 'company-select-next
+	    "C-p" 'company-select-previous))
+#+end_src
 ** Yasnippet
-   #+begin_src emacs-lisp
-     (defun company-yasnippet-or-completion ()
-       (interactive)
-       (let ((yas-fallback-behavior nil))
-	 (unless (yas-expand)
-	   (call-interactively #'company-complete-common))))
+#+begin_src emacs-lisp
+(defun company-yasnippet-or-completion ()
+  (interactive)
+  (let ((yas-fallback-behavior nil))
+    (unless (yas-expand)
+      (call-interactively #'company-complete-common))))
 
-     (use-package yasnippet
-       :diminish (yas-minor-mode)
-       :init
-       (setq yas-triggers-in-field t)
-       :hook
-       (org-mode . (lambda()
-		     (yas-minor-mode +1)
-		     (yas-activate-extra-mode 'latex-mode)))
-       (prog-mode . yas-minor-mode)
-       (latex-mode . yas-minor-mode))
+(use-package yasnippet
+  :diminish (yas-minor-mode)
+  :init
+  (setq yas-triggers-in-field t)
+  :hook
+  (org-mode . (lambda()
+		(yas-minor-mode +1)
+		(yas-activate-extra-mode 'latex-mode)))
+  (prog-mode . yas-minor-mode)
+  (latex-mode . yas-minor-mode))
 
-     (use-package yasnippet-snippets
-       :after yasnippet)
-   #+end_src
+(use-package yasnippet-snippets
+  :after yasnippet)
+#+end_src
 ** Flycheck
-   #+begin_src emacs-lisp
-     (use-package flycheck
-       :init
-       (setq flycheck-check-syntax-automatically '(save mode-enabled))
-       (setq flycheck-global-modes '(not emacs-lisp-mode latex-mode))
-       (global-flycheck-mode))
-   #+end_src
+#+begin_src emacs-lisp
+(use-package flycheck
+  :init
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq flycheck-global-modes '(not emacs-lisp-mode latex-mode))
+  (global-flycheck-mode))
+#+end_src
 * Language Packages and Configuration
 ** LSP mode
 #+begin_src emacs-lisp
-  (use-package all-the-icons)
+(use-package all-the-icons)
 
-  (use-package lsp-mode
-    :init
-    (setq lsp-log-io nil
-	  lsp-keymap-prefix "C-c l"
-	  lsp-ui-sideline-enable nil
-	  lsp-headerline-breadcrumb-enable nil
-	  lsp-enable-symbol-highlighting nil
-	  lsp-enable-indentation nil
-	  lsp-enable-on-type-formatting nil)
-    :hook
-    (lsp-mode . lsp-enable-which-key-integration)
-    (js-mode . lsp-deferred)
-    ;; (js-mode . (lambda ()
-    ;;   	     (lsp-deferred)
-    ;;   	     (setq-local lsp-diagnostics-provider :none)))
-    ;; (typescript-mode . (lambda ()
-    ;; 		       (lsp-deferred)
-    ;; 		       (setq-local lsp-diagnostics-provider :none)))
-    (typescript-mode . lsp-deferred)
-    :commands (lsp lsp-deferred)
-    :general
-    (:keymaps 'lsp-mode-map
-	      "M-." 'lsp-find-definition
-	      "M-?" 'lsp-find-references))
+(use-package lsp-mode
+  :init
+  (setq lsp-log-io nil
+	lsp-keymap-prefix "C-c l"
+	lsp-ui-sideline-enable nil
+	lsp-headerline-breadcrumb-enable nil
+	lsp-enable-symbol-highlighting nil
+	lsp-enable-indentation nil
+	lsp-enable-on-type-formatting nil)
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration)
+  (js-mode . lsp-deferred)
+  ;; (js-mode . (lambda ()
+  ;;   	     (lsp-deferred)
+  ;;   	     (setq-local lsp-diagnostics-provider :none)))
+  ;; (typescript-mode . (lambda ()
+  ;; 		       (lsp-deferred)
+  ;; 		       (setq-local lsp-diagnostics-provider :none)))
+  (typescript-mode . lsp-deferred)
+  :commands (lsp lsp-deferred)
+  :general
+  (:keymaps 'lsp-mode-map
+	    "M-." 'lsp-find-definition
+	    "M-?" 'lsp-find-references))
 
 #+end_src
 ** Treesitter
 Use ~treesitter-hl-mode~ to enable TS highlighting.
 #+begin_src emacs-lisp
-  (use-package tree-sitter)
-  (use-package tree-sitter-langs)
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
 #+end_src
 ** Formatting
 #+begin_src emacs-lisp
-  (use-package format-all)
+(use-package format-all)
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
-  (use-package markdown-mode)
+(use-package markdown-mode)
 #+end_src
 ** Javascript/Typescript
 Tide is maybe deprecated in favor for lsp mode?
 #+begin_src emacs-lisp
-  (use-package json-mode)
-  (use-package typescript-mode)
+(use-package json-mode)
+(use-package typescript-mode)
 
-  ;; (defun setup-tide-mode ()
-  ;;   (interactive)
-  ;;   (tide-setup)
-  ;;   (flycheck-mode +1)
-  ;;   (eldoc-mode +1))
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (eldoc-mode +1))
 
-  ;; (use-package tide
-  ;;   :hook
-  ;;   (js-mode . (lambda()
-  ;; 	       (setup-tide-mode)
-  ;; 	       (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
-  ;;   (typescript-mode . (lambda()
-  ;; 		       (setup-tide-mode)
-  ;; 		       (flycheck-add-next-checker 'typescript-tide '(warning . javascript-eslint) 'append))))
+;; (use-package tide
+;;   :hook
+;;   (js-mode . (lambda()
+;; 	       (setup-tide-mode)
+;; 	       (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
+;;   (typescript-mode . (lambda()
+;; 		       (setup-tide-mode)
+;; 		       (flycheck-add-next-checker 'typescript-tide '(warning . javascript-eslint) 'append))))
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
-  (use-package yaml-mode
-    :init
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
+(use-package yaml-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode)))
 #+end_src
 ** MIPS
 #+begin_src emacs-lisp
-  (use-package mips-mode
-    :init
-    (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
-    :hook
-    (mips-mode . (lambda()
-		   (setq-local mips-operands-column 8
-			       mips-operator-column 8
-			       mips-comments-column 40))))
+(use-package mips-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.asm\\'" . mips-mode))
+  :hook
+  (mips-mode . (lambda()
+		 (setq-local mips-operands-column 8
+			     mips-operator-column 8
+			     mips-comments-column 40))))
 #+end_src
 ** Nix
 #+begin_src emacs-lisp
-  (use-package nix-mode
-    :mode "\\.nix\\'")
+(use-package nix-mode
+  :mode "\\.nix\\'")
 #+end_src
 ** C#
 #+begin_src emacs-lisp
-  (use-package csharp-mode
-    :hook csharp-mode . (lambda ()
-			  (setq-local indent-tabs-mode nil)))
+(use-package csharp-mode
+  :hook csharp-mode . (lambda ()
+			(setq-local indent-tabs-mode nil)))
 #+end_src
 * Themes/visual
 Disable if using default theme.
 #+begin_src emacs-lisp :tangle no
-  (use-package doom-themes
-    :config
-    ;; Global settings (defaults)
-    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	  doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-flatwhite t)
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-flatwhite t)
 
-    ;; Enable flashing mode-line on errors
-    (doom-themes-visual-bell-config)
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
 
-    ;; Corrects (and improves) org-mode's native fontification.
-    (doom-themes-org-config)
-    (custom-set-faces
-     '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
-     '(org-block-begin-line ((t (:background nil)))) ;; symmetry
-     '(org-ellipsis ((t (:underline nil))))))
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config)
+  (custom-set-faces
+   '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
+   '(org-block-begin-line ((t (:background nil)))) ;; symmetry
+   '(org-ellipsis ((t (:underline nil))))))
 #+end_src
 * Extra packages/config
 #+begin_src emacs-lisp
-  (use-package edit-indirect)
+(use-package edit-indirect)
 #+end_src
 Below is functions which allow scaling up/down/reset font size globally.
 #+begin_src emacs-lisp
-  (defun jackson/adjust-font-size (height)
-    "Adjust font size by given height. If height is '0', reset font
+(defun jackson/adjust-font-size (height)
+  "Adjust font size by given height. If height is '0', reset font
   size. This function also handles icons and modeline font sizes."
-    (interactive "nHeight ('0' to reset): ")
-    (let ((new-height (if (zerop height)
-			  jackson/default-font-size
-			(+ height (face-attribute 'default :height)))))
-      (set-face-attribute 'default nil :height new-height)
-      (set-face-attribute 'mode-line nil :height new-height)
-      (set-face-attribute 'mode-line-inactive nil :height new-height)
-      (message "Font size: %s" new-height)))
+  (interactive "nHeight ('0' to reset): ")
+  (let ((new-height (if (zerop height)
+			jackson/default-font-size
+		      (+ height (face-attribute 'default :height)))))
+    (set-face-attribute 'default nil :height new-height)
+    (set-face-attribute 'mode-line nil :height new-height)
+    (set-face-attribute 'mode-line-inactive nil :height new-height)
+    (message "Font size: %s" new-height)))
 
-  (defun jackson/increase-font-size ()
-    "Increase font size by 0.5 (5 in height)."
-    (interactive)
-    (jackson/adjust-font-size 5))
+(defun jackson/increase-font-size ()
+  "Increase font size by 0.5 (5 in height)."
+  (interactive)
+  (jackson/adjust-font-size 5))
 
-  (defun jackson/decrease-font-size ()
-    "Decrease font size by 0.5 (5 in height)."
-    (interactive)
-    (jackson/adjust-font-size -5))
+(defun jackson/decrease-font-size ()
+  "Decrease font size by 0.5 (5 in height)."
+  (interactive)
+  (jackson/adjust-font-size -5))
 
-  (defun jackson/reset-font-size ()
-    "Reset font size according to the `jackson/default-font-size'."
-    (interactive)
-    (jackson/adjust-font-size 0))
+(defun jackson/reset-font-size ()
+  "Reset font size according to the `jackson/default-font-size'."
+  (interactive)
+  (jackson/adjust-font-size 0))
 
-  (general-define-key
-   "C--" 'jackson/decrease-font-size
-   "C-*" 'jackson/increase-font-size
-   "C-0" 'jackson/reset-font-size)
+(general-define-key
+ "C--" 'jackson/decrease-font-size
+ "C-*" 'jackson/increase-font-size
+ "C-0" 'jackson/reset-font-size)
 #+end_src
 * Org settings
 ** General Org Config
 #+begin_src emacs-lisp
-  (use-package org
-    :init
-    (setq org-catch-invisible-edits 'smart ;; Possibly better editing with folds
-	  org-special-ctrl-a/e t
-	  org-table-copy-increment nil ;; don't increment table on S-RET
-	  org-adapt-indentation nil
-	  org-src-preserve-indentation t)
-    :config
-    (setq org-directory "~/git_repos/emacs-org-mode"
-	  org-default-notes-file (concat org-directory "/.notes.org")
-	  org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org" "~/git_repos/emacs-org-mode/.notes.org")))
+(use-package org
+  :init
+  (setq org-catch-invisible-edits 'smart ;; Possibly better editing with folds
+	org-special-ctrl-a/e t
+	org-table-copy-increment nil ;; don't increment table on S-RET
+	org-adapt-indentation nil
+	org-src-preserve-indentation t)
+  :config
+  (setq org-directory "~/git_repos/emacs-org-mode"
+	org-default-notes-file (concat org-directory "/.notes.org")
+	org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org" "~/git_repos/emacs-org-mode/.notes.org")))
 #+end_src
 ** Babel settings
 #+begin_src emacs-lisp
-  ;; BABEL LANGUAGES
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python . t)))
-  (push '("conf-unix" . conf-unix) org-src-lang-modes)
+;; BABEL LANGUAGES
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)))
+(push '("conf-unix" . conf-unix) org-src-lang-modes)
 
-  ;; Automatically tangle config file when we save it
-  (defun jackson/org-babel-tangle-config ()
-    (when (string-equal (buffer-file-name)
-			(expand-file-name "~/.config/nixpkgs/configs/emacs/Minimal.org"))
-      ;; Dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-	(org-babel-tangle))))
+;; Automatically tangle config file when we save it
+(defun jackson/org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+		      (expand-file-name "~/.config/nixpkgs/configs/emacs/Minimal.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
 
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
 #+end_src

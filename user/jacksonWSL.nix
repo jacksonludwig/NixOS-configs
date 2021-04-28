@@ -9,7 +9,6 @@ let
           url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
         }))
         (import (builtins.fetchTarball {
-          # url = https://github.com/mjlbach/emacs-overlay/archive/master.tar.gz;
           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
         }))
       ];
