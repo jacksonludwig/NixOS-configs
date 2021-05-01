@@ -18,7 +18,7 @@ Basic settings
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
-;; (setq gc-cons-threshold 500000000) ;; 500mb
+(setq gc-cons-threshold (* 16 1024 1024))
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq create-lockfiles nil)
 
@@ -94,7 +94,8 @@ This currently doesn't set the fixed face.
 #+end_src
 * Core Packages
 ** GCMH
-   #+begin_src emacs-lisp
+This is probably unnecessary.
+   #+begin_src emacs-lisp :tangle no
 (use-package gcmh
   :init
   (gcmh-mode 1))
@@ -202,7 +203,7 @@ I'm not using this yet.
   (text-mode . company-mode)
   (prog-mode . company-mode)
   :general
-  ("M-n" 'company-complete-common)
+  ("M-N" 'company-complete-common)
   (:keymaps 'company-active-map
 	    "C-n" 'company-select-next
 	    "C-p" 'company-select-previous))
@@ -270,7 +271,7 @@ I'm not using this yet.
 #+end_src
 ** Treesitter
 Use ~treesitter-hl-mode~ to enable TS highlighting.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
 #+end_src
@@ -357,6 +358,7 @@ Disable if using default theme.
 #+begin_src emacs-lisp
 (use-package edit-indirect)
 #+end_src
+
 Below is functions which allow scaling up/down/reset font size globally.
 #+begin_src emacs-lisp
 (defun jackson/adjust-font-size (height)
@@ -391,12 +393,14 @@ Below is functions which allow scaling up/down/reset font size globally.
  "C-*" 'jackson/increase-font-size
  "C-0" 'jackson/reset-font-size)
 #+end_src
+
 These are for improved pdf when using DocView.
 #+begin_src emacs-lisp
 (setq revert-without-query '(".pdf"))
 (setq doc-view-resolution 120)
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 #+end_src
+
 * Org settings
 ** General Org Config
 #+begin_src emacs-lisp
