@@ -270,8 +270,7 @@ I'm not using this yet.
 
 #+end_src
 ** Treesitter
-Use ~treesitter-hl-mode~ to enable TS highlighting.
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (use-package tree-sitter)
 (use-package tree-sitter-langs)
 #+end_src
@@ -394,11 +393,16 @@ Below is functions which allow scaling up/down/reset font size globally.
  "C-0" 'jackson/reset-font-size)
 #+end_src
 
-These are for improved pdf when using DocView.
+These are for a slightly improved pdf experience when using DocView.
 #+begin_src emacs-lisp
 (setq revert-without-query '(".pdf"))
 (setq doc-view-resolution 120)
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+#+end_src
+
+This package can be enabled to allow built in screenshotting.
+#+begin_src emacs-lisp :tangle no
+(straight-use-package '(screenshot :type git :host github :repo "tecosaur/screenshot"))
 #+end_src
 
 * Org settings
