@@ -25,7 +25,6 @@ in {
     gcc
     cmake
 
-    python3
     go
     jdk11
     nodejs
@@ -37,7 +36,6 @@ in {
     nodePackages.pyright
     nodePackages.npm
     nodePackages.typescript-language-server
-    texlab
     tree-sitter
 
     firefox
@@ -66,7 +64,7 @@ in {
   };
 
   programs.neovim = {
-    enable = true;
+    enable = false;
     package = unstable.neovim-nightly;
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
@@ -78,7 +76,6 @@ in {
 
   programs.emacs = {
     enable = true;
-    # package = unstable.emacsPgtkGcc;
     package = unstable.emacsGcc;
     extraPackages = epkgs: with epkgs; [
         vterm

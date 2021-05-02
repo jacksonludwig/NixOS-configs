@@ -25,7 +25,6 @@ in {
     gcc
     cmake
 
-    python3
     go
     jdk11
     nodejs
@@ -63,7 +62,7 @@ in {
   };
 
   programs.neovim = {
-    enable = true;
+    enable = false;
     package = unstable.neovim-nightly;
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
