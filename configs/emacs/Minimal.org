@@ -211,7 +211,7 @@ I'm not using this yet.
 (use-package flycheck
   :init
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (setq flycheck-global-modes '(not emacs-lisp-mode latex-mode mips-mode))
+  (setq flycheck-global-modes '(not emacs-lisp-mode latex-mode mips-mode org-mode magit-mode))
   (global-flycheck-mode))
 #+end_src
 ** Magit
