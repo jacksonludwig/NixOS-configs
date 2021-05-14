@@ -81,9 +81,9 @@ in {
         vterm
     ];
   };
-  home.file.".doom.d/init.el".source = ../configs/doom/init.el;
-  home.file.".doom.d/config.el".source = ../configs/doom/config.el;
-  home.file.".doom.d/packages.el".source = ../configs/doom/packages.el;
+  # home.file.".doom.d/init.el".source = ../configs/doom/init.el;
+  # home.file.".doom.d/config.el".source = ../configs/doom/config.el;
+  # home.file.".doom.d/packages.el".source = ../configs/doom/packages.el;
   # home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
   # home.file.".emacs.d/splash.png".source = ../configs/emacs/splash.png;
 

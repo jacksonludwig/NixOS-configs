@@ -18,7 +18,7 @@ Basic settings
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
-(setq gc-cons-threshold (* 100 1024 1024))
+(setq gc-cons-threshold (* 75 1024 1024))
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq create-lockfiles nil)
 
@@ -105,20 +105,6 @@ This is the simplest font setup.
   :diminish
   :init (which-key-mode +1))
 #+end_src
-** Selectrum
-I currently have this disabled as it has some issues.
-#+begin_src emacs-lisp :tangle no
-(use-package selectrum
-  :init
-  (setq selectrum-fix-vertical-window-height t) ;; workaround for incorret window height
-  (selectrum-mode +1))
-
-(use-package selectrum-prescient
-  :after selectrum
-  :config
-  (selectrum-prescient-mode +1)
-  (prescient-persist-mode +1))
-#+end_src
 ** Vertico
 This is an alternative to selectrum.
 #+begin_src emacs-lisp
@@ -183,35 +169,9 @@ This is an alternative to selectrum.
 (use-package marginalia
   :init
   (marginalia-mode)
-  (advice-add #'marginalia-cycle :after
-	      (lambda () (when (bound-and-true-p selectrum-mode) (selectrum-exhibit 'keep-selected))))
-  (setq marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   :general
   (:keymaps 'minibuffer-local-map
 	    "M-A" 'marginalia-cycle))
-#+end_src
-** Embark
-I'm not using this yet.
-#+begin_src emacs-lisp :tangle no
-(use-package embark
-  :general
-  (jackson/leader
-    "ea" 'embark-act
-    "eb" 'embark-bindings)
-  :config
-  ;; Hide the mode line of the Embark live/completions buffers
-  (add-to-list 'display-buffer-alist
-	       '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-		 nil
-		 (window-parameters (mode-line-format . none)))))
-
-(use-package embark-consult
-  :after (embark consult)
-  :demand t ; only necessary if you have the hook below
-  ;; if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer
-  :hook
-  (embark-collect-mode . embark-consult-preview-minor-mode))
 #+end_src
 ** Company
 #+begin_src emacs-lisp
@@ -310,25 +270,9 @@ I'm not using this yet.
 (use-package markdown-mode)
 #+end_src
 ** Javascript/Typescript
-Tide is maybe deprecated in favor for lsp mode?
 #+begin_src emacs-lisp
 (use-package json-mode)
 (use-package typescript-mode)
-
-;; (defun setup-tide-mode ()
-;;   (interactive)
-;;   (tide-setup)
-;;   (flycheck-mode +1)
-;;   (eldoc-mode +1))
-
-;; (use-package tide
-;;   :hook
-;;   (js-mode . (lambda()
-;; 	       (setup-tide-mode)
-;; 	       (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
-;;   (typescript-mode . (lambda()
-;; 		       (setup-tide-mode)
-;; 		       (flycheck-add-next-checker 'typescript-tide '(warning . javascript-eslint) 'append))))
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
