@@ -18,7 +18,7 @@ Basic settings
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file 'noerror)
 
-(setq gc-cons-threshold (* 75 1024 1024))
+;; (setq gc-cons-threshold (* 50 1024 1024)) ;; use this if not trying GCMH
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq create-lockfiles nil)
 
@@ -79,6 +79,13 @@ This is the simplest font setup.
 ** Diminish
 #+begin_src emacs-lisp
 (use-package diminish)
+#+end_src
+** GCMH
+#+begin_src emacs-lisp
+(use-package gcmh
+  :diminish gcmh-mode
+  :init
+  (gcmh-mode 1))
 #+end_src
 ** General
 #+begin_src emacs-lisp
