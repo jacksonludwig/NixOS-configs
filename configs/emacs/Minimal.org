@@ -25,7 +25,7 @@ Basic settings
 ;; Hide native comp warnings/errors. Risky?
 ;; (setq native-comp-async-report-warnings-errors nil)
 
-;; (load-theme 'modus-operandi)
+(load-theme 'modus-operandi)
 #+end_src
 * Sane UI Defaults
 #+begin_src emacs-lisp
@@ -44,10 +44,10 @@ Basic settings
 * Font
 This is the simplest font setup.
 #+begin_src emacs-lisp
-;; (defvar jackson/default-font-size 125)
-;; (defvar jackson/main-font "Jetbrains Mono")
-(defvar jackson/default-font-size 138)
-(defvar jackson/main-font "Iosevka")
+(defvar jackson/default-font-size 125)
+(defvar jackson/main-font "Jetbrains Mono")
+;;(defvar jackson/default-font-size 138)
+;;(defvar jackson/main-font "Iosevka")
 (defvar jackson/variable-font "DejaVu Sans")
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
