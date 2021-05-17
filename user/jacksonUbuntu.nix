@@ -48,9 +48,9 @@ in {
     jetbrains-mono
     source-code-pro
     source-sans-pro
-    roboto-mono
     dejavu_fonts
     emacs-all-the-icons-fonts
+    meslo-lg
 
     neofetch
   ];

@@ -32,7 +32,6 @@ Basic settings
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(column-number-mode 1)
 (setq visible-bell t)
 #+end_src
 * Default settings and modes
@@ -45,9 +44,10 @@ Basic settings
 This is the simplest font setup.
 #+begin_src emacs-lisp
 (defvar jackson/default-font-size 125)
-(defvar jackson/main-font "Jetbrains Mono")
+;;(defvar jackson/main-font "Jetbrains Mono")
 ;;(defvar jackson/default-font-size 138)
 ;;(defvar jackson/main-font "Iosevka")
+(defvar jackson/main-font "Meslo LG S")
 (defvar jackson/variable-font "DejaVu Sans")
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
