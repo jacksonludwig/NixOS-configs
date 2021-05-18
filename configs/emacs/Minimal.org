@@ -43,10 +43,11 @@ Basic settings
 * Font
 This is the simplest font setup.
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 125)
+(defvar jackson/default-font-size 128)
 ;;(defvar jackson/main-font "Jetbrains Mono")
 ;;(defvar jackson/default-font-size 138)
 ;;(defvar jackson/main-font "Iosevka")
+;;(defvar jackson/main-font "DejaVu Sans Mono")
 (defvar jackson/main-font "Meslo LG S")
 (defvar jackson/variable-font "DejaVu Sans")
 
@@ -265,14 +266,16 @@ This is an alternative to selectrum.
 ** Treesitter
 #+begin_src emacs-lisp
 (use-package tree-sitter
-  :init (global-tree-sitter-mode)
-  :config
-  (add-hook 'js-mode-hook #'tree-sitter-hl-mode))
+  ;; :init (global-tree-sitter-mode)
+  ;; :config
+  ;; (add-hook 'js-mode-hook #'tree-sitter-hl-mode)
+)
 (use-package tree-sitter-langs)
 #+end_src
 ** Formatting
 #+begin_src emacs-lisp
 (use-package prettier-js
+  :init (setq prettier-js-show-errors nil)
   :hook (js-mode . prettier-js-mode))
 #+end_src
 ** Markdown
