@@ -43,12 +43,13 @@ Basic settings
 * Font
 This is the simplest font setup.
 #+begin_src emacs-lisp
-;;(defvar jackson/default-font-size 128)
+(defvar jackson/default-font-size 128)
 ;;(defvar jackson/main-font "Jetbrains Mono")
-(defvar jackson/default-font-size 138)
-(defvar jackson/main-font "Iosevka")
-;;(defvar jackson/main-font "DejaVu Sans Mono")
+;;(defvar jackson/default-font-size 138)
+;;(defvar jackson/main-font "Iosevka")
+(defvar jackson/main-font "DejaVu Sans Mono")
 ;;(defvar jackson/main-font "Meslo LG S")
+;;(defvar jackson/main-font "Source Code Pro")
 (defvar jackson/variable-font "DejaVu Sans")
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
