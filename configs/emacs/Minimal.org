@@ -43,12 +43,12 @@ Basic settings
 * Font
 This is the simplest font setup.
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 128)
+;;(defvar jackson/default-font-size 128)
 ;;(defvar jackson/main-font "Jetbrains Mono")
-;;(defvar jackson/default-font-size 138)
-;;(defvar jackson/main-font "Iosevka")
+(defvar jackson/default-font-size 138)
+(defvar jackson/main-font "Iosevka")
 ;;(defvar jackson/main-font "DejaVu Sans Mono")
-(defvar jackson/main-font "Meslo LG S")
+;;(defvar jackson/main-font "Meslo LG S")
 (defvar jackson/variable-font "DejaVu Sans")
 
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
@@ -115,22 +115,13 @@ This is the simplest font setup.
   :init (which-key-mode +1))
 #+end_src
 ** Vertico
-This is an alternative to selectrum.
+This is an alternative to selectrum/ivy/helm.
 #+begin_src emacs-lisp
 ;; Enable vertico
 (use-package vertico
   :init
   (vertico-mode))
 ;;(straight-use-package '(vertico :type git :host github :repo "minad/vertico" :commit "5b6d95f316425a533fa14e78732af26b22cf3b22"))
-
-;; Use the `orderless' completion style.
-;; Enable `partial-completion' for files to allow path expansion.
-;; You may prefer to use `initials' instead of `partial-completion'.
-(use-package orderless
-  :init
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles . (partial-completion))))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -176,6 +167,35 @@ This is an alternative to selectrum.
   (:keymaps 'company-active-map
 	    "C-n" 'company-select-next
 	    "C-p" 'company-select-previous))
+#+end_src
+** Corfu
+This is an alternative to company. Use only one.
+#+begin_src emacs-lisp :tangle no
+(use-package corfu
+  :config
+  ;; Recommended: Enable Corfu globally.
+  ;; This is recommended since dabbrev can be used globally (M-/).
+  :hook ((text-mode . corfu-mode)
+	 (prog-mode . corfu-mode)
+	 (eshell-mode . corfu-mode)
+	 (term-mode . corfu-mode))
+  :bind (("M-N" . completion-at-point)))
+
+(use-package dabbrev
+  ;; Swap M-/ and C-M-/
+  :bind (("M-/" . dabbrev-completion)
+         ("C-M-/" . dabbrev-expand)))
+#+end_src
+** Orderless
+#+begin_src emacs-lisp
+;; Use the `orderless' completion style.
+;; Enable `partial-completion' for files to allow path expansion.
+;; You may prefer to use `initials' instead of `partial-completion'.
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles . (partial-completion))))))
 #+end_src
 ** Yasnippet
 #+begin_src emacs-lisp
@@ -255,7 +275,9 @@ This is an alternative to selectrum.
 #+begin_src emacs-lisp
 (use-package prettier-js
   :init (setq prettier-js-show-errors nil)
-  :hook (js-mode . prettier-js-mode))
+  :general
+  (:keymaps 'js-mode-map
+	    "C-c c f" 'prettier-js))
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp
@@ -264,7 +286,9 @@ This is an alternative to selectrum.
 ** Javascript/Typescript
 #+begin_src emacs-lisp
 (use-package json-mode)
-(use-package typescript-mode)
+(use-package typescript-mode
+  :hook (typescript-mode . (lambda()
+			     (setq-local indent-tabs-mode nil))))
 #+end_src
 ** YAML
 #+begin_src emacs-lisp
