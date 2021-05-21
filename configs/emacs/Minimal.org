@@ -25,7 +25,7 @@ Basic settings
 ;; Hide native comp warnings/errors. Risky?
 ;; (setq native-comp-async-report-warnings-errors nil)
 
-(load-theme 'modus-operandi)
+;; (load-theme 'modus-operandi)
 #+end_src
 * Sane UI Defaults
 #+begin_src emacs-lisp
@@ -339,6 +339,13 @@ Disable if using default themes.
    '(org-block-begin-line ((t (:background nil)))) ;; symmetry
    '(org-ellipsis ((t (:underline nil))))))
 #+end_src
+
+Nord theme
+#+begin_src emacs-lisp
+(use-package nord-theme
+  :config
+  (load-theme 'nord))
+#+end_src
 * Extra packages/config
 ** Misc config
 #+begin_src emacs-lisp
@@ -405,7 +412,7 @@ This package can be enabled to allow built in screenshotting.
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
 	org-default-notes-file (concat org-directory "/.notes.org")
-	org-agenda-files '("~/git_repos/emacs-org-mode/School.org" "~/git_repos/emacs-org-mode/Work.org" "~/git_repos/emacs-org-mode/.notes.org")))
+	org-agenda-files (directory-files-recursively org-directory "\\.org$")))
 #+end_src
 ** Babel settings
 #+begin_src emacs-lisp
