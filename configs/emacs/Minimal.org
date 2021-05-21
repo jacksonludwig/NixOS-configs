@@ -99,6 +99,7 @@ This is the simplest font setup.
   (jackson/leader
     "qq" 'kill-emacs)
   (general-define-key
+   "C-/" 'undo-only
    "C-?" 'undo-redo))
 #+end_src
 ** Restart emacs
