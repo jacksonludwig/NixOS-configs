@@ -228,6 +228,9 @@ This is an alternative to company. Use only one.
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
   (setq flycheck-global-modes '(not emacs-lisp-mode latex-mode mips-mode org-mode magit-mode))
   (global-flycheck-mode))
+
+(use-package flycheck-pos-tip
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
 #+end_src
 ** Magit
 #+begin_src emacs-lisp
