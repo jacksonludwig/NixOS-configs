@@ -1,0 +1,239 @@
+#+title: Init.el Config
+#+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
+#+startup: overview
+
+* Global Settings
+#+begin_src emacs-lisp
+(setq user-full-name "Jackson Ludwig"
+      user-mail-address "jacksonludwig0@gmail.com")
+
+;; Send backup files to tmp
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; Save custom vars to separate file
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(load custom-file 'noerror)
+
+(setq create-lockfiles nil) ; no lockfiles
+
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(menu-bar-mode 0)
+
+(set-frame-font "DejaVu Sans Mono 13" nil t)
+
+(setq-default
+ auto-window-vscroll nil                          ; Lighten vertical scroll
+ confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
+ fill-column 80                                   ; Set width for automatic line breaks
+ help-window-select t                             ; Focus new help windows when opened
+ indent-tabs-mode nil                             ; Stop using tabs to indent
+ inhibit-startup-screen t                         ; Disable start-up screen
+ initial-scratch-message ""                       ; Empty the initial *scratch* buffer
+ left-margin-width 1 right-margin-width 1         ; Add left and right margins
+ split-height-threshold nil                       ; Disable vertical window splitting
+ split-width-threshold 1                          ; Disable horizontal window splitting
+ tab-width 2                                      ; Set width for tabs
+ window-combination-resize t                      ; Resize windows proportionally
+ x-stretch-cursor t                               ; Stretch cursor to the glyph width
+ scroll-step 1
+ scroll-conservatively 10000)
+
+(fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
+
+(put 'downcase-region 'disabled nil)              ; Enable downcase-region
+(put 'upcase-region 'disabled nil)                ; Enable upcase-region
+
+(electric-pair-mode +1)
+(show-paren-mode +1)
+#+end_src
+
+* General Packages
+** Bootstrap
+#+begin_src emacs-lisp
+(setq straight-repository-branch "develop")
+(setq straight-use-package-by-default t)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+	(url-retrieve-synchronously
+	 "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+	 'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(straight-use-package 'use-package)
+#+end_src
+** Diminish
+#+begin_src emacs-lisp
+(use-package diminish)
+#+end_src
+** GCMH
+#+begin_src emacs-lisp
+(use-package gcmh
+  :diminish gcmh-mode
+  :init
+  (gcmh-mode 1))
+#+end_src
+** Theme
+#+begin_src emacs-lisp
+(use-package nord-theme
+  :config
+  (load-theme 'nord))
+#+end_src
+
+** General
+#+begin_src emacs-lisp
+(use-package general
+  :init
+  (general-create-definer jackson/leader
+    :prefix "C-c")
+  (general-define-key
+   "C-/" 'undo-only
+   "C-?" 'undo-redo))
+#+end_src
+** Magit
+#+begin_src emacs-lisp
+(use-package magit)
+#+end_src
+** Consult
+#+begin_src emacs-lisp
+(use-package consult
+  :init
+  (recentf-mode +1)
+  (setq recentf-max-saved-items 200)
+  (setq consult-preview-key (kbd "M-p"))
+  :general
+  (jackson/leader
+    "fr" 'consult-recent-file
+    "gd" 'consult-grep)
+  ("C-s" 'consult-line)
+  ("M-g M-g" 'consult-goto-line))
+#+end_src
+** Vertico
+#+begin_src emacs-lisp
+(use-package vertico
+  :init
+  (vertico-mode))
+
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
+#+end_src
+** Marginalia
+#+begin_src emacs-lisp
+(use-package marginalia
+  :init
+  (marginalia-mode))
+#+end_src
+** Orderless
+#+begin_src emacs-lisp
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles . (partial-completion))))))
+#+end_src
+** Which key
+#+begin_src emacs-lisp
+(use-package which-key
+  :diminish
+  :config
+  (which-key-mode))
+#+end_src
+** Flycheck
+#+begin_src emacs-lisp
+(use-package flycheck)
+#+end_src
+** Company
+#+begin_src emacs-lisp
+(use-package company
+  :diminish
+  :init
+  (setq company-minimum-prefix-length 2)
+  (setq company-dabbrev-downcase nil)
+  (setq company-idle-delay nil)
+  :hook
+  (text-mode . company-mode)
+  (prog-mode . company-mode)
+  :general
+  ("M-N" 'company-complete-common)
+  (:keymaps 'company-active-map
+	    "C-n" 'company-select-next
+	    "C-p" 'company-select-previous))
+#+end_src
+** LSP Mode
+#+begin_src emacs-lisp
+(use-package all-the-icons)
+
+(use-package lsp-mode
+  :init
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-log-io nil)
+  (setq lsp-ui-sideline-enable nil
+	      lsp-headerline-breadcrumb-enable nil
+	      lsp-enable-symbol-highlighting nil
+	      lsp-enable-indentation nil
+	      lsp-enable-on-type-formatting nil)
+  :hook
+  (typescript-mode . lsp-deferred)
+  (js-mode . lsp-deferred)
+  :commands (lsp lsp-deferred)
+  :general
+  (:keymaps 'lsp-mode-map
+	          "M-." 'lsp-find-definition
+	          "M-?" 'lsp-find-references))
+#+end_src
+
+* Languages
+** Typescript
+#+begin_src emacs-lisp
+(use-package typescript-mode)
+#+end_src
+** Javascript
+#+begin_src emacs-lisp
+(setq js-indent-level 2)
+#+end_src
+* Org mode
+#+begin_src emacs-lisp
+(use-package org
+  :init
+  (setq org-startup-folded nil
+	      org-hide-emphasis-markers nil
+	      org-edit-src-content-indentation 0
+	      org-src-tab-acts-natively t
+	      org-src-fontify-natively t
+        org-adapt-indentation nil
+	      org-confirm-babel-evaluate nil
+        org-special-ctrl/a t
+	      org-support-shift-select 'always)
+  :config
+  (setq org-directory "~/git_repos/emacs-org-mode"
+	      org-default-notes-file (concat org-directory "/.notes.org")
+	      org-agenda-files (directory-files-recursively org-directory "\\.org$")))
+
+;; BABEL LANGUAGES
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)))
+(push '("conf-unix" . conf-unix) org-src-lang-modes)
+
+;; Automatically tangle config file when we save it
+(defun jackson/org-babel-tangle-config ()
+  (when (string-equal (buffer-file-name)
+		      (expand-file-name "~/.config/nixpkgs/configs/emacs/Mac.org"))
+    ;; Dynamic scoping to the rescue
+    (let ((org-confirm-babel-evaluate nil))
+      (org-babel-tangle))))
+
+(add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
+#+end_src

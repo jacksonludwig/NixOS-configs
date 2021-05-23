@@ -1,6 +1,6 @@
 #+title: Init.el Generator
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
-#+startup: fold
+#+startup: overview
 
 * Core settings
 Basic settings
@@ -47,18 +47,19 @@ This is the simplest font setup.
 ;;(defvar jackson/main-font "Jetbrains Mono")
 ;;(defvar jackson/default-font-size 138)
 ;;(defvar jackson/main-font "Iosevka")
-(defvar jackson/main-font "DejaVu Sans Mono")
+;;(defvar jackson/main-font "DejaVu Sans Mono")
 ;;(defvar jackson/main-font "Meslo LG S")
 ;;(defvar jackson/main-font "Source Code Pro")
-(defvar jackson/variable-font "DejaVu Sans")
+;;(defvar jackson/variable-font "DejaVu Sans")
 
-(set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
+;;(set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
+;;(set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
 
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
+;;(set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
+(set-frame-font "DejaVu Sans Mono 13" nil t)
 #+end_src
 * Package bootstrap
 #+begin_src emacs-lisp
@@ -324,26 +325,6 @@ This is an alternative to company. Use only one.
 			(setq-local indent-tabs-mode nil)))
 #+end_src
 * Themes/visual
-Disable if using default themes.
-#+begin_src emacs-lisp :tangle no
-(use-package doom-themes
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-flatwhite t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config)
-  (custom-set-faces
-   '(org-block-end-line ((t (:background nil)))) ;; avoid bleeding when folded
-   '(org-block-begin-line ((t (:background nil)))) ;; symmetry
-   '(org-ellipsis ((t (:underline nil))))))
-#+end_src
-
 Nord theme
 #+begin_src emacs-lisp
 (use-package nord-theme
@@ -412,7 +393,9 @@ This package can be enabled to allow built in screenshotting.
 	org-special-ctrl-a/e t
 	org-table-copy-increment nil ;; don't increment table on S-RET
 	org-adapt-indentation nil
-	org-src-preserve-indentation t)
+	org-src-preserve-indentation t
+	org-src-tab-acts-natively t
+	org-edit-src-content-indentation t)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
 	org-default-notes-file (concat org-directory "/.notes.org")
