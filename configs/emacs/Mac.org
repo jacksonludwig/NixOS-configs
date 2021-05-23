@@ -211,11 +211,25 @@
 * Languages
 ** Typescript
 #+begin_src emacs-lisp
-(use-package typescript-mode)
+(use-package typescript-mode
+  :init
+  (setq typescript-indent-level 2))
 #+end_src
 ** Javascript
 #+begin_src emacs-lisp
 (setq js-indent-level 2)
+#+end_src
+
+* Formatting
+** JS/TS
+#+begin_src emacs-lisp
+(use-package prettier-js
+  :init (setq prettier-js-show-errors nil)
+  :general
+  (:keymaps 'js-mode-map
+	    "C-c c f" 'prettier-js)
+  (:keymaps 'typescript-mode-map
+	    "C-c c f" 'prettier-js))
 #+end_src
 * Org mode
 #+begin_src emacs-lisp
