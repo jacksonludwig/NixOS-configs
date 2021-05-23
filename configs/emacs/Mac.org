@@ -23,7 +23,13 @@
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 
-(set-frame-font "DejaVu Sans Mono 13" nil t)
+(cond
+ ((string-equal system-type "gnu/linux")
+  (progn
+    (set-frame-font "DejaVu Sans Mono 13" nil t)))
+ ((string-equal system-type "darwin")
+  (progn
+    ((set-frame-font "Menlo 13" nil t)))))
 
 (setq-default
  auto-window-vscroll nil                          ; Lighten vertical scroll
@@ -242,7 +248,7 @@
 	      org-src-fontify-natively t
         org-adapt-indentation nil
 	      org-confirm-babel-evaluate nil
-        org-special-ctrl/a t
+        org-special-ctrl-a/e t
 	      org-support-shift-select 'always)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
