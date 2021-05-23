@@ -169,6 +169,21 @@
 	    "C-n" 'company-select-next
 	    "C-p" 'company-select-previous))
 #+end_src
+** Yasnippet
+#+begin_src emacs-lisp
+(use-package yasnippet-snippets)
+
+(use-package yasnippet
+  :diminish (yas-minor-mode)
+  :init
+  (setq yas-triggers-in-field t)
+  :hook
+  (org-mode . (lambda()
+		(yas-minor-mode +1)
+		(yas-activate-extra-mode 'latex-mode)))
+  (prog-mode . yas-minor-mode)
+  (latex-mode . yas-minor-mode))
+#+end_src
 ** LSP Mode
 #+begin_src emacs-lisp
 (use-package all-the-icons)
@@ -236,4 +251,47 @@
       (org-babel-tangle))))
 
 (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'jackson/org-babel-tangle-config)))
+#+end_src
+* Extras
+** Font functions
+#+begin_src emacs-lisp
+(defvar jackson/default-font-size 128)
+
+(defun jackson/adjust-font-size (height)
+  "Adjust font size by given height. If height is '0', reset font
+  size. This function also handles icons and modeline font sizes."
+  (interactive "nHeight ('0' to reset): ")
+  (let ((new-height (if (zerop height)
+			jackson/default-font-size
+		      (+ height (face-attribute 'default :height)))))
+    (set-face-attribute 'default nil :height new-height)
+    (set-face-attribute 'mode-line nil :height new-height)
+    (set-face-attribute 'mode-line-inactive nil :height new-height)
+    (message "Font size: %s" new-height)))
+
+(defun jackson/increase-font-size ()
+  "Increase font size by 0.5 (5 in height)."
+  (interactive)
+  (jackson/adjust-font-size 5))
+
+(defun jackson/decrease-font-size ()
+  "Decrease font size by 0.5 (5 in height)."
+  (interactive)
+  (jackson/adjust-font-size -5))
+
+(defun jackson/reset-font-size ()
+  "Reset font size according to the `jackson/default-font-size'."
+  (interactive)
+  (jackson/adjust-font-size 0))
+
+(general-define-key
+ "C--" 'jackson/decrease-font-size
+ "C-*" 'jackson/increase-font-size
+ "C-0" 'jackson/reset-font-size)
+#+end_src
+** PDF settings
+#+begin_src emacs-lisp
+(setq revert-without-query '(".pdf"))
+(setq doc-view-resolution 120)
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 #+end_src
