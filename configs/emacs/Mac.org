@@ -367,7 +367,5 @@
 #+end_src
 ** PDF settings
 #+begin_src emacs-lisp
-(setq revert-without-query '(".pdf"))
 (setq doc-view-resolution 120)
-(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 #+end_src
