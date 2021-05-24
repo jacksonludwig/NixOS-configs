@@ -37,6 +37,8 @@ in {
     nodePackages.npm
     nodePackages.typescript-language-server
     tree-sitter
+    nodePackages.serverless
+    
 
     htop
     xclip
