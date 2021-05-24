@@ -25,20 +25,16 @@ in {
     gcc
     cmake
 
-    go
     jdk11
     nodejs
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
 
-    gopls
     nodePackages.pyright
-    nodePackages.npm
     nodePackages.typescript-language-server
     tree-sitter
-    nodePackages.serverless
-    
+    nodePackages.npm
 
     htop
     xclip
@@ -52,7 +48,7 @@ in {
     source-sans-pro
     dejavu_fonts
     emacs-all-the-icons-fonts
-    meslo-lg
+    roboto-mono
 
     neofetch
   ];

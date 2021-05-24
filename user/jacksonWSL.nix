@@ -25,27 +25,22 @@ in {
     gcc
     cmake
 
-    go
     jdk11
     nodejs
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
 
-    gopls
     nodePackages.pyright
-    nodePackages.npm
     nodePackages.typescript-language-server
+    nodePackages.npm
     tree-sitter
-    nodePackages.serverless
 
     firefox
     htop
     xclip
     ispell
     texlive.combined.scheme-full
-    isync
-    mu
 
     iosevka-bin
     jetbrains-mono

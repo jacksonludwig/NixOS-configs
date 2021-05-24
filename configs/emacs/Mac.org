@@ -26,10 +26,10 @@
 (cond
  ((string-equal system-type "gnu/linux")
   (progn
-    (set-frame-font "DejaVu Sans Mono 13" nil t)))
+    (set-frame-font "Roboto Mono 12" nil t)))
  ((string-equal system-type "darwin")
   (progn
-    ((set-frame-font "Menlo 13" nil t)))))
+    ((set-frame-font "Menlo 12" nil t)))))
 
 (set-fringe-mode 17)                           ; alternative to margins
 
@@ -322,7 +322,7 @@
 * Extras
 ** Font functions
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 128)
+(defvar jackson/default-font-size 120)
 
 (defun jackson/adjust-font-size (height)
   "Adjust font size by given height. If height is '0', reset font
