@@ -31,7 +31,7 @@
   (progn
     ((set-frame-font "Menlo 13" nil t)))))
 
-;; (set-fringe-mode 17)                           ; alternative to margins
+(set-fringe-mode 17)                           ; alternative to margins
 
 (setq-default
  auto-window-vscroll nil                          ; Lighten vertical scroll
@@ -41,7 +41,7 @@
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
- left-margin-width 1 right-margin-width 1         ; Add left and right margins
+ ;; left-margin-width 1 right-margin-width 1         ; Add left and right margins
  split-height-threshold nil                       ; Disable vertical window splitting
  split-width-threshold 1                          ; Disable horizontal window splitting
  tab-width 2                                      ; Set width for tabs
@@ -195,10 +195,8 @@
     :severity 0
     :overlay-category 'flycheck-info-overlay
     :fringe-bitmap 'bitmap
-    :fringe-face 'flycheck-fringe-info)
+    :fringe-face 'flycheck-fringe-info))
   
-  (setq-default flycheck-indication-mode 'left-margin))
-
 (use-package flycheck-pos-tip
   :hook (flycheck-mode . flycheck-pos-tip-mode))
 #+end_src
