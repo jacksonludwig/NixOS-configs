@@ -215,7 +215,12 @@
 	          "M-." 'lsp-find-definition
 	          "M-?" 'lsp-find-references))
 #+end_src
-
+** Expand-Region
+#+begin_src emacs-lisp
+(use-package expand-region
+  :general
+  ("C-=" 'er/expand-region))
+#+end_src
 * Languages
 ** Typescript
 #+begin_src emacs-lisp
