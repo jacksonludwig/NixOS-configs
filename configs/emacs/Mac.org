@@ -31,6 +31,8 @@
   (progn
     ((set-frame-font "Menlo 13" nil t)))))
 
+;; (set-fringe-mode 17)                           ; alternative to margins
+
 (setq-default
  auto-window-vscroll nil                          ; Lighten vertical scroll
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
@@ -158,7 +160,47 @@
 #+end_src
 ** Flycheck
 #+begin_src emacs-lisp
-(use-package flycheck)
+(use-package flycheck
+  :init
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (define-fringe-bitmap 'bitmap
+    (vector #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00011100
+            #b00111110
+            #b00111110
+            #b00111110
+            #b00011100
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000))
+  (flycheck-define-error-level 'error
+    :severity 2
+    :overlay-category 'flycheck-error-overlay
+    :fringe-bitmap 'bitmap
+    :fringe-face 'flycheck-fringe-error)
+  (flycheck-define-error-level 'warning
+    :severity 1
+    :overlay-category 'flycheck-warning-overlay
+    :fringe-bitmap 'bitmap
+    :fringe-face 'flycheck-fringe-warning)
+  (flycheck-define-error-level 'info
+    :severity 0
+    :overlay-category 'flycheck-info-overlay
+    :fringe-bitmap 'bitmap
+    :fringe-face 'flycheck-fringe-info)
+  
+  (setq-default flycheck-indication-mode 'left-margin))
+
+(use-package flycheck-pos-tip
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
 #+end_src
 ** Company
 #+begin_src emacs-lisp
@@ -310,6 +352,15 @@
   "Reset font size according to the `jackson/default-font-size'."
   (interactive)
   (jackson/adjust-font-size 0))
+
+(defun jackson/set-big-font ()
+  "Set font to a big size (1.5x the default)"
+  (interactive)
+  (let ((new-height (truncate (* jackson/default-font-size 1.5))))
+    (message "Font size: %s" new-height)
+    (set-face-attribute 'default nil :height new-height)
+    (set-face-attribute 'mode-line nil :height new-height)
+    (set-face-attribute 'mode-line-inactive nil :height new-height)))
 
 (general-define-key
  "C--" 'jackson/decrease-font-size
