@@ -23,15 +23,17 @@
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 
-(cond
- ((string-equal system-type "gnu/linux")
-  (progn
-    (set-frame-font "Roboto Mono 12" nil t)))
- ((string-equal system-type "darwin")
-  (progn
-    ((set-frame-font "Menlo 12" nil t)))))
+(defvar jackson/default-font-size 120)
+(defvar jackson/main-font "Roboto Mono")
+(defvar jackson/variable-font "DejaVu Sans")
+;; Set default face
+(set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :family jackson/main-font :height 1.0)
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :family jackson/variable-font :height 1.0)
 
-(set-fringe-mode 17)                           ; alternative to margins
+(set-fringe-mode 18)                              ; larger fringes
 
 (setq-default
  auto-window-vscroll nil                          ; Lighten vertical scroll
@@ -41,7 +43,6 @@
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
- ;; left-margin-width 1 right-margin-width 1         ; Add left and right margins
  split-height-threshold nil                       ; Disable vertical window splitting
  split-width-threshold 1                          ; Disable horizontal window splitting
  tab-width 2                                      ; Set width for tabs
@@ -271,6 +272,10 @@
 ** Javascript
 #+begin_src emacs-lisp
 (setq js-indent-level 2)
+
+(use-package rjsx-mode
+  :mode "\\.js\\'"
+  :hook (rjsx-mode . (lambda() (js2-mode-hide-warnings-and-errors))))
 #+end_src
 
 * Formatting
@@ -322,8 +327,6 @@
 * Extras
 ** Font functions
 #+begin_src emacs-lisp
-(defvar jackson/default-font-size 120)
-
 (defun jackson/adjust-font-size (height)
   "Adjust font size by given height. If height is '0', reset font
   size. This function also handles icons and modeline font sizes."
