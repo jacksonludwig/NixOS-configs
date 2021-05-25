@@ -58,6 +58,7 @@
 
 (electric-pair-mode +1)
 (show-paren-mode +1)
+(global-subword-mode +1)
 
 (add-hook 'help-mode-hook (lambda() (visual-line-mode)))
 #+end_src
@@ -83,7 +84,9 @@
 #+end_src
 ** Diminish
 #+begin_src emacs-lisp
-(use-package diminish)
+(use-package diminish
+  :config
+  (diminish 'subword-mode))
 #+end_src
 ** GCMH
 #+begin_src emacs-lisp
