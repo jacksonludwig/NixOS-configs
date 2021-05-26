@@ -82,4 +82,9 @@ in {
   # home.file.".doom.d/packages.el".source = ../configs/doom/packages.el;
   # home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
   # home.file.".emacs.d/splash.png".source = ../configs/emacs/splash.png;
+
+  home.file.".local/share/fonts/menlonf" = {
+    source = ../configs/menlo_font;
+    recursive = true;
+  };
 }

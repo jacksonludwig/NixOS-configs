@@ -86,4 +86,9 @@ in {
   # Font config
   home.file.".Xresources".source = ../configs/wsl_font_conf/.Xresources;
   home.file.".config/fontconfig/fonts.conf".source = ../configs/wsl_font_conf/fonts.conf;
+
+  home.file.".local/share/fonts/menlonf" = {
+    source = ../configs/menlo_font;
+    recursive = true;
+  };
 }

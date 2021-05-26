@@ -24,7 +24,7 @@
 (menu-bar-mode 0)
 
 (defvar jackson/default-font-size 120)
-(defvar jackson/main-font "Roboto Mono")
+(defvar jackson/main-font "Menlo NF")
 (defvar jackson/variable-font "DejaVu Sans")
 ;; Set default face
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
