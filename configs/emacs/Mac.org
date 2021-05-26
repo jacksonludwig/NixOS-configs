@@ -107,7 +107,8 @@ Doom modeline
 (use-package doom-modeline
   :init
   (setq lsp-modeline-diagnostics-enable nil)
-  (setq doom-modeline-icon nil)
+  (setq doom-modeline-icon nil
+        doom-mode-bar-width 2)
   :hook
   (after-init . doom-modeline-mode))
 #+end_src
