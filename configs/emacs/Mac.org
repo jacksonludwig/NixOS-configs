@@ -102,6 +102,16 @@
   (load-theme 'nord))
 #+end_src
 
+Doom modeline
+#+begin_src emacs-lisp
+(use-package doom-modeline
+  :init
+  (setq lsp-modeline-diagnostics-enable nil)
+  (setq doom-modeline-icon nil)
+  :hook
+  (after-init . doom-modeline-mode))
+#+end_src
+
 ** General
 #+begin_src emacs-lisp
 (use-package general
@@ -187,16 +197,19 @@
             #b00000000))
   (flycheck-define-error-level 'error
     :severity 2
+    :compilation-level 2
     :overlay-category 'flycheck-error-overlay
     :fringe-bitmap 'bitmap
     :fringe-face 'flycheck-fringe-error)
   (flycheck-define-error-level 'warning
     :severity 1
+    :compilation-level 1
     :overlay-category 'flycheck-warning-overlay
     :fringe-bitmap 'bitmap
     :fringe-face 'flycheck-fringe-warning)
   (flycheck-define-error-level 'info
     :severity 0
+    :compilation-level 0
     :overlay-category 'flycheck-info-overlay
     :fringe-bitmap 'bitmap
     :fringe-face 'flycheck-fringe-info))
@@ -369,7 +382,8 @@
 (general-define-key
  "C--" 'jackson/decrease-font-size
  "C-*" 'jackson/increase-font-size
- "C-0" 'jackson/reset-font-size)
+ "C-0" 'jackson/reset-font-size
+ "C-c t b" 'jackson/set-big-font)
 #+end_src
 ** PDF settings
 #+begin_src emacs-lisp
