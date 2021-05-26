@@ -83,8 +83,8 @@ in {
   # home.file.".emacs.d/init.el".source = ../configs/emacs/init.el;
   # home.file.".emacs.d/splash.png".source = ../configs/emacs/splash.png;
 
-  home.file.".local/share/fonts/menlonf" = {
-    source = ../configs/menlo_font;
+  home.file.".local/share/fonts/" = {
+    source = ../configs/fonts;
     recursive = true;
   };
 }

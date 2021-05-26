@@ -24,8 +24,8 @@
 (menu-bar-mode 0)
 
 (defvar jackson/default-font-size 120)
-(defvar jackson/main-font "Menlo NF")
-(defvar jackson/variable-font "DejaVu Sans")
+(defvar jackson/main-font "SF Mono")
+(defvar jackson/variable-font "SF Pro Text")
 ;; Set default face
 (set-face-attribute 'default nil :family jackson/main-font :height jackson/default-font-size)
 ;; Set the fixed pitch face
