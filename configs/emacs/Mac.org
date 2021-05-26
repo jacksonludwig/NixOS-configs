@@ -108,7 +108,7 @@ Doom modeline
   :init
   (setq lsp-modeline-diagnostics-enable nil)
   (setq doom-modeline-icon nil
-        doom-mode-bar-width 2)
+        doom-modeline-bar-width 3)
   :hook
   (after-init . doom-modeline-mode))
 #+end_src
@@ -277,7 +277,7 @@ Doom modeline
 #+begin_src emacs-lisp
 (use-package expand-region
   :general
-  ("C-=" 'er/expand-region))
+  ("C-z" 'er/expand-region))
 #+end_src
 * Languages
 ** Typescript
