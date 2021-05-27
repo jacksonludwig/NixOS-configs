@@ -23,7 +23,7 @@
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 
-(defvar jackson/default-font-size 120)
+(defvar jackson/default-font-size 115)
 (defvar jackson/main-font "SF Mono")
 (defvar jackson/variable-font "SF Pro Text")
 ;; Set default face

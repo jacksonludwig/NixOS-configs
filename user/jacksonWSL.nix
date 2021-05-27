@@ -33,10 +33,9 @@ in {
 
     nodePackages.pyright
     nodePackages.typescript-language-server
-    nodePackages.npm
     tree-sitter
+    nodePackages.npm
 
-    firefox
     htop
     xclip
     ispell
@@ -46,9 +45,9 @@ in {
     jetbrains-mono
     source-code-pro
     source-sans-pro
-    roboto-mono
     dejavu_fonts
     emacs-all-the-icons-fonts
+    roboto-mono
 
     neofetch
   ];
