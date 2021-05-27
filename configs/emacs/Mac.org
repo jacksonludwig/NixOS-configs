@@ -102,9 +102,10 @@
   (load-theme 'nord))
 #+end_src
 
-Doom modeline
+Doom modeline. Not sure if this is worth using
 #+begin_src emacs-lisp
 (use-package doom-modeline
+  :disabled
   :init
   (setq lsp-modeline-diagnostics-enable nil)
   (setq doom-modeline-icon nil
@@ -320,8 +321,7 @@ Doom modeline
 	      org-src-fontify-natively t
         org-adapt-indentation nil
 	      org-confirm-babel-evaluate nil
-        org-special-ctrl-a/e t
-	      org-support-shift-select 'always)
+        org-special-ctrl-a/e t)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
 	      org-default-notes-file (concat org-directory "/.notes.org")
