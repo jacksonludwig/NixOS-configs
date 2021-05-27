@@ -110,7 +110,10 @@ Doom modeline
   (setq doom-modeline-icon nil
         doom-modeline-bar-width 3)
   :hook
-  (after-init . doom-modeline-mode))
+  (after-init . (lambda()
+                  (set-face-background 'doom-modeline-bar (face-background 'mode-line))
+                  (set-face-background 'doom-modeline-bar-inactive (face-background 'mode-line))
+                  (doom-modeline-mode))))
 #+end_src
 
 ** General
