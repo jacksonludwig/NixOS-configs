@@ -43,8 +43,8 @@
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
- split-height-threshold nil                       ; Disable vertical window splitting
- split-width-threshold 1                          ; Disable horizontal window splitting
+ ;; split-height-threshold nil                       ; Disable vertical window splitting
+ ;; split-width-threshold 1                          ; Disable horizontal window splitting
  tab-width 2                                      ; Set width for tabs
  window-combination-resize t                      ; Resize windows proportionally
  x-stretch-cursor t                               ; Stretch cursor to the glyph width
@@ -96,13 +96,15 @@
   (gcmh-mode 1))
 #+end_src
 ** Theme
+Nord theme.
 #+begin_src emacs-lisp
 (use-package nord-theme
+  :disabled
   :config
   (load-theme 'nord))
 #+end_src
 
-Doom modeline. Not sure if this is worth using
+Doom modeline. This is likely not worth the performance hit.
 #+begin_src emacs-lisp
 (use-package doom-modeline
   :disabled
@@ -117,6 +119,13 @@ Doom modeline. Not sure if this is worth using
                   (doom-modeline-mode))))
 #+end_src
 
+Modus theme.
+#+begin_src emacs-lisp
+(load-theme 'modus-operandi)
+(set-face-background 'modus-themes-fringe-cyan (face-background 'default))   ; hide bg in fringe
+(set-face-background 'modus-themes-fringe-yellow (face-background 'default)) ; hide bg in fringe
+#+end_src
+
 ** General
 #+begin_src emacs-lisp
 (use-package general
@@ -125,7 +134,10 @@ Doom modeline. Not sure if this is worth using
     :prefix "C-c")
   (general-define-key
    "C-/" 'undo-only
-   "C-?" 'undo-redo))
+   "C-?" 'undo-redo)
+  (jackson/leader
+    "w m" 'maximize-window
+    "w b" 'balance-windows))
 #+end_src
 ** Magit
 #+begin_src emacs-lisp
@@ -297,6 +309,16 @@ Doom modeline. Not sure if this is worth using
 (use-package rjsx-mode
   :mode "\\.js\\'"
   :hook (rjsx-mode . (lambda() (js2-mode-hide-warnings-and-errors))))
+#+end_src
+** Nix
+#+begin_src emacs-lisp
+(use-package nix-mode
+  :mode "\\.nix\\'")
+#+end_src
+** YAML
+#+begin_src emacs-lisp
+(use-package yaml-mode
+  :mode "\\.yml\\'")
 #+end_src
 
 * Formatting
