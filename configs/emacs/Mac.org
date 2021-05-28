@@ -99,7 +99,6 @@
 Nord theme.
 #+begin_src emacs-lisp
 (use-package nord-theme
-  :disabled
   :config
   (load-theme 'nord))
 #+end_src
@@ -121,9 +120,15 @@ Doom modeline. This is likely not worth the performance hit.
 
 Modus theme.
 #+begin_src emacs-lisp
-(load-theme 'modus-operandi)
-(set-face-background 'modus-themes-fringe-cyan (face-background 'default))   ; hide bg in fringe
-(set-face-background 'modus-themes-fringe-yellow (face-background 'default)) ; hide bg in fringe
+(use-package modus-themes
+  :disabled
+  :config
+  (load-theme 'modus-operandi)
+  (custom-set-faces
+   `(org-block-begin-line ((t (:background ,(face-background 'default)))))
+   `(org-block-end-line ((t (:background ,(face-background 'default)))))
+   `(modus-themes-fringe-cyan ((t (:background ,(face-background 'default)))))
+   `(modus-themes-fringe-yellow ((t (:background ,(face-background 'default)))))))
 #+end_src
 
 ** General
