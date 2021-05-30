@@ -99,6 +99,7 @@
 Nord theme.
 #+begin_src emacs-lisp
 (use-package nord-theme
+  :disabled
   :config
   (load-theme 'nord))
 #+end_src
@@ -129,6 +130,13 @@ Modus theme.
    `(org-block-end-line ((t (:background ,(face-background 'default)))))
    `(modus-themes-fringe-cyan ((t (:background ,(face-background 'default)))))
    `(modus-themes-fringe-yellow ((t (:background ,(face-background 'default)))))))
+#+end_src
+
+Nano-theme.
+#+begin_src emacs-lisp
+(straight-use-package '(nano-theme :type git :host github :repo "404cn/nano-theme.el"))
+(setq nano-theme-light/dark 'light)
+(load-theme 'nano t)
 #+end_src
 
 ** General
