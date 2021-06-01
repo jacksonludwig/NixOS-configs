@@ -344,6 +344,9 @@ Nano-theme.
 #+begin_src emacs-lisp
 (use-package prettier-js
   :init (setq prettier-js-show-errors nil)
+  :hook
+  (rjsx-mode . prettier-js-mode)
+  (typescript-mode . prettier-js-mode)
   :general
   (:keymaps 'js-mode-map
 	    "C-c c f" 'prettier-js)
