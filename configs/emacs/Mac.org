@@ -134,9 +134,14 @@ Modus theme.
 
 Nano-theme.
 #+begin_src emacs-lisp
-(straight-use-package '(nano-theme :type git :host github :repo "404cn/nano-theme.el"))
-(setq nano-theme-light/dark 'light)
-(load-theme 'nano t)
+(use-package nano-theme
+  :straight '(nano-theme :type git :host github :repo "404cn/nano-theme.el")
+  :init
+  (setq nano-theme-light/dark 'light)
+  :config
+  (load-theme 'nano t)
+  (custom-set-faces
+   `(js2-function-param ((t (:foreground ,(face-foreground 'default)))))))
 #+end_src
 
 ** General
