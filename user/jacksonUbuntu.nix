@@ -55,7 +55,7 @@ in {
 
   programs.git = {
     enable = true;
-    userEmail = "jacksonludwig0@gmail.com";
+    userEmail = "jludwig@greenactionstudio.com";
     userName = "Jackson Ludwig";
   };
 
