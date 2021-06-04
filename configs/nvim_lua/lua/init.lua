@@ -103,6 +103,8 @@ require('packer').startup(function ()
           enable = true
         }
       }
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
     end
   }
 end)
@@ -115,7 +117,7 @@ vim.cmd('set termguicolors')
 vim.cmd('set splitright')
 vim.cmd('set splitbelow')
 vim.cmd('set nowrap')
-vim.cmd('set updatetime=100')
+vim.cmd('set updatetime=300')
 vim.cmd('set signcolumn=yes')
 
 vim.o.mouse = 'a'
