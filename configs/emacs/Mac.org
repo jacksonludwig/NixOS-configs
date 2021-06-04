@@ -137,6 +137,7 @@ Modus theme.
 Nano-theme.
 #+begin_src emacs-lisp
 (use-package nano-theme
+  :disabled
   :straight '(nano-theme :type git :host github :repo "404cn/nano-theme.el")
   :init
   (setq nano-theme-light/dark 'light)

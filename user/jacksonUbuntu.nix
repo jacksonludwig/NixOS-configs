@@ -30,9 +30,11 @@ in {
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
+    nodePackages.eslint_d
 
     nodePackages.pyright
     nodePackages.typescript-language-server
+    nodePackages.diagnostic-languageserver
     tree-sitter
     nodePackages.npm
 
@@ -60,7 +62,7 @@ in {
   };
 
   programs.neovim = {
-    enable = false;
+    enable = true;
     package = unstable.neovim-nightly;
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;

@@ -13,17 +13,10 @@ end
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
   use {'wbthomason/packer.nvim', opt = true}
+
   use {'tpope/vim-commentary'}
 
-  use {
-    'mhartington/oceanic-next', 
-    config = function() 
-      vim.g.oceanic_next_terminal_bold = 1
-      vim.g.oceanic_next_terminal_italic = 1
-    end
-  }
-
-  use { 'benknoble/vim-mips' }
+  use {'mhartington/oceanic-next'}
 
   use {
     'nvim-telescope/telescope.nvim',
@@ -34,72 +27,6 @@ require('packer').startup(function ()
       vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>sg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>ff', '<cmd>lua require("telescope.builtin").file_browser()<cr>', { noremap = true, silent = true })
-    end
-  }
-
-  use {
-    'mhartington/formatter.nvim',
-    config = function()
-      require('formatter').setup({
-        logging = false,
-        filetype = {
-          javascript = {
-            -- prettier
-            function()
-              return {
-                exe = "prettier",
-                args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0), '--single-quote'},
-                stdin = true
-              }
-            end
-          },
-        }
-      })
-      -- stuff to format on save
-      vim.api.nvim_exec([[
-      augroup FormatAutogroup
-      autocmd!
-      autocmd BufWritePost *.js FormatWrite
-      augroup END
-        ]], true)
-    end
-  }
-
-  use {
-    'lewis6991/gitsigns.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    },
-    config = function() require('gitsigns').setup() end
-  }
-
-  use {'hoob3rt/lualine.nvim', 
-    disable = false,
-    config = function() 
-      local lualine = require "lualine"
-      local oceanic_next = require('jackson.oceanic_next.statusline')
-      lualine.setup({
-        sections = {
-          lualine_a = {""},
-          lualine_b = {"branch"},
-          lualine_c = {"filename"},
-          lualine_x = {"b:gitsigns_status"},
-          lualine_y = {"filetype"},
-          lualine_z = {
-            "location",
-            {
-              "diagnostics",
-              sources = {"nvim_lsp"},
-              symbols = {error = "•", warn = "•", info = "•"}
-            }
-          }
-        },
-        options = {
-          theme = oceanic_next,
-          section_separators = '',
-          component_separators = '',
-        }
-      }) 
     end
   }
 
@@ -116,12 +43,22 @@ require('packer').startup(function ()
   }
 
   use {
+    'airblade/vim-rooter',
+  }
+
+  use {
     'rafamadriz/friendly-snippets'
   }
 
   use {
     'hrsh7th/vim-vsnip', 
     config = function() 
+
+      -- use .ts snippets in .tsx files
+      vim.g.vsnip_filetypes = {
+        typescriptreact = {"typescript"}
+      }
+
       vim.api.nvim_exec([[
       imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
       smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
@@ -142,7 +79,9 @@ require('packer').startup(function ()
     end
   }
 
-  use {'airblade/vim-rooter'}
+  use {
+    'hrsh7th/vim-vsnip-integ'
+  }
 
   use {
     'norcalli/nvim-colorizer.lua',
@@ -150,6 +89,7 @@ require('packer').startup(function ()
       require('colorizer').setup({
         'css';
         'javascript';
+        'typescript';
       })
     end
   }
@@ -162,10 +102,10 @@ require('packer').startup(function ()
       require'nvim-treesitter.configs'.setup {
         ensure_installed = "maintained",
         highlight = {
-          enable = true
+          enable = false
         },
         indent = {
-          enable = true
+          enable = false
         },
         autotag = {
           enable = true
@@ -192,26 +132,24 @@ vim.cmd('set signcolumn=yes')
 vim.o.mouse = 'a'
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.g.syntax = true
 vim.o.completeopt = "menuone,noselect"
-vim.g.tex_flavor = "latex"
-
--------------------- THEME -------------------------------
-vim.cmd('colorscheme OceanicNext')
 
 -------------------- autocmd -------------------------------
 vim.api.nvim_exec([[
 autocmd Filetype lua setlocal ts=2 sts=2 sw=2 et
 autocmd Filetype vim setlocal ts=2 sts=2 sw=2 et
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 et
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 et
 autocmd Filetype css setlocal ts=2 sts=2 sw=2
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype json setlocal ts=2 sts=2 sw=2
-autocmd Filetype asm setlocal filetype=mips
   ]], true)
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
+
+-------------------- THEME -------------------------------
+vim.cmd('colorscheme OceanicNext')
 
 -------------------- COMPLETION -------------------------------
 require'compe'.setup {
@@ -249,73 +187,91 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
   ]], true)
 
+------------------------ LSP --------------------------
 
--------------------- LSP -------------------------------
-local nvim_lsp = require('lspconfig')
-local on_attach = function(client, bufnr)
-  print("LSP started: " .. client.name)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>Telescope lsp_definitions<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-  buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>sw', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
-  buf_set_keymap('n', '<space>sd', '<cmd>Telescope lsp_document_symbols<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>Telescope lsp_code_actions<CR>', opts)
-
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>=", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  end
-
-end
+local nvim_lsp = require("lspconfig")
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = false,
-    signs = true,
-    update_in_insert = false,
   }
 )
 
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
-local servers = { "pyright", "gopls", "texlab" }
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
+local on_attach = function(client, bufnr)
+  local buf_map = vim.api.nvim_buf_set_keymap
+  vim.cmd("command! LspDef lua require('telescope.builtin').lsp_definitions()")
+  vim.cmd("command! LspFormatting lua vim.lsp.buf.formatting_sync()")
+  vim.cmd("command! LspCodeAction lua require('telescope.builtin').lsp_code_actions()")
+  vim.cmd("command! LspHover lua vim.lsp.buf.hover()")
+  vim.cmd("command! LspRename lua vim.lsp.buf.rename()")
+  vim.cmd("command! LspOrganize lua lsp_organize_imports()")
+  vim.cmd("command! LspRefs lua require('telescope.builtin').lsp_references()")
+  vim.cmd("command! LspTypeDef lua vim.lsp.buf.type_definition()")
+  vim.cmd("command! LspImplementation lua vim.lsp.buf.implementation()")
+  vim.cmd("command! LspDiagPrev lua vim.lsp.diagnostic.goto_prev()")
+  vim.cmd("command! LspDiagNext lua vim.lsp.diagnostic.goto_next()")
+  vim.cmd( "command! LspDiagLine lua vim.lsp.diagnostic.show_line_diagnostics()")
+  vim.cmd("command! LspSignatureHelp lua vim.lsp.buf.signature_help()")
+  buf_map(bufnr, "n", "gd", ":LspDef<CR>", {silent = true})
+  buf_map(bufnr, "n", "<space>r", ":LspRename<CR>", {silent = true})
+  buf_map(bufnr, "n", "gr", ":LspRefs<CR>", {silent = true})
+  buf_map(bufnr, "n", "gy", ":LspTypeDef<CR>", {silent = true})
+  buf_map(bufnr, "n", "K", ":LspHover<CR>", {silent = true})
+  buf_map(bufnr, "n", "gs", ":LspOrganize<CR>", {silent = true})
+  buf_map(bufnr, "n", "[d", ":LspDiagPrev<CR>", {silent = true})
+  buf_map(bufnr, "n", "]d", ":LspDiagNext<CR>", {silent = true})
+  buf_map(bufnr, "n", "ga", ":LspCodeAction<CR>", {silent = true})
+  buf_map(bufnr, "n", "<space>d", ":LspDiagLine<CR>", {silent = true})
+  buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", {silent = true})
 end
 
--- Servers that need extra config
--- tsserver
-local tsserver_on_attach = function(client, bufnr)
-  on_attach(client, bufnr)
-  require("nvim-lsp-ts-utils").setup({})
-end
-nvim_lsp.tsserver.setup({
-  capabilities = capabilities,
-  on_attach = tsserver_on_attach,
-})
+nvim_lsp.tsserver.setup {
+  on_attach = function(client)
+    on_attach(client)
+    local ts_utils = require("nvim-lsp-ts-utils")
+
+    -- defaults
+    ts_utils.setup {
+      debug = false,
+      disable_commands = false,
+      enable_import_on_completion = false,
+      import_on_completion_timeout = 5000,
+
+      -- eslint
+      eslint_enable_code_actions = true,
+      eslint_bin = "eslint_d",
+      eslint_args = {"-f", "json", "--stdin", "--stdin-filename", "$FILENAME"},
+      eslint_enable_disable_comments = true,
+
+      -- experimental settings!
+      -- eslint diagnostics
+      eslint_enable_diagnostics = false,
+      eslint_diagnostics_debounce = 250,
+
+      -- formatting
+      enable_formatting = true,
+      formatter = "prettier",
+      formatter_args = {"--stdin-filepath", "$FILENAME"},
+      format_on_save = true,
+      no_save_after_format = false,
+
+      -- parentheses completion
+      complete_parens = false,
+      signature_help_in_parens = false,
+
+      -- update imports on file move
+      update_imports_on_move = false,
+      require_confirmation_on_move = false,
+      watch_dir = "/src",
+    }
+
+    -- required to enable ESLint code actions and formatting
+    ts_utils.setup_client(client)
+
+    -- no default maps, so you may want to define some here
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "tgs", ":TSLspOrganize<CR>", {silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "tqq", ":TSLspFixCurrent<CR>", {silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "tgr", ":TSLspRenameFile<CR>", {silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "tgi", ":TSLspImportAll<CR>", {silent = true})
+  end
+}
