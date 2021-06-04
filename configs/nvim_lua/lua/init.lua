@@ -79,20 +79,9 @@ require('packer').startup(function ()
     end
   }
 
-  use {
-    'hrsh7th/vim-vsnip-integ'
-  }
-
-  use {
-    'norcalli/nvim-colorizer.lua',
-    config = function()
-      require('colorizer').setup({
-        'css';
-        'javascript';
-        'typescript';
-      })
-    end
-  }
+  -- use {
+  --   'hrsh7th/vim-vsnip-integ'
+  -- }
 
   use { 'windwp/nvim-ts-autotag', 'JoosepAlviste/nvim-ts-context-commentstring' }
 
@@ -170,7 +159,7 @@ require'compe'.setup {
     path = true;
     buffer = true;
     calc = false;
-    vsnip = true;
+    vsnip = false;
     nvim_lsp = true;
     nvim_lua = true;
     spell = true;

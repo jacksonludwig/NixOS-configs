@@ -34,7 +34,6 @@ in {
 
     nodePackages.pyright
     nodePackages.typescript-language-server
-    nodePackages.diagnostic-languageserver
     tree-sitter
     nodePackages.npm
 
