@@ -51,7 +51,6 @@
     htop
     xclip
     ispell
-    discord
     texlive.combined.scheme-full
 
     iosevka-bin

@@ -49,6 +49,14 @@ require('packer').startup(function ()
   use {
     'jose-elias-alvarez/nvim-lsp-ts-utils',
   }
+
+  use {
+    'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
+  }
+
+  use {
+    'windwp/nvim-ts-autotag',
+  }
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -64,6 +72,8 @@ vim.cmd('set tabstop=2')
 vim.cmd('set shiftwidth=2')
 vim.cmd('set expandtab')
 vim.cmd('set pumheight=40')
+vim.cmd('set number')
+vim.cmd('set relativenumber')
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
@@ -252,3 +262,17 @@ vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm("<CR>")]], {expr = true, si
 vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close("<C-e>")]], {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<C-f>", [[compe#scroll({ 'delta': +4 })]], {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<C-d>", [[compe#scroll({ 'delta': -4 })]], {expr = true, silent = true})
+
+-- TREESITTER
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = false
+  },
+  indent = {
+    enable = false
+  },
+  autotag = {
+    enable = true
+  },
+}

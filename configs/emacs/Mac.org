@@ -101,7 +101,6 @@
 Nord theme.
 #+begin_src emacs-lisp
 (use-package nord-theme
-  :disabled
   :config
   (load-theme 'nord))
 #+end_src
