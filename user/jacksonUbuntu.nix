@@ -1,20 +1,29 @@
 { config, pkgs, ... }:
 
-let
+# let
+# 
+#   unstable = import (fetchTarball
+#     "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
+#       overlays = [
+#         (import (builtins.fetchTarball {
+#           url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+#         }))
+#         (import (builtins.fetchTarball {
+#           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+#         }))
+#       ];
+#     };
+# 
+# in 
 
-  unstable = import (fetchTarball
-    "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
-      overlays = [
-        (import (builtins.fetchTarball {
-          url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-        }))
-        (import (builtins.fetchTarball {
-          url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-        }))
-      ];
-    };
+{
 
-in {
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   # packages to install
   home.packages = with pkgs; [
     bat
@@ -25,17 +34,19 @@ in {
     gcc
     cmake
 
-    jdk11
     nodejs
+    nodePackages.npm
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
     nodePackages.eslint_d
+    nodePackages.diagnostic-languageserver
+    nodePackages.typescript-language-server
+    nodePackages.expo-cli
 
     nodePackages.pyright
-    nodePackages.typescript-language-server
     tree-sitter
-    nodePackages.npm
+    jdk11
 
     htop
     xclip
@@ -62,7 +73,7 @@ in {
 
   programs.neovim = {
     enable = true;
-    package = unstable.neovim-nightly;
+    package = pkgs.neovim-nightly;
     withNodeJs = true;
     extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
@@ -73,7 +84,7 @@ in {
 
   programs.emacs = {
     enable = true;
-    package = unstable.emacsGcc;
+    # package = unstable.emacsGcc;
     extraPackages = epkgs: with epkgs; [
       vterm
     ];

@@ -31,11 +31,7 @@ require('packer').startup(function ()
   }
 
   use {
-    'hrsh7th/nvim-compe',
-  }
-
-  use {
-    'jose-elias-alvarez/nvim-lsp-ts-utils',
+    'airblade/vim-rooter',
   }
 
   use {
@@ -43,69 +39,15 @@ require('packer').startup(function ()
   }
 
   use {
-    'airblade/vim-rooter',
+    'hrsh7th/vim-vsnip',
   }
 
   use {
-    'rafamadriz/friendly-snippets'
+    'hrsh7th/nvim-compe',
   }
 
   use {
-    'hrsh7th/vim-vsnip', 
-    config = function() 
-
-      -- use .ts snippets in .tsx files
-      vim.g.vsnip_filetypes = {
-        typescriptreact = {"typescript"}
-      }
-
-      vim.api.nvim_exec([[
-      imap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
-      smap <expr> <C-l>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-l>'
-
-      imap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-      smap <expr> <C-j>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-j>'
-
-      imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-      smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-      imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-      smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
-      nmap        s   <Plug>(vsnip-select-text)
-      xmap        s   <Plug>(vsnip-select-text)
-      nmap        S   <Plug>(vsnip-cut-text)
-      xmap        S   <Plug>(vsnip-cut-text)
-        ]], true)
-    end
-  }
-
-  -- use {
-  --   'hrsh7th/vim-vsnip-integ'
-  -- }
-
-  use { 'windwp/nvim-ts-autotag', 'JoosepAlviste/nvim-ts-context-commentstring' }
-
-  use {
-    'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
-    config = function ()
-      require'nvim-treesitter.configs'.setup {
-        ensure_installed = "maintained",
-        highlight = {
-          enable = false
-        },
-        indent = {
-          enable = false
-        },
-        autotag = {
-          enable = true
-        },
-        context_commentstring = {
-          enable = true
-        }
-      }
-    vim.wo.foldmethod = "expr"
-    vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
-    end
+    'jose-elias-alvarez/nvim-lsp-ts-utils',
   }
 end)
 
@@ -117,24 +59,11 @@ vim.cmd('set termguicolors')
 vim.cmd('set splitright')
 vim.cmd('set splitbelow')
 vim.cmd('set nowrap')
-vim.cmd('set updatetime=300')
 vim.cmd('set signcolumn=yes')
-
-vim.o.mouse = 'a'
-vim.wo.number = true
-vim.wo.relativenumber = true
-vim.o.completeopt = "menuone,noselect"
-
--------------------- autocmd -------------------------------
-vim.api.nvim_exec([[
-autocmd Filetype lua setlocal ts=2 sts=2 sw=2 et
-autocmd Filetype vim setlocal ts=2 sts=2 sw=2 et
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 et
-autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 et
-autocmd Filetype css setlocal ts=2 sts=2 sw=2
-autocmd Filetype html setlocal ts=2 sts=2 sw=2
-autocmd Filetype json setlocal ts=2 sts=2 sw=2
-  ]], true)
+vim.cmd('set tabstop=2')
+vim.cmd('set shiftwidth=2')
+vim.cmd('set expandtab')
+vim.cmd('set pumheight=40')
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
@@ -142,66 +71,23 @@ vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent 
 -------------------- THEME -------------------------------
 vim.cmd('colorscheme OceanicNext')
 
--------------------- COMPLETION -------------------------------
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = false;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = false;
-    vsnip = false;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    tags = false;
-    snippets_nvim = false;
-    treesitter = false;
-  };
-}
-vim.api.nvim_exec([[
-inoremap <silent><expr> <C-space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-  ]], true)
-
------------------------- LSP --------------------------
-
+------- LSP
 local nvim_lsp = require("lspconfig")
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-  }
-)
 
 local on_attach = function(client, bufnr)
   local buf_map = vim.api.nvim_buf_set_keymap
-  vim.cmd("command! LspDef lua require('telescope.builtin').lsp_definitions()")
+  vim.cmd("command! LspDef lua vim.lsp.buf.definition()")
   vim.cmd("command! LspFormatting lua vim.lsp.buf.formatting_sync()")
-  vim.cmd("command! LspCodeAction lua require('telescope.builtin').lsp_code_actions()")
+  vim.cmd("command! LspCodeAction lua vim.lsp.buf.code_action()")
   vim.cmd("command! LspHover lua vim.lsp.buf.hover()")
   vim.cmd("command! LspRename lua vim.lsp.buf.rename()")
   vim.cmd("command! LspOrganize lua lsp_organize_imports()")
-  vim.cmd("command! LspRefs lua require('telescope.builtin').lsp_references()")
+  vim.cmd("command! LspRefs lua vim.lsp.buf.references()")
   vim.cmd("command! LspTypeDef lua vim.lsp.buf.type_definition()")
   vim.cmd("command! LspImplementation lua vim.lsp.buf.implementation()")
   vim.cmd("command! LspDiagPrev lua vim.lsp.diagnostic.goto_prev()")
   vim.cmd("command! LspDiagNext lua vim.lsp.diagnostic.goto_next()")
-  vim.cmd( "command! LspDiagLine lua vim.lsp.diagnostic.show_line_diagnostics()")
+  vim.cmd("command! LspDiagLine lua vim.lsp.diagnostic.show_line_diagnostics()")
   vim.cmd("command! LspSignatureHelp lua vim.lsp.buf.signature_help()")
   buf_map(bufnr, "n", "gd", ":LspDef<CR>", {silent = true})
   buf_map(bufnr, "n", "<space>r", ":LspRename<CR>", {silent = true})
@@ -211,14 +97,25 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "gs", ":LspOrganize<CR>", {silent = true})
   buf_map(bufnr, "n", "[d", ":LspDiagPrev<CR>", {silent = true})
   buf_map(bufnr, "n", "]d", ":LspDiagNext<CR>", {silent = true})
-  buf_map(bufnr, "n", "ga", ":LspCodeAction<CR>", {silent = true})
+  buf_map(bufnr, "n", "<space>c", ":LspCodeAction<CR>", {silent = true})
   buf_map(bufnr, "n", "<space>d", ":LspDiagLine<CR>", {silent = true})
   buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", {silent = true})
+
+  if client.resolved_capabilities.document_formatting then
+    vim.api.nvim_exec([[
+    augroup LspAutocommands
+    autocmd! * <buffer>
+    autocmd BufWritePost <buffer> LspFormatting
+    augroup END
+    ]], true)
+  end
 end
 
 nvim_lsp.tsserver.setup {
   on_attach = function(client)
+    client.resolved_capabilities.document_formatting = false
     on_attach(client)
+
     local ts_utils = require("nvim-lsp-ts-utils")
 
     -- defaults
@@ -240,10 +137,10 @@ nvim_lsp.tsserver.setup {
       eslint_diagnostics_debounce = 250,
 
       -- formatting
-      enable_formatting = true,
+      enable_formatting = false,
       formatter = "prettier",
       formatter_args = {"--stdin-filepath", "$FILENAME"},
-      format_on_save = true,
+      format_on_save = false,
       no_save_after_format = false,
 
       -- parentheses completion
@@ -258,11 +155,100 @@ nvim_lsp.tsserver.setup {
 
     -- required to enable ESLint code actions and formatting
     ts_utils.setup_client(client)
-
-    -- no default maps, so you may want to define some here
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "tgs", ":TSLspOrganize<CR>", {silent = true})
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "tqq", ":TSLspFixCurrent<CR>", {silent = true})
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "tgr", ":TSLspRenameFile<CR>", {silent = true})
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "tgi", ":TSLspImportAll<CR>", {silent = true})
   end
 }
+
+local filetypes = {
+  typescript = "eslint",
+  typescriptreact = "eslint",
+}
+
+local linters = {
+  eslint = {
+    sourceName = "eslint",
+    command = "eslint_d",
+    rootPatterns = {".eslintrc.js", "package.json"},
+    debounce = 100,
+    args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
+    parseJson = {
+      errorsRoot = "[0].messages",
+      line = "line",
+      column = "column",
+      endLine = "endLine",
+      endColumn = "endColumn",
+      message = "${message} [${ruleId}]",
+      security = "severity"
+    },
+    securities = {[2] = "error", [1] = "warning"}
+  }
+}
+
+local formatters = {
+  prettier = {command = "prettier", args = {"--stdin-filepath", "%filepath"}}
+}
+
+local formatFiletypes = {
+  typescript = "prettier",
+  typescriptreact = "prettier"
+}
+
+nvim_lsp.diagnosticls.setup {
+  on_attach = on_attach,
+  filetypes = vim.tbl_keys(filetypes),
+  init_options = {
+    filetypes = filetypes,
+    linters = linters,
+    formatters = formatters,
+    formatFiletypes = formatFiletypes
+  }
+}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+  }
+)
+
+vim.lsp.handlers["textDocument/definition"] = require('telescope.builtin').lsp_definitions
+vim.lsp.handlers["textDocument/references"] = require('telescope.builtin').lsp_references
+vim.lsp.handlers["textDocument/codeAction"] = require('telescope.builtin').lsp_code_actions
+
+
+-- COMP
+-- use .ts snippets in .tsx files
+vim.g.vsnip_filetypes = {
+    typescriptreact = {"typescript"}
+}
+
+require"compe".setup {
+    preselect = "always",
+    source = {
+        path = true,
+        buffer = true,
+        vsnip = true,
+        nvim_lsp = true,
+        nvim_lua = true
+    }
+}
+
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+_G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return vim.fn["compe#confirm"]()
+    elseif vim.fn.call("vsnip#available", {1}) == 1 then
+        return t("<Plug>(vsnip-expand-or-jump)")
+    else
+        return t("<Tab>")
+    end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", {expr = true, silent = true})
+vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm("<CR>")]], {expr = true, silent = true})
+vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close("<C-e>")]], {expr = true, silent = true})
+vim.api.nvim_set_keymap("i", "<C-f>", [[compe#scroll({ 'delta': +4 })]], {expr = true, silent = true})
+vim.api.nvim_set_keymap("i", "<C-d>", [[compe#scroll({ 'delta': -4 })]], {expr = true, silent = true})
