@@ -96,6 +96,10 @@ require('packer').startup(function ()
     'peitalin/vim-jsx-typescript',
   }
 
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+  }
+
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -113,6 +117,7 @@ vim.cmd('set expandtab')
 vim.cmd('set pumheight=40')
 vim.cmd('set number')
 vim.cmd('set relativenumber')
+vim.cmd('set mouse=a')
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
@@ -151,9 +156,14 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", {silent = true})
 end
 
+require('null-ls').setup {}
+
 nvim_lsp.tsserver.setup {
   on_attach = function(client, bufnr)
     on_attach(client, bufnr)
+
+    -- disable tsserver formatting since formatting via null-ls
+    client.resolved_capabilities.document_formatting = false
 
     local ts_utils = require("nvim-lsp-ts-utils")
 
@@ -162,25 +172,21 @@ nvim_lsp.tsserver.setup {
       debug = false,
       disable_commands = false,
       enable_import_on_completion = false,
-      import_on_completion_timeout = 5000,
 
       -- eslint
-      eslint_enable_code_actions = true,
-      eslint_bin = "eslint_d",
-      eslint_args = {"-f", "json", "--stdin", "--stdin-filename", "$FILENAME"},
+      eslint_enable_code_actions = false,
       eslint_enable_disable_comments = true,
+      eslint_bin = "eslint_d",
+      eslint_config_fallback = nil,
 
-      -- experimental settings!
       -- eslint diagnostics
       eslint_enable_diagnostics = false,
       eslint_diagnostics_debounce = 250,
 
       -- formatting
       enable_formatting = true,
-      formatter = "prettier",
-      formatter_args = {"--stdin-filepath", "$FILENAME"},
-      format_on_save = true,
-      no_save_after_format = false,
+      formatter = "eslint_d",
+      formatter_config_fallback = nil,
 
       -- parentheses completion
       complete_parens = false,
@@ -189,11 +195,14 @@ nvim_lsp.tsserver.setup {
       -- update imports on file move
       update_imports_on_move = false,
       require_confirmation_on_move = false,
-      watch_dir = "/src",
+      watch_dir = nil,
     }
 
     -- required to enable ESLint code actions and formatting
     ts_utils.setup_client(client)
+
+    -- format on save
+    vim.cmd("autocmd BufWritePost <buffer> LspFormatting")
 
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>tq", ":TSLspFixCurrent<CR>", {silent = true})
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>tr", ":TSLspRenameFile<CR>", {silent = true})
