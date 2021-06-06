@@ -12,11 +12,18 @@ end
 -------------------- PLUGINS -------------------------------
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function ()
-  use {'wbthomason/packer.nvim', opt = true}
+  use {
+    'wbthomason/packer.nvim',
+    opt = true,
+  }
 
-  use {'tpope/vim-commentary'}
+  use {
+    'tpope/vim-commentary',
+  }
 
-  use {'mhartington/oceanic-next'}
+  use {
+    'mhartington/oceanic-next',
+  }
 
   use {
     'nvim-telescope/telescope.nvim',
@@ -40,6 +47,10 @@ require('packer').startup(function ()
 
   use {
     'hrsh7th/vim-vsnip',
+  }
+
+  use {
+    'rafamadriz/friendly-snippets',
   }
 
   use {
@@ -109,6 +120,7 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "]d", ":LspDiagNext<CR>", {silent = true})
   buf_map(bufnr, "n", "<space>c", ":LspCodeAction<CR>", {silent = true})
   buf_map(bufnr, "n", "<space>d", ":LspDiagLine<CR>", {silent = true})
+  buf_map(bufnr, "n", "<space>q", ":TSLspFixCurrent<CR>", {silent = true})
   buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", {silent = true})
 
   if client.resolved_capabilities.document_formatting then
@@ -235,7 +247,7 @@ require"compe".setup {
     source = {
         path = true,
         buffer = true,
-        vsnip = true,
+        vsnip = false,
         nvim_lsp = true,
         nvim_lua = true
     }
@@ -245,23 +257,24 @@ local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
-_G.tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return vim.fn["compe#confirm"]()
-    elseif vim.fn.call("vsnip#available", {1}) == 1 then
-        return t("<Plug>(vsnip-expand-or-jump)")
-    else
-        return t("<Tab>")
-    end
-end
-
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
 vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm("<CR>")]], {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close("<C-e>")]], {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<C-f>", [[compe#scroll({ 'delta': +4 })]], {expr = true, silent = true})
 vim.api.nvim_set_keymap("i", "<C-d>", [[compe#scroll({ 'delta': -4 })]], {expr = true, silent = true})
+vim.api.nvim_exec([[
+" Expand
+imap <expr> <C-k>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-k>'
+smap <expr> <C-k>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-k>'
+
+" Jump forward
+imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)' : '<C-l>'
+
+" Jump backward
+imap <expr> <C-j> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-l>'
+smap <expr> <C-j> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<C-j>'
+]], true)
 
 -- TREESITTER
 require'nvim-treesitter.configs'.setup {

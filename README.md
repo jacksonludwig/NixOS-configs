@@ -35,14 +35,10 @@ Config your configuration.nix, create a home.nix, and import or create any relev
 }
 ```
 
-### Email configuration for emacs/mu4e
-```bash
-# in ~/.gpass
-<password>
-
-# in ~/.authinfo
-machine smtp.gmail.com login <gmail address> password <password> port 465
-```
+### Some extras to add
+To use kitty with home-manager without your `.bashrc` being managed,
+put `export TERMINFO_DIRS=$(nix eval --raw nixpkgs.kitty.terminfo.outPath)/share/terminfo`
+in your `.bashrc`.
 
 ### If any font issues are encountered on WSL
 Run ``xrdb -merge ~/.Xresources`` after running ``home-manager switch`` at least once.
