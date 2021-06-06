@@ -92,6 +92,10 @@ require('packer').startup(function ()
     'windwp/nvim-ts-autotag',
   }
 
+  use {
+    'peitalin/vim-jsx-typescript',
+  }
+
 end)
 
 -------------------- VARIABLES -------------------------------
