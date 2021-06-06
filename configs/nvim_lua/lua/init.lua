@@ -168,7 +168,7 @@ nvim_lsp.tsserver.setup {
 
       -- experimental settings!
       -- eslint diagnostics
-      eslint_enable_diagnostics = true,
+      eslint_enable_diagnostics = false,
       eslint_diagnostics_debounce = 250,
 
       -- formatting
