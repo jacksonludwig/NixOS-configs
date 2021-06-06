@@ -39,18 +39,16 @@
     nodePackages.prettier
     nodePackages.eslint
     nodePackages.eslint_d
-    nodePackages.diagnostic-languageserver
     nodePackages.typescript-language-server
     nodePackages.expo-cli
 
     nodePackages.pyright
     tree-sitter
-    jdk11
 
     htop
     xclip
     ispell
-    texlive.combined.scheme-full
+    texlive.combined.scheme-medium
 
     iosevka-bin
     jetbrains-mono

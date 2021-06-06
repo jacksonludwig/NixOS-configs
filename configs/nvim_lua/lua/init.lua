@@ -28,7 +28,30 @@ require('packer').startup(function ()
   use {
     'nvim-telescope/telescope.nvim',
     requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+
     config = function() 
+      -- This disables tree-sitter highlighting in previewers. Workaround for slowness currently.
+      local previewers = require('telescope.previewers')
+      local putils = require('telescope.previewers.utils')
+      local pfiletype = require('plenary.filetype')
+
+      local new_maker = function(filepath, bufnr, opts)
+        opts = opts or {}
+        if opts.use_ft_detect == nil then
+          local ft = pfiletype.detect(filepath)
+          -- Here for example you can say: if ft == "xyz" then this_regex_highlighing else nothing end
+          opts.use_ft_detect = false
+          putils.regex_highlighter(bufnr, ft)
+        end
+        previewers.buffer_previewer_maker(filepath, bufnr, opts)
+      end
+
+      require('telescope').setup {
+        defaults = {
+          buffer_previewer_maker = new_maker,
+        }
+      }
+
       vim.api.nvim_set_keymap('n', '<space><space>', '<cmd>lua require("telescope.builtin").find_files()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>fr', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
@@ -68,6 +91,7 @@ require('packer').startup(function ()
   use {
     'windwp/nvim-ts-autotag',
   }
+
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -115,28 +139,17 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, "n", "gr", ":LspRefs<CR>", {silent = true})
   buf_map(bufnr, "n", "gy", ":LspTypeDef<CR>", {silent = true})
   buf_map(bufnr, "n", "K", ":LspHover<CR>", {silent = true})
-  buf_map(bufnr, "n", "gs", ":LspOrganize<CR>", {silent = true})
+  buf_map(bufnr, "n", "<space>o", ":LspOrganize<CR>", {silent = true})
   buf_map(bufnr, "n", "[d", ":LspDiagPrev<CR>", {silent = true})
   buf_map(bufnr, "n", "]d", ":LspDiagNext<CR>", {silent = true})
   buf_map(bufnr, "n", "<space>c", ":LspCodeAction<CR>", {silent = true})
   buf_map(bufnr, "n", "<space>d", ":LspDiagLine<CR>", {silent = true})
-  buf_map(bufnr, "n", "<space>q", ":TSLspFixCurrent<CR>", {silent = true})
   buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", {silent = true})
-
-  if client.resolved_capabilities.document_formatting then
-    vim.api.nvim_exec([[
-    augroup LspAutocommands
-    autocmd! * <buffer>
-    autocmd BufWritePost <buffer> LspFormatting
-    augroup END
-    ]], true)
-  end
 end
 
 nvim_lsp.tsserver.setup {
-  on_attach = function(client)
-    client.resolved_capabilities.document_formatting = false
-    on_attach(client)
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
 
     local ts_utils = require("nvim-lsp-ts-utils")
 
@@ -155,14 +168,14 @@ nvim_lsp.tsserver.setup {
 
       -- experimental settings!
       -- eslint diagnostics
-      eslint_enable_diagnostics = false,
+      eslint_enable_diagnostics = true,
       eslint_diagnostics_debounce = 250,
 
       -- formatting
-      enable_formatting = false,
+      enable_formatting = true,
       formatter = "prettier",
       formatter_args = {"--stdin-filepath", "$FILENAME"},
-      format_on_save = false,
+      format_on_save = true,
       no_save_after_format = false,
 
       -- parentheses completion
@@ -177,52 +190,12 @@ nvim_lsp.tsserver.setup {
 
     -- required to enable ESLint code actions and formatting
     ts_utils.setup_client(client)
+
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>tq", ":TSLspFixCurrent<CR>", {silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>tr", ":TSLspRenameFile<CR>", {silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>to", ":TSLspOrganize<CR>", {silent = true})
+    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>ti", ":TSLspImportAll<CR>", {silent = true})
   end
-}
-
-local filetypes = {
-  typescript = "eslint",
-  typescriptreact = "eslint",
-}
-
-local linters = {
-  eslint = {
-    sourceName = "eslint",
-    command = "eslint_d",
-    rootPatterns = {".eslintrc.js", "package.json"},
-    debounce = 100,
-    args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
-    parseJson = {
-      errorsRoot = "[0].messages",
-      line = "line",
-      column = "column",
-      endLine = "endLine",
-      endColumn = "endColumn",
-      message = "${message} [${ruleId}]",
-      security = "severity"
-    },
-    securities = {[2] = "error", [1] = "warning"}
-  }
-}
-
-local formatters = {
-  prettier = {command = "prettier", args = {"--stdin-filepath", "%filepath"}}
-}
-
-local formatFiletypes = {
-  typescript = "prettier",
-  typescriptreact = "prettier"
-}
-
-nvim_lsp.diagnosticls.setup {
-  on_attach = on_attach,
-  filetypes = vim.tbl_keys(filetypes),
-  init_options = {
-    filetypes = filetypes,
-    linters = linters,
-    formatters = formatters,
-    formatFiletypes = formatFiletypes
-  }
 }
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -234,7 +207,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 vim.lsp.handlers["textDocument/definition"] = require('telescope.builtin').lsp_definitions
 vim.lsp.handlers["textDocument/references"] = require('telescope.builtin').lsp_references
 vim.lsp.handlers["textDocument/codeAction"] = require('telescope.builtin').lsp_code_actions
-
 
 -- COMP
 -- use .ts snippets in .tsx files
