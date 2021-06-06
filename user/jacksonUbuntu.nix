@@ -35,14 +35,15 @@
 
     nodejs
     nodePackages.npm
+    nodePackages.node2nix
     nodePackages.typescript
     nodePackages.prettier
+    (callPackage ../packages/prettier_d_slim/default.nix {}).prettier_d_slim
     nodePackages.eslint
     nodePackages.eslint_d
     nodePackages.typescript-language-server
     nodePackages.expo-cli
 
-    nodePackages.pyright
     tree-sitter
 
     htop
