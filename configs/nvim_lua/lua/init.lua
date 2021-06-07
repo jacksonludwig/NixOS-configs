@@ -96,8 +96,43 @@ require('packer').startup(function ()
     'peitalin/vim-jsx-typescript',
   }
 
+  -- use {
+  --   'jose-elias-alvarez/null-ls.nvim',
+  -- }
+  
   use {
-    'jose-elias-alvarez/null-ls.nvim',
+    'mhartington/formatter.nvim',
+    config = function()
+      local prettier = function()
+        return {
+          exe = "prettier",
+          args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+          stdin = true
+        }
+      end
+
+      require('formatter').setup({
+        logging = false,
+        filetype = {
+          javascript = {
+            prettier
+          },
+          typescript = {
+            prettier
+          },
+          typescriptreact = {
+            prettier
+          },
+        }
+      })
+
+      vim.api.nvim_exec([[
+      augroup FormatAutogroup
+      autocmd!
+      autocmd BufWritePost *.js,*.ts,*.tsx FormatWrite
+      augroup END
+      ]], true)
+    end
   }
 
 end)
@@ -118,6 +153,7 @@ vim.cmd('set pumheight=40')
 vim.cmd('set number')
 vim.cmd('set relativenumber')
 vim.cmd('set mouse=a')
+vim.cmd('set completeopt=menuone,noselect')
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
@@ -156,8 +192,6 @@ local on_attach = function(client, bufnr)
   buf_map(bufnr, "i", "<C-x><C-x>", "<cmd> LspSignatureHelp<CR>", {silent = true})
 end
 
-require('null-ls').setup {}
-
 nvim_lsp.tsserver.setup {
   on_attach = function(client, bufnr)
     on_attach(client, bufnr)
@@ -184,8 +218,8 @@ nvim_lsp.tsserver.setup {
       eslint_diagnostics_debounce = 250,
 
       -- formatting
-      enable_formatting = true,
-      formatter = "prettier",
+      enable_formatting = false,
+      formatter = "prettier_d_slim",
       formatter_config_fallback = nil,
 
       -- parentheses completion
@@ -199,10 +233,10 @@ nvim_lsp.tsserver.setup {
     }
 
     -- required to enable ESLint code actions and formatting
-    ts_utils.setup_client(client)
+    -- ts_utils.setup_client(client)
 
     -- format on save
-    vim.cmd("autocmd BufWritePost <buffer> LspFormatting")
+    -- vim.cmd("autocmd BufWritePost <buffer> LspFormatting")
 
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>tq", ":TSLspFixCurrent<CR>", {silent = true})
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>tr", ":TSLspRenameFile<CR>", {silent = true})
@@ -228,14 +262,26 @@ vim.g.vsnip_filetypes = {
 }
 
 require"compe".setup {
-    preselect = "always",
-    source = {
-        path = true,
-        buffer = true,
-        vsnip = false,
-        nvim_lsp = true,
-        nvim_lua = true
-    }
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true,
+    buffer = true,
+    vsnip = false,
+    nvim_lsp = true,
+    nvim_lua = true
+  }
 }
 
 local t = function(str)

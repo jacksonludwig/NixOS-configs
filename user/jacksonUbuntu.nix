@@ -21,6 +21,9 @@
     (import (builtins.fetchTarball {
       url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
     }))
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
   ];
 
   # packages to install
@@ -38,7 +41,7 @@
     nodePackages.node2nix
     nodePackages.typescript
     nodePackages.prettier
-    # (callPackage ../packages/prettier_d_slim/default.nix {}).prettier_d_slim
+    (callPackage ../packages/prettier_d_slim/default.nix {}).prettier_d_slim
     nodePackages.eslint
     nodePackages.eslint_d
     nodePackages.typescript-language-server
@@ -82,6 +85,7 @@
   programs.emacs = {
     enable = true;
     # package = unstable.emacsGcc;
+    package = emacsGcc;
     extraPackages = epkgs: with epkgs; [
       vterm
     ];

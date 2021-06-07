@@ -302,6 +302,7 @@ Nano-theme.
   :hook
   (typescript-mode . lsp-deferred)
   (js-mode . lsp-deferred)
+  (web-mode . lsp-deferred)
   :commands (lsp lsp-deferred)
   :general
   (:keymaps 'lsp-mode-map
@@ -320,6 +321,9 @@ Nano-theme.
 (use-package typescript-mode
   :init
   (setq typescript-indent-level 2))
+
+(use-package web-mode
+  :mode "\\.tsx\\'")
 #+end_src
 ** Javascript
 #+begin_src emacs-lisp
@@ -348,11 +352,7 @@ Nano-theme.
   :hook
   (rjsx-mode . prettier-js-mode)
   (typescript-mode . prettier-js-mode)
-  :general
-  (:keymaps 'js-mode-map
-	    "C-c c f" 'prettier-js)
-  (:keymaps 'typescript-mode-map
-	    "C-c c f" 'prettier-js))
+  (web-mode . prettier-js-mode))
 #+end_src
 * Org mode
 #+begin_src emacs-lisp
