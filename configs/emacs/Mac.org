@@ -137,13 +137,11 @@ Nano-theme.
 #+begin_src emacs-lisp
 (use-package nano-theme
   :disabled
-  :straight '(nano-theme :type git :host github :repo "404cn/nano-theme.el")
-  :init
-  (setq nano-theme-light/dark 'light)
+  :straight '(nano-theme :type git :host github :repo "rougier/nano-theme")
   :config
-  (load-theme 'nano t)
-  (custom-set-faces
-   `(js2-function-param ((t (:foreground ,(face-foreground 'default)))))))
+  (load-theme 'nano t))
+  ;; (custom-set-faces
+  ;;  `(js2-function-param ((t (:foreground ,(face-foreground 'default)))))))
 #+end_src
 
 ** General
@@ -173,7 +171,7 @@ Nano-theme.
   :general
   (jackson/leader
     "fr" 'consult-recent-file
-    "gd" 'consult-grep)
+    "gd" 'consult-git-grep)
   ("C-s" 'consult-line)
   ("M-g M-g" 'consult-goto-line))
 #+end_src
