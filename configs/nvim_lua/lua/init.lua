@@ -185,7 +185,7 @@ nvim_lsp.tsserver.setup {
 
       -- formatting
       enable_formatting = true,
-      formatter = "prettier_d_slim",
+      formatter = "prettier",
       formatter_config_fallback = nil,
 
       -- parentheses completion
