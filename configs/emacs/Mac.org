@@ -93,6 +93,7 @@
 ** GCMH
 #+begin_src emacs-lisp
 (use-package gcmh
+  :disabled
   :diminish gcmh-mode
   :init
   (gcmh-mode 1))
@@ -278,9 +279,9 @@ Nano-theme.
   :init
   (setq yas-triggers-in-field t)
   :hook
-  (org-mode . (lambda()
-		(yas-minor-mode +1)
-		(yas-activate-extra-mode 'latex-mode)))
+  ;; (org-mode . (lambda()
+	;; 	(yas-minor-mode +1)
+	;; 	(yas-activate-extra-mode 'latex-mode)))
   (prog-mode . yas-minor-mode)
   (latex-mode . yas-minor-mode))
 #+end_src
@@ -290,6 +291,7 @@ Nano-theme.
 
 (use-package lsp-mode
   :init
+  (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   (setq lsp-keymap-prefix "C-c l")
   (setq lsp-log-io nil)
@@ -322,7 +324,10 @@ Nano-theme.
   (setq typescript-indent-level 2))
 
 (use-package web-mode
-  :mode "\\.tsx\\'")
+  :mode "\\.tsx\\'"
+  :init
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2))
 #+end_src
 ** Javascript
 #+begin_src emacs-lisp
