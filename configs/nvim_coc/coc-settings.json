@@ -1,6 +1,6 @@
 {
   "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
+  "suggest.maxCompleteItemCount": 40,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -8,7 +8,11 @@
     "json",
     "javascriptreact"
   ],
+  "coc.preferences.formatOnType": false,
+  "tsserver.formatOnType": false,
+  "typescript.format.enabled": false,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
-  "diagnostic.infoSign": "•"
+  "diagnostic.infoSign": "•",
+  "typescript.suggest.completeFunctionCalls": false
 }
