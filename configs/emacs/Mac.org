@@ -1,4 +1,4 @@
-#+title: Init.el Config
+\#+title: Init.el Config
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 #+startup: overview
 
@@ -291,6 +291,7 @@ Nano-theme.
 
 (use-package lsp-mode
   :init
+  :disabled
   (setq gc-cons-threshold 100000000)
   (setq read-process-output-max (* 1024 1024)) ;; 1mb
   (setq lsp-keymap-prefix "C-c l")
