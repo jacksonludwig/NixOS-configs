@@ -75,10 +75,10 @@
     enable = true;
     package = pkgs.neovim-nightly;
     withNodeJs = true;
-    extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
+    extraConfig = builtins.readFile ../configs/nvim_coc/init.vim;
   };
   home.file.".config/nvim/lua" = {
-    source = ../configs/nvim_lua/lua;
+    source = ../configs/nvim_coc/lua;
     recursive = true;
   };
 
