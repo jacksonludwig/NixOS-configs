@@ -1,6 +1,6 @@
 lua require('init')
 
-let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier']
+let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier', 'coc-pairs']
 
 " Some servers have issues with backup files, see #649.
 set nobackup
