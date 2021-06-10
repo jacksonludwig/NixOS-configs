@@ -9,7 +9,6 @@
     "javascriptreact"
   ],
   "coc.preferences.formatOnType": false,
-  "tsserver.formatOnType": false,
   "typescript.format.enabled": false,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
