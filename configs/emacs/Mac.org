@@ -1,4 +1,4 @@
-\#+title: Init.el Config
+#+title: Init.el Config
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 #+startup: overview
 
@@ -90,35 +90,12 @@
   :config
   (diminish 'subword-mode))
 #+end_src
-** GCMH
-#+begin_src emacs-lisp
-(use-package gcmh
-  :disabled
-  :diminish gcmh-mode
-  :init
-  (gcmh-mode 1))
-#+end_src
 ** Theme
 Nord theme.
 #+begin_src emacs-lisp
 (use-package nord-theme
   :config
   (load-theme 'nord))
-#+end_src
-
-Doom modeline. This is likely not worth the performance hit.
-#+begin_src emacs-lisp
-(use-package doom-modeline
-  :disabled
-  :init
-  (setq lsp-modeline-diagnostics-enable nil)
-  (setq doom-modeline-icon nil
-        doom-modeline-bar-width 3)
-  :hook
-  (after-init . (lambda()
-                  (set-face-background 'doom-modeline-bar (face-background 'mode-line))
-                  (set-face-background 'doom-modeline-bar-inactive (face-background 'mode-line))
-                  (doom-modeline-mode))))
 #+end_src
 
 Modus theme.
@@ -132,17 +109,6 @@ Modus theme.
    `(org-block-end-line ((t (:background ,(face-background 'default)))))
    `(modus-themes-fringe-cyan ((t (:background ,(face-background 'default)))))
    `(modus-themes-fringe-yellow ((t (:background ,(face-background 'default)))))))
-#+end_src
-
-Nano-theme.
-#+begin_src emacs-lisp
-(use-package nano-theme
-  :disabled
-  :straight '(nano-theme :type git :host github :repo "rougier/nano-theme")
-  :config
-  (load-theme 'nano t))
-  ;; (custom-set-faces
-  ;;  `(js2-function-param ((t (:foreground ,(face-foreground 'default)))))))
 #+end_src
 ** Undo fu (27.1 only)
 #+begin_src emacs-lisp
@@ -213,52 +179,6 @@ Nano-theme.
   :config
   (which-key-mode))
 #+end_src
-** Flycheck
-#+begin_src emacs-lisp
-(use-package flycheck
-  :init
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (define-fringe-bitmap 'bitmap
-    (vector #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00011100
-            #b00111110
-            #b00111110
-            #b00111110
-            #b00011100
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000
-            #b00000000))
-  (flycheck-define-error-level 'error
-    :severity 2
-    :compilation-level 2
-    :overlay-category 'flycheck-error-overlay
-    :fringe-bitmap 'bitmap
-    :fringe-face 'flycheck-fringe-error)
-  (flycheck-define-error-level 'warning
-    :severity 1
-    :compilation-level 1
-    :overlay-category 'flycheck-warning-overlay
-    :fringe-bitmap 'bitmap
-    :fringe-face 'flycheck-fringe-warning)
-  (flycheck-define-error-level 'info
-    :severity 0
-    :compilation-level 0
-    :overlay-category 'flycheck-info-overlay
-    :fringe-bitmap 'bitmap
-    :fringe-face 'flycheck-fringe-info))
-  
-(use-package flycheck-pos-tip
-  :init (setq flycheck-pos-tip-timeout 20)
-  :hook (flycheck-mode . flycheck-pos-tip-mode))
-#+end_src
 ** Company
 #+begin_src emacs-lisp
 (use-package company
@@ -291,32 +211,6 @@ Nano-theme.
   (prog-mode . yas-minor-mode)
   (latex-mode . yas-minor-mode))
 #+end_src
-** LSP Mode
-#+begin_src emacs-lisp
-(use-package all-the-icons)
-
-(use-package lsp-mode
-  :init
-  :disabled
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024)) ;; 1mb
-  (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-log-io nil)
-  (setq lsp-ui-sideline-enable nil
-	      lsp-headerline-breadcrumb-enable nil
-	      lsp-enable-symbol-highlighting nil
-	      lsp-enable-indentation nil
-	      lsp-enable-on-type-formatting nil)
-  :hook
-  (typescript-mode . lsp-deferred)
-  (js-mode . lsp-deferred)
-  (web-mode . lsp-deferred)
-  :commands (lsp lsp-deferred)
-  :general
-  (:keymaps 'lsp-mode-map
-	          "M-." 'lsp-find-definition
-	          "M-?" 'lsp-find-references))
-#+end_src
 ** Expand-Region
 #+begin_src emacs-lisp
 (use-package expand-region
@@ -326,6 +220,23 @@ Nano-theme.
 * Languages
 ** Typescript
 #+begin_src emacs-lisp
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  (company-mode +1))
+
+(use-package tide
+  :config
+  (flycheck-add-next-checker 'tsx-tide '(warning . javascript-eslint) 'append)
+  (flycheck-add-next-checker 'typescript-tide '(warning . javascript-eslint) 'append)
+  :hook
+  (typescript-mode . setup-tide-mode)
+  (web-mode . setup-tide-mode))
+
 (use-package typescript-mode
   :init
   (setq typescript-indent-level 2))
@@ -339,10 +250,6 @@ Nano-theme.
 ** Javascript
 #+begin_src emacs-lisp
 (setq js-indent-level 2)
-
-(use-package rjsx-mode
-  :mode "\\.js\\'"
-  :hook (rjsx-mode . (lambda() (js2-mode-hide-warnings-and-errors))))
 #+end_src
 ** Nix
 #+begin_src emacs-lisp
@@ -356,15 +263,14 @@ Nano-theme.
 #+end_src
 
 * Formatting
-** JS/TS
+** Format-all
 #+begin_src emacs-lisp
-(use-package prettier-js
-  :init (setq prettier-js-show-errors nil)
+(use-package format-all
   :hook
-  (rjsx-mode . prettier-js-mode)
-  (typescript-mode . prettier-js-mode)
-  (web-mode . prettier-js-mode))
+  (web-mode . format-all-mode)
+  (typescript-mode . format-all-mode))
 #+end_src
+
 * Org mode
 #+begin_src emacs-lisp
 (use-package org
@@ -379,8 +285,7 @@ Nano-theme.
         org-special-ctrl-a/e t)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
-       org-default-notes-file (concat org-directory "/.notes.org")
-       org-agenda-files (directory-files-recursively org-directory "\\.org$")))
+       org-default-notes-file (concat org-directory "/.notes.org")))
 
 ;; BABEL LANGUAGES
 (org-babel-do-load-languages
