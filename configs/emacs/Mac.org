@@ -38,20 +38,20 @@
 (set-fringe-mode 18)                              ; larger fringes
 
 (setq-default
- auto-window-vscroll nil                          ; Lighten vertical scroll
+ gc-cons-threshold (* 8 1024 1024)      ; We're not using Game Boys anymore
+ read-process-output-max (* 1024 1024)  ; Increase read size per process
+ sentence-end-double-space nil          ; Use a single space after dots
  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
  fill-column 80                                   ; Set width for automatic line breaks
  help-window-select t                             ; Focus new help windows when opened
  indent-tabs-mode nil                             ; Stop using tabs to indent
  inhibit-startup-screen t                         ; Disable start-up screen
  initial-scratch-message ""                       ; Empty the initial *scratch* buffer
- ;; split-height-threshold nil                       ; Disable vertical window splitting
- ;; split-width-threshold 1                          ; Disable horizontal window splitting
  tab-width 2                                      ; Set width for tabs
  window-combination-resize t                      ; Resize windows proportionally
  x-stretch-cursor t                               ; Stretch cursor to the glyph width
- scroll-step 1
- scroll-conservatively 10000)
+ scroll-margin 2
+ scroll-conservatively 101)
 
 (fset 'yes-or-no-p 'y-or-n-p)                     ; Replace yes/no prompts with y/n
 
@@ -196,6 +196,47 @@ Modus theme.
 	    "C-n" 'company-select-next
 	    "C-p" 'company-select-previous))
 #+end_src
+** Flycheck
+#+begin_src emacs-lisp
+(use-package flycheck
+  :init
+  (define-fringe-bitmap 'bitmap
+    (vector #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00011100
+            #b00111110
+            #b00111110
+            #b00111110
+            #b00011100
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000
+            #b00000000))
+  (flycheck-define-error-level 'error
+    :severity 2
+    :compilation-level 2
+    :overlay-category 'flycheck-error-overlay
+    :fringe-bitmap 'bitmap
+    :fringe-face 'flycheck-fringe-error)
+  (flycheck-define-error-level 'warning
+    :severity 1
+    :compilation-level 1
+    :overlay-category 'flycheck-warning-overlay
+    :fringe-bitmap 'bitmap
+    :fringe-face 'flycheck-fringe-warning)
+  (flycheck-define-error-level 'info
+    :severity 0
+    :compilation-level 0
+    :overlay-category 'flycheck-info-overlay
+    :fringe-bitmap 'bitmap
+    :fringe-face 'flycheck-fringe-info))
+#+end_src
 ** Yasnippet
 #+begin_src emacs-lisp
 (use-package yasnippet-snippets)
@@ -267,6 +308,7 @@ Modus theme.
 #+begin_src emacs-lisp
 (use-package format-all
   :hook
+  (format-all-mode . format-all-ensure-formatter)
   (web-mode . format-all-mode)
   (typescript-mode . format-all-mode))
 #+end_src
@@ -274,18 +316,23 @@ Modus theme.
 * Org mode
 #+begin_src emacs-lisp
 (use-package org
-  :init
-  (setq org-startup-folded nil
-	      org-hide-emphasis-markers nil
-	      org-edit-src-content-indentation 0
-	      org-src-tab-acts-natively t
-	      org-src-fontify-natively t
-        org-adapt-indentation nil
-	      org-confirm-babel-evaluate nil
-        org-special-ctrl-a/e t)
+  :custom
+  (org-adapt-indentation nil)
+  (org-confirm-babel-evaluate nil)
+  (org-cycle-separator-lines 0)
+  (org-descriptive-links nil)
+  (org-edit-src-content-indentation 0)
+  (org-edit-src-persistent-message nil)
+  (org-fontify-done-headline t)
+  (org-fontify-quote-and-verse-blocks t)
+  (org-src-tab-acts-natively t)
+  (org-src-window-setup 'current-window)
+  (org-startup-folded 'content)
+  (org-startup-truncated nil)
+  (org-support-shift-select 'always)
   :config
   (setq org-directory "~/git_repos/emacs-org-mode"
-       org-default-notes-file (concat org-directory "/.notes.org")))
+        org-default-notes-file (concat org-directory "/.notes.org")))
 
 ;; BABEL LANGUAGES
 (org-babel-do-load-languages
@@ -297,7 +344,7 @@ Modus theme.
 ;; Automatically tangle config file when we save it
 (defun jackson/org-babel-tangle-config ()
   (when (string-equal (buffer-file-name)
-	       (expand-file-name "~/.config/nixpkgs/configs/emacs/Mac.org"))
+	                    (expand-file-name "~/.config/nixpkgs/configs/emacs/Mac.org"))
     ;; Dynamic scoping to the rescue
     (let ((org-confirm-babel-evaluate nil))
       (org-babel-tangle))))
