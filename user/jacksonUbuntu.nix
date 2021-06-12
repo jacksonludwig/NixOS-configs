@@ -45,6 +45,7 @@
     nodePackages.expo-cli
 
     tree-sitter
+    watchman
 
     htop
     xclip

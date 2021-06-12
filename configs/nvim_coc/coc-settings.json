@@ -1,5 +1,4 @@
 {
-  "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 40,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
@@ -8,10 +7,10 @@
     "json",
     "javascriptreact"
   ],
-  "coc.preferences.formatOnType": false,
   "typescript.format.enabled": false,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "typescript.suggest.completeFunctionCalls": false
+  "typescript.suggest.completeFunctionCalls": false,
+  "jest.watchman": true
 }
