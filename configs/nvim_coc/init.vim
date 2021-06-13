@@ -1,13 +1,6 @@
 lua require('init')
 
-let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier', 'coc-jest', 'coc-pairs']
-"
-" Run jest for current file
-command! -nargs=0 Jest :call  CocAction('runCommand', 'jest.projectTest')
-" Run jest for current file
-command! -nargs=0 JestCurrent :call  CocAction('runCommand', 'jest.fileTest', ['%'])
-" Run jest for current test
-command! -nargs=0 JestSingleTest :call CocAction('runCommand', 'jest.singleTest')
+let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier', 'coc-pairs']
 
 " Some servers have issues with backup files, see #649.
 set nobackup
