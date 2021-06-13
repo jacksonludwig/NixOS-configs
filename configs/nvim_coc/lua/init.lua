@@ -25,6 +25,7 @@ packer.startup(function ()
 
   use {
     'tpope/vim-commentary',
+    'tpope/vim-fugitive',
   }
 
   use {
@@ -70,61 +71,28 @@ packer.startup(function ()
     end
   }
 
-  use { 
-    'camspiers/snap', 
-    disable = true,
-    rocks = {'fzy'},
-    config = function()
-      local snap = require'snap'
-      snap.register.map({"n"}, {"<space><space>"}, function ()
-        snap.run {
-          producer = snap.get'consumer.fzy'(snap.get'producer.ripgrep.file'),
-          select = snap.get'select.file'.select,
-          multiselect = snap.get'select.file'.multiselect,
-          views = {snap.get'preview.file'}
-        }
-      end)
-      snap.register.map({"n"}, {"<space>fr"}, function ()
-        snap.run {
-          producer = snap.get'consumer.fzy'(snap.get'producer.vim.oldfile'),
-          select = snap.get'select.file'.select,
-          multiselect = snap.get'select.file'.multiselect,
-          views = {snap.get'preview.file'}
-        }
-      end)
-      snap.register.map({"n"}, {"<space>b"}, function ()
-        snap.run {
-          producer = snap.get'consumer.fzy'(snap.get'producer.vim.oldfiles'),
-          select = snap.get'select.file'.select,
-          multiselect = snap.get'select.file'.multiselect,
-          views = {snap.get'preview.file'}
-        }
-      end)
-      snap.register.map({"n"}, {"<space>g"}, function ()
-        snap.run {
-          producer = snap.get'producer.ripgrep.vimgrep',
-          select = snap.get'select.vimgrep'.select,
-          multiselect = snap.get'select.vimgrep'.multiselect,
-          views = {snap.get'preview.vimgrep'}
-        }
-      end)
-      snap.register.map({"n"}, {"<space>ff"}, function ()
-        snap.run {
-          producer = snap.get'consumer.fzy'(snap.get'producer.git.file'),
-          select = snap.get'select.file'.select,
-          multiselect = snap.get'select.file'.multiselect,
-          views = {snap.get'preview.file'}
-        }
-      end)
-    end
-  }
-
   use {
     'airblade/vim-rooter',
   }
 
   use {
-    'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
+    'nvim-treesitter/nvim-treesitter',
+    requires = {'JoosepAlviste/nvim-ts-context-commentstring'},
+    run = ':TSUpdate',
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        ensure_installed = "maintained",
+        highlight = {
+          enable = false
+        },
+        indent = {
+          enable = false
+        },
+        context_commentstring = {
+          enable = true
+        }
+      }
+    end
   }
 
   use {
@@ -179,13 +147,3 @@ vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent 
 -------------------- THEME -------------------------------
 vim.cmd('colorscheme OceanicNext')
 
--- TREESITTER
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
-  highlight = {
-    enable = false
-  },
-  indent = {
-    enable = false
-  },
-}
