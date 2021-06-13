@@ -25,7 +25,6 @@ packer.startup(function ()
 
   use {
     'tpope/vim-commentary',
-    'tpope/vim-fugitive',
   }
 
   use {
