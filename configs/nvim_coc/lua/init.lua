@@ -137,6 +137,7 @@ packer.startup(function ()
 
   use { 
     "rcarriga/vim-ultest",
+    disable = true,
     requires = {"vim-test/vim-test"},
     run = ":UpdateRemotePlugins",
     config = function()
