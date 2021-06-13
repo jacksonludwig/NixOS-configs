@@ -2,19 +2,25 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  execute('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
+  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
   execute 'packadd packer.nvim'
 end
 
 -------------------- PLUGINS -------------------------------
-vim.cmd [[packadd packer.nvim]]
-require('packer').startup(function ()
+local packer = require('packer')
+
+packer.init({
+  luarocks = {
+    python_cmd = 'python3'
+  }
+})
+
+packer.startup(function ()
   use {
     'wbthomason/packer.nvim',
-    opt = true,
   }
 
   use {
@@ -26,9 +32,13 @@ require('packer').startup(function ()
   }
 
   use {
-    'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+    'nvim-lua/popup.nvim',
+    'nvim-lua/plenary.nvim'
+  }
 
+  use {
+    'nvim-telescope/telescope.nvim',
+    disable = false,
     config = function() 
       -- This disables tree-sitter highlighting in previewers. Workaround for slowness currently.
       local previewers = require('telescope.previewers')
@@ -57,6 +67,55 @@ require('packer').startup(function ()
       vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>g', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>ff', '<cmd>lua require("telescope.builtin").file_browser()<cr>', { noremap = true, silent = true })
+    end
+  }
+
+  use { 
+    'camspiers/snap', 
+    disable = true,
+    rocks = {'fzy'},
+    config = function()
+      local snap = require'snap'
+      snap.register.map({"n"}, {"<space><space>"}, function ()
+        snap.run {
+          producer = snap.get'consumer.fzy'(snap.get'producer.ripgrep.file'),
+          select = snap.get'select.file'.select,
+          multiselect = snap.get'select.file'.multiselect,
+          views = {snap.get'preview.file'}
+        }
+      end)
+      snap.register.map({"n"}, {"<space>fr"}, function ()
+        snap.run {
+          producer = snap.get'consumer.fzy'(snap.get'producer.vim.oldfile'),
+          select = snap.get'select.file'.select,
+          multiselect = snap.get'select.file'.multiselect,
+          views = {snap.get'preview.file'}
+        }
+      end)
+      snap.register.map({"n"}, {"<space>b"}, function ()
+        snap.run {
+          producer = snap.get'consumer.fzy'(snap.get'producer.vim.oldfiles'),
+          select = snap.get'select.file'.select,
+          multiselect = snap.get'select.file'.multiselect,
+          views = {snap.get'preview.file'}
+        }
+      end)
+      snap.register.map({"n"}, {"<space>g"}, function ()
+        snap.run {
+          producer = snap.get'producer.ripgrep.vimgrep',
+          select = snap.get'select.vimgrep'.select,
+          multiselect = snap.get'select.vimgrep'.multiselect,
+          views = {snap.get'preview.vimgrep'}
+        }
+      end)
+      snap.register.map({"n"}, {"<space>ff"}, function ()
+        snap.run {
+          producer = snap.get'consumer.fzy'(snap.get'producer.git.file'),
+          select = snap.get'select.file'.select,
+          multiselect = snap.get'select.file'.multiselect,
+          views = {snap.get'preview.file'}
+        }
+      end)
     end
   }
 
