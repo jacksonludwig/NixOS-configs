@@ -11,6 +11,5 @@
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "typescript.suggest.completeFunctionCalls": false,
-  "jest.watchman": true
+  "typescript.suggest.completeFunctionCalls": false
 }
