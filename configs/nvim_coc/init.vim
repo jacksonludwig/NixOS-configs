@@ -3,7 +3,7 @@ lua require('init')
 let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier', 'coc-pairs', 'coc-explorer']
 
 " Coc Explorer bind.
-nnoremap <silent><expr> <space>e  <cmd>CocCommand explorer<cr>
+nnoremap <silent> <space>e  <cmd>CocCommand explorer<cr>
 
 " Some servers have issues with backup files, see #649.
 set nobackup
