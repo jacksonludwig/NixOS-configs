@@ -1,6 +1,9 @@
 lua require('init')
 
-let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier', 'coc-pairs']
+let g:coc_global_extensions = ['coc-json', 'coc-eslint', 'coc-tsserver', 'coc-prettier', 'coc-pairs', 'coc-explorer']
+
+" Coc Explorer bind.
+nnoremap <silent><expr> <space>e  <cmd>CocCommand explorer<cr>
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -102,8 +105,6 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>d  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent><nowait> <space>cm  :<C-u>CocList commands<cr>
 " Find symbol of current document.
