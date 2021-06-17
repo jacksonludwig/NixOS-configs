@@ -73,6 +73,9 @@ packer.startup(function ()
       vim.api.nvim_set_keymap('n', '<space>bb', '<cmd>lua require("telescope.builtin").buffers()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>g', '<cmd>lua require("telescope.builtin").live_grep()<cr>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('n', '<space>ff', '<cmd>lua require("telescope.builtin").file_browser()<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<space>vc', '<cmd>lua require("telescope.builtin").git_commits()<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<space>vb', '<cmd>lua require("telescope.builtin").git_branches()<cr>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<space>vs', '<cmd>lua require("telescope.builtin").git_status()<cr>', { noremap = true, silent = true })
     end
   }
 
