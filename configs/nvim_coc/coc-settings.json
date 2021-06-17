@@ -1,5 +1,4 @@
 {
-  "suggest.maxCompleteItemCount": 40,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
