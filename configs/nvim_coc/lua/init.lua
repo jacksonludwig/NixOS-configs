@@ -25,6 +25,12 @@ packer.startup(function ()
 
   use {
     'tpope/vim-commentary',
+    'tpope/vim-fugitive',
+    'tpope/vim-rhubarb',
+  }
+
+  use {
+    'mkitt/tabline.vim',
   }
 
   use {
@@ -104,7 +110,7 @@ packer.startup(function ()
 
   use { 
     "rcarriga/vim-ultest",
-    disable = true,
+    disable = false,
     requires = {"vim-test/vim-test"},
     run = ":UpdateRemotePlugins",
     config = function()
@@ -139,6 +145,14 @@ vim.cmd('set number')
 vim.cmd('set relativenumber')
 vim.cmd('set mouse=a')
 vim.cmd('set completeopt=menuone,noselect')
+
+-- Highlight on yank
+vim.api.nvim_exec([[
+  augroup YankHighlight
+    autocmd!
+    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+  augroup end
+]], false)
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
