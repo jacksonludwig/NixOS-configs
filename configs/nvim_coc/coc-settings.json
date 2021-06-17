@@ -8,9 +8,9 @@
     "javascriptreact"
   ],
   "typescript.format.enabled": false,
+  "typescript.suggest.completeFunctionCalls": false,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "typescript.suggest.completeFunctionCalls": false,
   "pairs.disableLanguages": ["TelescopePrompt"]
 }
