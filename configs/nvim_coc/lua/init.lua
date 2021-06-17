@@ -108,25 +108,6 @@ packer.startup(function ()
     'neoclide/coc.nvim', branch = 'release',
   }
 
-  use { 
-    "rcarriga/vim-ultest",
-    disable = false,
-    requires = {"vim-test/vim-test"},
-    run = ":UpdateRemotePlugins",
-    config = function()
-      vim.g.ultest_use_pty = 1
-      vim.g.ultest_output_on_line = 0
-      vim.api.nvim_set_keymap('n', '<space>tf', '<Plug>(ultest-next-fail)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<space>tb', '<Plug>(ultest-prev-fail)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<space>tn', '<Plug>(ultest-run-nearest)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<space>tt', '<Plug>(ultest-run-file)', { noremap = false, silent = false })
-      vim.api.nvim_set_keymap('n', '<space>ts', '<Plug>(ultest-summary-toggle)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<space>to', '<Plug>(ultest-output-show)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<space>tj', '<Plug>(ultest-output-jump)', { noremap = false, silent = true })
-      vim.api.nvim_set_keymap('n', '<space>tx', '<Plug>(ultest-stop-file)', { noremap = false, silent = true })
-    end
-  }
-
 end)
 
 -------------------- VARIABLES -------------------------------
