@@ -128,7 +128,7 @@ vim.cmd('set expandtab')
 vim.cmd('set number')
 vim.cmd('set relativenumber')
 vim.cmd('set mouse=a')
-vim.cmd('set completeopt=menuone,noselect')
+vim.cmd('set completeopt=menuone,noselect,noinsert')
 
 -- Highlight on yank
 vim.api.nvim_exec([[

@@ -6,6 +6,7 @@
     "json",
     "javascriptreact"
   ],
+  "suggest.noselect": true,
   "typescript.format.enabled": false,
   "typescript.suggest.completeFunctionCalls": false,
   "diagnostic.errorSign": "•",

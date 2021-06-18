@@ -16,8 +16,12 @@ set shortmess+=c
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Format on enter (if coc allows it)
-inoremap <silent><expr> <cr> "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin.
+" Tweaked to not auto complete unless selected (also need suggest.disable in
+" coc-settings)
+inoremap <silent><expr> <cr> pumvisible() && complete_info()["selected"] != -1 ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[d` and `]d` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

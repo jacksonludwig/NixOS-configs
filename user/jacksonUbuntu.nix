@@ -34,8 +34,8 @@
     cmake
 
     nodejs
+    # nodejs-16_x
     nodePackages.npm
-    nodePackages.node2nix
     nodePackages.typescript
     nodePackages.prettier
     # (callPackage ../packages/prettier_d_slim/default.nix {}).prettier_d_slim
