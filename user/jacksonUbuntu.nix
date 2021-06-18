@@ -53,7 +53,7 @@
     texlive.combined.scheme-medium
 
     iosevka-bin
-    jetbrains-mono
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     source-code-pro
     source-sans-pro
     dejavu_fonts
