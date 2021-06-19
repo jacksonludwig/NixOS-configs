@@ -33,9 +33,9 @@
     gcc
     cmake
 
-    nodejs
-    # nodejs-16_x
-    nodePackages.npm
+    # nodejs
+    nodejs-16_x
+    (lib.lowPrio nodePackages.npm)
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
