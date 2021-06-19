@@ -35,6 +35,7 @@ packer.startup(function ()
 
   use {
     'mhartington/oceanic-next',
+    'arzg/vim-colors-xcode',
   }
 
   use {
@@ -142,5 +143,5 @@ vim.api.nvim_exec([[
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
 
 -------------------- THEME -------------------------------
-vim.cmd('colorscheme OceanicNext')
+vim.cmd('colorscheme xcodelight')
 
