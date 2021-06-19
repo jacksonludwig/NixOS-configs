@@ -252,11 +252,30 @@ Modus theme.
   (prog-mode . yas-minor-mode)
   (latex-mode . yas-minor-mode))
 #+end_src
-** Expand-Region
+** Lsp mode
 #+begin_src emacs-lisp
-(use-package expand-region
+(use-package all-the-icons)
+
+(use-package lsp-mode
+  :disabled
+  :init
+  (setq read-process-output-max (* 1024 1024)) ;; 1mb
+  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-log-io nil)
+  (setq lsp-ui-sideline-enable nil
+	      lsp-headerline-breadcrumb-enable nil
+	      lsp-enable-symbol-highlighting nil
+	      lsp-enable-indentation nil
+	      lsp-enable-on-type-formatting nil)
+  :hook
+  (typescript-mode . lsp-deferred)
+  (web-mode . lsp-deferred)
+  (js-mode . lsp-deferred)
+  :commands (lsp lsp-deferred)
   :general
-  ("C-z" 'er/expand-region))
+  (:keymaps 'lsp-mode-map
+	          "M-." 'lsp-find-definition
+	          "M-?" 'lsp-find-references))
 #+end_src
 * Languages
 ** Typescript
