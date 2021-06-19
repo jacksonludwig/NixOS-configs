@@ -38,7 +38,6 @@
     nodePackages.npm
     nodePackages.typescript
     nodePackages.prettier
-    # (callPackage ../packages/prettier_d_slim/default.nix {}).prettier_d_slim
     nodePackages.eslint
     nodePackages.eslint_d
     nodePackages.typescript-language-server
@@ -95,4 +94,5 @@
   };
 
   home.file.".config/kitty/kitty.conf".source = ../configs/kitty/kitty.conf;
+  home.file.".config/alacritty/alacritty.yml".source = ../configs/alacritty/alacritty.yml;
 }
