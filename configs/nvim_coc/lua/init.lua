@@ -34,6 +34,10 @@ packer.startup(function ()
   }
 
   use {
+    'arzg/vim-colors-xcode',
+  }
+
+  use {
     'tjdevries/gruvbuddy.nvim',
     requires = { 'tjdevries/colorbuddy.nvim' },
   }
@@ -115,7 +119,110 @@ packer.startup(function ()
   use {
     'tjdevries/express_line.nvim',
     config = function() 
-      require('el').setup{}
+      local builtin = require('el.builtin')
+      local extensions = require('el.extensions')
+      local sections = require('el.sections')
+      local subscribe = require('el.subscribe')
+
+      local a = vim.api
+      local hi = sections.highlight
+
+      local coc_diag = function(_, buf, severity)
+        local ok, res = pcall(a.nvim_buf_get_var, buf.bufnr, "coc_diagnostic_info")
+
+        if ok then
+          local count = res[severity]
+
+          if count > 0 then
+            return count > 0 and string.upper(string.format(" %s%s ", severity:sub(1, 1), count)) or ""
+          end
+        end
+      end
+
+      local coc_diag_wrapper = function(win, buf)
+        local ei = "ElMiddleInactive"
+
+        return {
+          hi(
+          {active = "CocListBlackGrey", inactive = ei},
+          function(win, buf)
+            return coc_diag(win, buf, "information")
+          end
+          ),
+          hi(
+          {active = "CocListBlackGrey", inactive = ei},
+          function(win, buf)
+            return coc_diag(win, buf, "hint")
+          end
+          ),
+          hi(
+          {active = "CocListBlackYellow", inactive = ei},
+          function(win, buf)
+            return coc_diag(win, buf, "warning")
+          end
+          ),
+          hi(
+          {active = "CocListBlackRed", inactive = ei},
+          function(win, buf)
+            return coc_diag(win, buf, "error")
+          end
+          )
+        }
+      end
+
+      local git_icon = subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
+        local icon = extensions.file_icon(_, bufnr)
+        if icon then
+          return icon .. " "
+        end
+
+        return ""
+      end)
+
+      local git_branch = subscribe.buf_autocmd("el_git_branch", "BufEnter", function(window, buffer)
+        local branch = extensions.git_branch(window, buffer)
+        if branch then
+          return " " .. extensions.git_icon() .. " " .. branch
+        end
+      end)
+
+      local git_changes = subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)
+        return extensions.git_changes(window, buffer)
+      end)
+
+      require('el').setup{
+        generator = function(win,buf)
+          return {
+            extensions.gen_mode {
+              format_string = " %s ",
+            },
+            git_branch,
+            " ",
+            sections.split,
+            git_icon,
+            sections.maximum_width(builtin.responsive_file(140, 90), 0.30),
+            sections.collapse_builtin {
+              " ",
+              builtin.modified_flag,
+            },
+            sections.split,
+            coc_diag_wrapper(win, buf),
+            git_changes,
+            "[",
+            builtin.line_with_width(3),
+            ":",
+            builtin.column_with_width(2),
+            "]",
+            sections.collapse_builtin {
+              "[",
+              builtin.help_list,
+              builtin.readonly_list,
+              "]",
+            },
+            builtin.filetype,
+          }
+        end
+      }
     end
   }
 
