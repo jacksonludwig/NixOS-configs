@@ -248,6 +248,10 @@ vim.cmd('set relativenumber')
 vim.cmd('set mouse=a')
 vim.cmd('set completeopt=menuone,noselect,noinsert')
 
+vim.opt.foldmethod = 'marker'
+vim.opt.foldlevel = 0
+vim.opt.modelines = 1
+
 -- Highlight on yank
 vim.api.nvim_exec([[
 augroup YankHighlight
