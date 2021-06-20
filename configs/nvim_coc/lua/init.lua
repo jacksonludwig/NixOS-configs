@@ -34,7 +34,8 @@ packer.startup(function ()
   }
 
   use {
-    'mhartington/oceanic-next',
+    'tjdevries/gruvbuddy.nvim',
+    requires = { 'tjdevries/colorbuddy.nvim' },
   }
 
   use {
@@ -111,6 +112,13 @@ packer.startup(function ()
     'neoclide/coc.nvim', branch = 'release',
   }
 
+  use {
+    'tjdevries/express_line.nvim',
+    config = function() 
+      require('el').setup{}
+    end
+  }
+
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -132,15 +140,16 @@ vim.cmd('set completeopt=menuone,noselect,noinsert')
 
 -- Highlight on yank
 vim.api.nvim_exec([[
-  augroup YankHighlight
-    autocmd!
-    autocmd TextYankPost * silent! lua vim.highlight.on_yank()
-  augroup end
+augroup YankHighlight
+autocmd!
+autocmd TextYankPost * silent! lua vim.highlight.on_yank()
+augroup end
 ]], false)
 
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
 
 -------------------- THEME -------------------------------
-vim.cmd('colorscheme OceanicNext')
+-- vim.cmd('colorscheme OceanicNext')
+require('colorbuddy').colorscheme('gruvbuddy')
 
