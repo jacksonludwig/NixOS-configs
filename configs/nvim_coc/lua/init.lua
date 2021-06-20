@@ -124,6 +124,8 @@ packer.startup(function ()
       local sections = require('el.sections')
       local subscribe = require('el.subscribe')
 
+      vim.opt.showmode = false
+
       local a = vim.api
       local hi = sections.highlight
 
