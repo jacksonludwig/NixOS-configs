@@ -243,16 +243,20 @@ packer.startup(function ()
         },
         sections = {
           lualine_a = {},
-          lualine_b = {'branch'},
-          lualine_c = {'filename'},
+          lualine_b = {},
+          lualine_c = {
+            'branch',
+            'filename'
+          },
           lualine_x = {
             { 'diagnostics', sources = { 'coc' }, symbols = {error = '•', warn = '•', info = '•', hint = '•'} },
             { 'g:coc_status', 'bo:filetype' },
-            'encoding',
-            'filetype'
+            'filetype',
+            'progress',
+            'location'
           },
-          lualine_y = {'progress'},
-          lualine_z = {'location'}
+          lualine_y = {},
+          lualine_z = {}
         },
         inactive_sections = {
           lualine_a = {},
