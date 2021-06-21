@@ -97,7 +97,8 @@ packer.startup(function ()
       require'nvim-treesitter.configs'.setup {
         ensure_installed = "maintained",
         highlight = {
-          enable = true
+          enable = true,
+          disable = {"typescript", "typescriptreact"}
         },
         indent = {
           enable = false
@@ -119,6 +120,7 @@ packer.startup(function ()
 
   use {
     'tjdevries/express_line.nvim',
+    disable = true,
     config = function() 
       local builtin = require('el.builtin')
       local extensions = require('el.extensions')
@@ -229,6 +231,43 @@ packer.startup(function ()
     end
   }
 
+  use {
+    'hoob3rt/lualine.nvim',
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'oceanicnext',
+          icons_enabled = true,
+          section_separators = { '', '' },
+          component_separators = { '', '' },
+        },
+        sections = {
+          lualine_a = {},
+          lualine_b = {'branch'},
+          lualine_c = {'filename'},
+          lualine_x = {
+            { 'diagnostics', sources = { 'coc' }, symbols = {error = '•', warn = '•', info = '•', hint = '•'} },
+            { 'g:coc_status', 'bo:filetype' },
+            'encoding',
+            'filetype'
+          },
+          lualine_y = {'progress'},
+          lualine_z = {'location'}
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {'location'},
+          lualine_y = {},
+          lualine_z = {}
+        },
+        tabline = {},
+        extensions = {}
+      }
+    end
+  }
+
 end)
 
 -------------------- VARIABLES -------------------------------
@@ -264,6 +303,5 @@ augroup end
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
 
 -------------------- THEME -------------------------------
--- vim.cmd('colorscheme OceanicNext')
 require('colorbuddy').colorscheme('gruvbuddy')
 
