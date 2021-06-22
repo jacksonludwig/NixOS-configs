@@ -127,8 +127,6 @@ packer.startup(function ()
       local sections = require('el.sections')
       local subscribe = require('el.subscribe')
 
-      vim.opt.showmode = false
-
       local a = vim.api
       local hi = sections.highlight
 
@@ -198,9 +196,6 @@ packer.startup(function ()
       require('el').setup{
         generator = function(win,buf)
           return {
-            extensions.gen_mode {
-              format_string = " %s ",
-            },
             git_branch,
             " ",
             sections.split,
