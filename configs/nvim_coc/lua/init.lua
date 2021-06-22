@@ -120,7 +120,7 @@ packer.startup(function ()
 
   use {
     'tjdevries/express_line.nvim',
-    disable = true,
+    disable = false,
     config = function() 
       local builtin = require('el.builtin')
       local extensions = require('el.extensions')
@@ -233,6 +233,7 @@ packer.startup(function ()
 
   use {
     'hoob3rt/lualine.nvim',
+    disable = true,
     config = function()
       require('lualine').setup {
         options = {
