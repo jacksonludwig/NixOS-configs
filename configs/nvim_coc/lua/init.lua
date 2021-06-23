@@ -299,6 +299,18 @@ autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
 ]], false)
 
+-- autocmd for theme stuff
+vim.api.nvim_exec([[
+function SetColors()
+  :hi VertSplit guifg=bg guibg=bg
+endfunction
+
+augroup minimal_theme
+    autocmd!
+    autocmd ColorScheme * call SetColors()
+augroup END
+]], false)
+
 -------------------- MAPPINGS -------------------------------
 vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
 
