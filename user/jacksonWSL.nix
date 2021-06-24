@@ -33,9 +33,9 @@
     gcc
     cmake
 
-    nodejs
-    # nodejs-16_x
-    nodePackages.npm
+    # nodejs
+    nodejs-16_x
+    (lib.lowPrio nodePackages.npm)
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
@@ -92,6 +92,9 @@
     source = ../configs/fonts;
     recursive = true;
   };
+
+  home.file.".config/fontconfig/fonts.conf".source = ../configs/wsl_font_conf/fonts.conf;
+  home.file.".Xresources".source = ../configs/wsl_font_conf/.Xresources;
 
   home.file.".config/kitty/kitty.conf".source = ../configs/kitty/kitty.conf;
   home.file.".config/alacritty/alacritty.yml".source = ../configs/alacritty/alacritty.yml;
