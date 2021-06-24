@@ -226,70 +226,28 @@ packer.startup(function ()
     end
   }
 
-  use {
-    'hoob3rt/lualine.nvim',
-    disable = true,
-    config = function()
-      require('lualine').setup {
-        options = {
-          theme = 'oceanicnext',
-          icons_enabled = true,
-          section_separators = { '', '' },
-          component_separators = { '', '' },
-        },
-        sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = {
-            'branch',
-            'filename'
-          },
-          lualine_x = {
-            { 'diagnostics', sources = { 'coc' }, symbols = {error = '•', warn = '•', info = '•', hint = '•'} },
-            { 'g:coc_status', 'bo:filetype' },
-            'filetype',
-            'progress',
-            'location'
-          },
-          lualine_y = {},
-          lualine_z = {}
-        },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = {'filename'},
-          lualine_x = {'location'},
-          lualine_y = {},
-          lualine_z = {}
-        },
-        tabline = {},
-        extensions = {}
-      }
-    end
-  }
-
 end)
 
 -------------------- VARIABLES -------------------------------
-vim.cmd('set undodir=$HOME/.config/nvim/undodir')
-vim.cmd('set undofile')
-vim.cmd('set hidden')
-vim.cmd('set termguicolors')
-vim.cmd('set splitright')
-vim.cmd('set splitbelow')
-vim.cmd('set nowrap')
-vim.cmd('set signcolumn=yes')
-vim.cmd('set tabstop=2')
-vim.cmd('set shiftwidth=2')
-vim.cmd('set expandtab')
-vim.cmd('set number')
-vim.cmd('set relativenumber')
-vim.cmd('set mouse=a')
-vim.cmd('set completeopt=menuone,noselect,noinsert')
+local opt = vim.opt
 
-vim.opt.foldmethod = 'marker'
-vim.opt.foldlevel = 0
-vim.opt.modelines = 1
+opt.undofile = true
+opt.hidden = true
+opt.termguicolors = true
+opt.splitright = true
+opt.splitbelow = true
+opt.wrap = false
+opt.signcolumn = "yes"
+opt.tabstop = 2
+opt.shiftwidth = 2
+opt.expandtab = true
+opt.number = true
+opt.relativenumber = true
+opt.mouse = 'a'
+opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+opt.foldmethod = 'marker'
+opt.foldlevel = 0
+opt.modelines = 1
 
 -- Highlight on yank
 vim.api.nvim_exec([[
@@ -303,6 +261,8 @@ augroup end
 vim.api.nvim_exec([[
 function SetColors()
   :hi VertSplit guifg=bg guibg=bg
+  :hi SignColumn guibg=bg
+  :hi LineNr guibg=bg
 endfunction
 
 augroup minimal_theme
