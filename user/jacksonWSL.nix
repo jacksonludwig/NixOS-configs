@@ -1,21 +1,5 @@
 { config, pkgs, ... }:
 
-# let
-# 
-#   unstable = import (fetchTarball
-#     "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
-#       overlays = [
-#         (import (builtins.fetchTarball {
-#           url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
-#         }))
-#         (import (builtins.fetchTarball {
-#           url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-#         }))
-#       ];
-#     };
-# 
-# in 
-
 {
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
@@ -34,8 +18,8 @@
     cmake
     go
 
-    # nodejs
-    nodejs-16_x
+    nodejs
+    # nodejs-16_x
     (lib.lowPrio nodePackages.npm)
     nodePackages.typescript
     nodePackages.prettier
@@ -79,11 +63,9 @@
     source = ../configs/nvim_lua/lua;
     recursive = true;
   };
-  # home.file.".config/nvim/coc-settings.json".source = ../configs/nvim_coc/coc-settings.json;
 
   programs.emacs = {
     enable = true;
-    # package = pkgs.emacsGcc;
     extraPackages = epkgs: with epkgs; [
       vterm
     ];
