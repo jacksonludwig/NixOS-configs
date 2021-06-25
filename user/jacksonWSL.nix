@@ -32,6 +32,7 @@
 
     gcc
     cmake
+    go
 
     # nodejs
     nodejs-16_x
@@ -72,13 +73,13 @@
     enable = true;
     package = pkgs.neovim-nightly;
     withNodeJs = true;
-    extraConfig = builtins.readFile ../configs/nvim_coc/init.vim;
+    extraConfig = builtins.readFile ../configs/nvim_lua/init.vim;
   };
   home.file.".config/nvim/lua" = {
-    source = ../configs/nvim_coc/lua;
+    source = ../configs/nvim_lua/lua;
     recursive = true;
   };
-  home.file.".config/nvim/coc-settings.json".source = ../configs/nvim_coc/coc-settings.json;
+  # home.file.".config/nvim/coc-settings.json".source = ../configs/nvim_coc/coc-settings.json;
 
   programs.emacs = {
     enable = true;
