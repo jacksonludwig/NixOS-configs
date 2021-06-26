@@ -52,25 +52,10 @@ packer.startup(function ()
     'nvim-telescope/telescope.nvim',
     disable = false,
     config = function() 
-      -- This disables tree-sitter highlighting in previewers. Workaround for slowness currently.
-      local previewers = require('telescope.previewers')
-      local putils = require('telescope.previewers.utils')
-      local pfiletype = require('plenary.filetype')
-
-      local new_maker = function(filepath, bufnr, opts)
-        opts = opts or {}
-        if opts.use_ft_detect == nil then
-          local ft = pfiletype.detect(filepath)
-          -- Here for example you can say: if ft == "xyz" then this_regex_highlighing else nothing end
-          opts.use_ft_detect = false
-          putils.regex_highlighter(bufnr, ft)
-        end
-        previewers.buffer_previewer_maker(filepath, bufnr, opts)
-      end
-
       require('telescope').setup {
         defaults = {
-          buffer_previewer_maker = new_maker,
+          file_previewer = require('telescope.previewers').cat.new,
+          grep_previewer = require('telescope.previewers').vimgrep.new,
         }
       }
 
@@ -115,72 +100,135 @@ packer.startup(function ()
   }
 
   use {
-    'tjdevries/express_line.nvim',
-    disable = false,
-    config = function() 
-      local builtin = require('el.builtin')
-      local extensions = require('el.extensions')
-      local sections = require('el.sections')
-      local subscribe = require('el.subscribe')
+    'neovim/nvim-lspconfig',
+    requires = { 'jose-elias-alvarez/nvim-lsp-ts-utils', 'jose-elias-alvarez/null-ls.nvim' },
+    config = function()
+      local nvim_lsp = require("lspconfig")
 
-      local git_icon = subscribe.buf_autocmd("el_file_icon", "BufRead", function(_, bufnr)
-        local icon = extensions.file_icon(_, bufnr)
-        if icon then
-          return icon .. " "
-        end
+      local on_attach_common = function(client, bufnr)
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-        return ""
-      end)
+        --Enable completion triggered by <c-x><c-o>
+        buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-      local git_branch = subscribe.buf_autocmd("el_git_branch", "BufEnter", function(window, buffer)
-        local branch = extensions.git_branch(window, buffer)
-        if branch then
-          return " " .. extensions.git_icon() .. " " .. branch
-        end
-      end)
+        -- Mappings.
+        local opts = { noremap=true, silent=true }
 
-      local git_changes = subscribe.buf_autocmd("el_git_changes", "BufWritePost", function(window, buffer)
-        return extensions.git_changes(window, buffer)
-      end)
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+        buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+        buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+        buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+        buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+        buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        buf_set_keymap('n', '<space>d', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+        buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+        buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+        buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+        buf_set_keymap("n", "<space>z", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+      end
 
-      require('el').setup{
-        generator = function(win,buf)
-          return {
-            git_branch,
-            " ",
-            sections.split,
-            git_icon,
-            sections.maximum_width(builtin.responsive_file(140, 90), 0.30),
-            sections.collapse_builtin {
-              " ",
-              builtin.modified_flag,
-            },
-            sections.split,
-            -- coc_diag_wrapper(win, buf),
-            -- lsp status here
-            git_changes,
-            "[",
-            builtin.line_with_width(3),
-            ":",
-            builtin.column_with_width(2),
-            "]",
-            sections.collapse_builtin {
-              "[",
-              builtin.help_list,
-              builtin.readonly_list,
-              "]",
-            },
-            builtin.filetype,
+      require("null-ls").setup {}
+
+      nvim_lsp.tsserver.setup {
+        on_attach = function(client, bufnr)
+          on_attach_common(client, bufnr)
+
+          -- disable tsserver formatting if you plan on formatting via null-ls
+          client.resolved_capabilities.document_formatting = false
+
+          local ts_utils = require("nvim-lsp-ts-utils")
+
+          -- defaults
+          ts_utils.setup {
+            debug = false,
+            disable_commands = false,
+            enable_import_on_completion = true,
+            import_all_timeout = 5000, -- ms
+
+            -- eslint
+            eslint_enable_code_actions = true,
+            eslint_enable_disable_comments = true,
+            eslint_bin = "eslint_d",
+            eslint_config_fallback = nil,
+            eslint_enable_diagnostics = true,
+
+            -- formatting
+            enable_formatting = true,
+            formatter = "eslint_d",
+            formatter_config_fallback = nil,
+
+            -- parentheses completion
+            complete_parens = false,
+            signature_help_in_parens = false,
+
+            -- update imports on file move
+            update_imports_on_move = false,
+            require_confirmation_on_move = false,
+            watch_dir = nil,
           }
+
+          -- required to fix code action ranges
+          ts_utils.setup_client(client)
+
+          -- format on save
+          vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting_sync()")
+
+          -- no default maps, so you may want to define some here
+          vim.api.nvim_buf_set_keymap(bufnr, "n", "tor", ":TSLspOrganize<CR>", {silent = true})
+          vim.api.nvim_buf_set_keymap(bufnr, "n", "tqf", ":TSLspFixCurrent<CR>", {silent = true})
+          vim.api.nvim_buf_set_keymap(bufnr, "n", "trn", ":TSLspRenameFile<CR>", {silent = true})
+          vim.api.nvim_buf_set_keymap(bufnr, "n", "tia", ":TSLspImportAll<CR>", {silent = true})
         end
       }
     end
   }
 
   use {
-    'neovim/nvim-lspconfig',
-    requires = { 'jose-elias-alvarez/nvim-lsp-ts-utils' },
+    'cohama/lexima.vim',
+    requires = { 'hrsh7th/nvim-compe' },
     config = function()
+      require'compe'.setup {
+        enabled = true;
+        autocomplete = true;
+        debug = false;
+        min_length = 1;
+        preselect = 'disable';
+        throttle_time = 80;
+        source_timeout = 200;
+        resolve_timeout = 800;
+        incomplete_delay = 400;
+        max_abbr_width = 100;
+        max_kind_width = 100;
+        max_menu_width = 100;
+        documentation = true;
+
+        source = {
+          path = true;
+          buffer = true;
+          calc = true;
+          nvim_lsp = true;
+          nvim_lua = true;
+          vsnip = true;
+        };
+      }
+
+      vim.cmd([[
+      let g:lexima_no_default_rules = v:true
+      call lexima#set_default_rules()
+      inoremap <silent><expr> <C-Space> compe#complete()
+      inoremap <silent><expr> <CR>      compe#confirm(lexima#expand('<LT>CR>', 'i'))
+      inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+      inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+      inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+      ]])
     end
   }
 
