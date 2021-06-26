@@ -30,10 +30,6 @@ packer.startup(function ()
   }
 
   use {
-    'mkitt/tabline.vim',
-  }
-
-  use {
     'arzg/vim-colors-xcode',
   }
 
@@ -93,10 +89,6 @@ packer.startup(function ()
         }
       }
     end
-  }
-
-  use {
-    'peitalin/vim-jsx-typescript',
   }
 
   use {
@@ -249,7 +241,7 @@ opt.expandtab = true
 opt.number = true
 opt.relativenumber = true
 opt.mouse = 'a'
-opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+opt.completeopt = { 'menuone', 'noselect' }
 opt.foldmethod = 'marker'
 opt.foldlevel = 0
 opt.modelines = 1
