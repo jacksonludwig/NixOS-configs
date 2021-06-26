@@ -187,7 +187,7 @@ packer.startup(function ()
           vim.api.nvim_buf_set_keymap(bufnr, "n", "trn", ":TSLspRenameFile<CR>", {silent = true})
           vim.api.nvim_buf_set_keymap(bufnr, "n", "tia", ":TSLspImportAll<CR>", {silent = true})
         end
-      }
+       }
     end
   }
 
@@ -261,7 +261,8 @@ augroup YankHighlight
 autocmd!
 autocmd TextYankPost * silent! lua vim.highlight.on_yank()
 augroup end
-]], false)
+]],
+false)
 
 -- autocmd for theme stuff
 vim.api.nvim_exec([[
@@ -269,16 +270,17 @@ function SetColors()
   :hi VertSplit guifg=bg guibg=bg
   :hi SignColumn guibg=bg
   :hi LineNr guibg=bg
-  endfunction
+endfunction
 
-  augroup minimal_theme
-  autocmd!
-  autocmd ColorScheme * call SetColors()
-  augroup END
-  ]], false)
+augroup minimal_theme
+autocmd!
+autocmd ColorScheme * call SetColors()
+augroup END
+]],
+false)
 
-  -------------------- MAPPINGS -------------------------------
-  vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
+-------------------- MAPPINGS -------------------------------
+vim.api.nvim_set_keymap('n', '<esc>', '<cmd>noh<CR>', { noremap = false, silent = true })
 
-  -------------------- THEME -------------------------------
-  require('colorbuddy').colorscheme('gruvbuddy')
+-------------------- THEME -------------------------------
+require('colorbuddy').colorscheme('gruvbuddy')

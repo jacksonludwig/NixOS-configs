@@ -16,7 +16,6 @@
 
     gcc
     cmake
-    go
 
     nodejs
     # nodejs-16_x
