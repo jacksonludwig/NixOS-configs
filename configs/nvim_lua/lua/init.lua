@@ -24,6 +24,10 @@ packer.startup(function ()
   }
 
   use {
+    'LnL7/vim-nix',
+  }
+
+  use {
     'tpope/vim-commentary',
     'tpope/vim-fugitive',
     'tpope/vim-rhubarb',
