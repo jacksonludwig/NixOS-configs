@@ -74,8 +74,8 @@
     recursive = true;
   };
 
-  home.file.".config/fontconfig/fonts.conf".source = ../configs/wsl_font_conf/fonts.conf;
-  home.file.".Xresources".source = ../configs/wsl_font_conf/.Xresources;
+  # home.file.".config/fontconfig/fonts.conf".source = ../configs/wsl_font_conf/fonts.conf;
+  # home.file.".Xresources".source = ../configs/wsl_font_conf/.Xresources;
 
   home.file.".config/kitty/kitty.conf".source = ../configs/kitty/kitty.conf;
   home.file.".config/alacritty/alacritty.yml".source = ../configs/alacritty/alacritty.yml;
