@@ -262,7 +262,7 @@ false)
 -- autocmd for theme stuff
 vim.api.nvim_exec([[
 function SetColors()
-  :hi VertSplit guifg=bg guibg=bg
+  :hi VertSplit guibg=NONE
   :hi SignColumn guibg=bg
   :hi LineNr guibg=bg
 endfunction
