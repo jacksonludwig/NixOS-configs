@@ -23,6 +23,7 @@
     nodePackages.typescript
     nodePackages.prettier
     nodePackages.eslint
+    nodePackages.eslint_d
     nodePackages.typescript-language-server
     nodePackages.expo-cli
 

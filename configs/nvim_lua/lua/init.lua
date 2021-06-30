@@ -183,6 +183,13 @@ packer.startup(function ()
           vim.api.nvim_buf_set_keymap(bufnr, "n", "tia", ":TSLspImportAll<CR>", {silent = true})
         end
        }
+
+       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+         vim.lsp.diagnostic.on_publish_diagnostics, {
+           virtual_text = false,
+         }
+       )
+
     end
   }
 
