@@ -136,7 +136,7 @@ packer.startup(function ()
         on_attach = function(client, bufnr)
           on_attach_common(client, bufnr)
 
-          -- disable tsserver formatting if you plan on formatting via null-ls
+          -- disable tsserver formatting 
           client.resolved_capabilities.document_formatting = false
 
           local ts_utils = require("nvim-lsp-ts-utils")
@@ -181,7 +181,10 @@ packer.startup(function ()
           vim.api.nvim_buf_set_keymap(bufnr, "n", "tqf", ":TSLspFixCurrent<CR>", {silent = true})
           vim.api.nvim_buf_set_keymap(bufnr, "n", "trn", ":TSLspRenameFile<CR>", {silent = true})
           vim.api.nvim_buf_set_keymap(bufnr, "n", "tia", ":TSLspImportAll<CR>", {silent = true})
-        end
+        end,
+        flags = {
+          debounce_text_changes = 150,
+        },
        }
 
        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
