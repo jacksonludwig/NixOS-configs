@@ -32,7 +32,7 @@
     htop
     xclip
     ispell
-    texlive.combined.scheme-medium
+    # texlive.combined.scheme-medium
 
     iosevka-bin
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -64,7 +64,7 @@
   # home.file.".config/nvim/coc-settings.json".source = ../configs/nvim_coc/coc-settings.json;
 
   programs.emacs = {
-    enable = true;
+    enable = false;
     extraPackages = epkgs: with epkgs; [
       vterm
     ];
